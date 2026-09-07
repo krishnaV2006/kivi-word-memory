@@ -190,12 +190,26 @@ explains how each of the two cases that once failed was closed, and the adversar
 in `eval/results/adversarial.md` tests the property the curated cases cannot: that memory
 stays out of the way of 1,616 sentences it was never taught anything about.
 
+### Optional: the scale measurement
+
+Not part of the main run, because it takes 3–5 minutes:
+
+```bash
+python -m eval.scale
+```
+
+It fills memory with up to 10,000 synthetic entries and reports latency, how many
+candidates a span retrieves, and whether the seeded assertions still hold at each size.
+Results are written to `eval/results/scale.md` and are committed, so you can read them
+without running it.
+
 ## 9. Where evaluation results are written
 
 | Path | Contents |
 |---|---|
 | `eval/results/summary.md` | **Start here.** Ablation table, per-category results, every failure, adversarial summary, decision-branch coverage, latency, cost, database growth. |
 | `eval/results/adversarial.md` | False-positive stress test: ~1,600 sentences containing no memory term, plus a control group that must fire. |
+| `eval/results/scale.md` | Latency, retrieval breadth and correctness from 10 to 10,000 entries. Written by a separate command, see below. |
 | `eval/results/results.json` | The same data as machine-readable JSON, including every case. |
 | `eval/results/cases/<case-id>.json` | One file per case: inputs, expected, what all three strategies actually produced, the memory state at decision time, and the reason for every span considered. |
 

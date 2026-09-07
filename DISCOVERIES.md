@@ -405,3 +405,60 @@ context terms per script.
 
 **Pinned by:** `eval/cases/04_code_mixed.json` (10 cases),
 `codemix-devanagari-should-fire`, the `devanagari` corpus in `eval/results/adversarial.md`
+
+---
+
+## 13. The scale test found an O(n) bug that no small-scale measurement could
+
+**Found:** by replacing an assertion with a measurement. The README claimed this design
+"would not be fine at 10,000 entries". That was a guess, so we filled memory with 10,000
+synthetic Indian-style names — built from a syllable pool, so they sit in the same
+phonetic space as the real entries rather than flattering the numbers by never colliding —
+and measured.
+
+| entries | cold p50 | warm p50 | max candidates per span |
+|---:|---:|---:|---:|
+| 10 | 6.7 ms | 2.1 ms | 2 |
+| 1,000 | 42.5 ms | 40.4 ms | 2 |
+| 10,000 | **594.4 ms** | **371.1 ms** | 2 |
+
+Six hundred milliseconds for a dictation product is unusable. But look at the last
+column: the number of candidates actually retrieved never moved. Retrieval was fine.
+Something else was linear in the size of memory.
+
+It was `build_memory_prompt_block`. To decide which memories were relevant to an
+utterance it iterated **every entry**, and recomputed a phonetic skeleton for **every
+surface** in memory, on every single request. At seed scale that is ten entries and
+invisible. At ten thousand it dominated everything else in the system by an order of
+magnitude.
+
+The fix is that the answer was already indexed. The same `key_index` retrieval uses will
+map a sentence's skeletons straight to entry ids, so the scan became a lookup — O(tokens)
+instead of O(entries):
+
+| entries | warm p50 before | warm p50 after |
+|---:|---:|---:|
+| 10 | 2.06 ms | 2.45 ms |
+| 1,000 | 40.4 ms | 4.05 ms |
+| 10,000 | 371.1 ms | **3.71 ms** |
+
+All 56 case artifacts were byte-identical afterwards, so the behaviour is unchanged.
+
+**What the corrected numbers actually say** is more useful than the bug. Two curves that
+were tangled together are now separable:
+
+- **Resolution is flat in the size of memory** — 2.45 ms at 10 entries, 3.71 ms at
+  10,000. The retrieval design does scale.
+- **Loading memory is linear** — cold p50 still reaches 233 ms at 10,000 entries, because
+  the HTTP layer deliberately re-reads all of memory every request so that an observation
+  recorded a moment ago cannot be missed.
+
+So the honest version of limitation 2 is no longer "no cache, might be slow". It is: the
+no-cache decision is free at seed scale and costs roughly 229 ms at 10,000 entries, and
+here is the measurement. That is a trade-off a reviewer can argue with.
+
+The narrow lesson: a latency number taken at one size tells you almost nothing about
+which part of a system is expensive. This bug was invisible at every size the rest of the
+evaluation ever exercised.
+
+**Pinned by:** `eval/results/scale.md`, `eval/scale.py`

@@ -306,18 +306,27 @@ def build_memory_prompt_block(view: MemoryView, sentence: str) -> str:
     above already does it -- but this is the seam where memory meets a model, so it is
     a first-class output rather than an implementation detail.
     """
-    skeletons = {indic_skeleton(t.stem) for t in apply_mod.tokenize(sentence)}
+    # Look the sentence up in the key index rather than scanning every entry. Scanning
+    # was O(number of entries) per request and recomputed a skeleton for every surface
+    # in memory, which made this the dominant cost of a resolution long before retrieval
+    # was: 594 ms at 10k entries, against 2 candidates actually retrieved. See
+    # DISCOVERIES.md section 13.
+    hit_ids: set[int] = set()
+    for token in apply_mod.tokenize(sentence):
+        skeleton = indic_skeleton(token.stem)
+        if skeleton:
+            hit_ids.update(view.key_index.get((skeleton, "indic"), ()))
+
     lines: list[str] = []
-    for entry in sorted(view.entries.values(), key=lambda e: e["canonical"]):
-        if entry["status"] != "active":
+    for entry_id in sorted(hit_ids, key=lambda i: view.entries[i]["canonical"]
+                           if i in view.entries else ""):
+        entry = view.entries.get(entry_id)
+        if entry is None or entry["status"] != "active":
             continue
-        surfaces = view.surfaces.get(entry["id"], [])
-        if any(indic_skeleton(s) in skeletons for s in surfaces):
-            variants = sorted({
-                s for s in surfaces if s.lower() != entry["canonical"].lower()
-            })
-            hint = f" (heard as: {', '.join(variants)})" if variants else ""
-            lines.append(f"- {entry['canonical']} [{entry['kind']}]{hint}")
+        surfaces = view.surfaces.get(entry_id, [])
+        variants = sorted({s for s in surfaces if s.lower() != entry["canonical"].lower()})
+        hint = f" (heard as: {', '.join(variants)})" if variants else ""
+        lines.append(f"- {entry['canonical']} [{entry['kind']}]{hint}")
     if not lines:
         return "# Known personal terms\n(none relevant to this utterance)"
     return "# Known personal terms\n" + "\n".join(lines)

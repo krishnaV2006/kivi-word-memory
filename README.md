@@ -264,13 +264,16 @@ Honest ones, in rough order of how much they would matter in production.
    context support the static list is what stands between Kivi and rewriting the fruit. A
    name colliding with an ordinary word *outside* that list would not be protected. A
    frequency-ranked lexicon, or a part-of-speech signal, would be the correct fix.
-2. **Memory is loaded per request with no cache.** The HTTP layer reads memory fresh on
-   every call, because observations mutate it between requests and a stale-cache bug that
-   silently applied a suppressed entry would cost more than the milliseconds. Measured
-   cold p50 is 4.8 ms; reusing a `MemoryView` (what a cache would buy) is 2.5 ms, and the
-   evaluation reports both. This limitation previously claimed memory loading dominated
-   the request — that was wrong, and measuring it is how we found the real cost was the
-   decision-trace commit. See DISCOVERIES.md §10.
+2. **Memory is loaded per request with no cache, and that is the one thing that does not
+   scale.** The HTTP layer reads memory fresh on every call, deliberately: observations
+   mutate it between requests and a stale-cache bug that silently applied a suppressed
+   entry would cost far more than the milliseconds. Resolution itself is flat in the size
+   of memory (2.4 ms at 10 entries, 3.7 ms at 10,000), but loading is linear — cold p50
+   reaches 233 ms at 10,000 entries. So the trade-off is free at seed scale and costs
+   about 229 ms at 10,000 entries; the fix is a cache invalidated on write. See
+   [eval/results/scale.md](eval/results/scale.md). Two earlier versions of this
+   limitation were wrong about the cause, both times because they asserted instead of
+   measuring — DISCOVERIES.md §10 and §13.
 3. **Context terms are a bag of words with no notion of recency or session.** In a real
    Kivi they should probably decay, and the active application would be a strong signal
    the model currently has no access to.
@@ -328,6 +331,7 @@ Everything here has been run and verified from a clean clone.
 | `eval/cases/` | 44 labelled cases |
 | `eval/run_eval.py` | The harness (also runs the adversarial pass) |
 | `eval/adversarial.py` | False-positive stress test over ~1,600 generated sentences |
+| `eval/scale.py` | Latency, retrieval breadth and correctness at 10 → 10,000 entries |
 | `eval/results/` | Committed generated results |
 | `tests/test_phonetics.py` | `python -m tests.test_phonetics`, no pytest needed |
 | `DISCOVERIES.md` | The failure modes found while building, linked to their cases |
