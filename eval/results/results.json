@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 18:41:23",
+  "generated_at": "2026-09-07 18:41:57",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -48,16 +48,16 @@
   "latency": {
     "repeats": 30,
     "warm": true,
-    "p50_ms": 12.94,
-    "p95_ms": 15.474,
-    "max_ms": 16.828,
-    "mean_ms": 13.258,
+    "p50_ms": 13.164,
+    "p95_ms": 15.429,
+    "max_ms": 15.546,
+    "mean_ms": 13.226,
     "stage_means_ms": {
-      "load_memory": 1.715,
+      "load_memory": 1.869,
       "span_generation": 0.181,
-      "scoring_and_decision": 5.803,
-      "rewrite_and_prompt": 0.454,
-      "total": 8.153
+      "scoring_and_decision": 5.9,
+      "rewrite_and_prompt": 0.431,
+      "total": 8.381
     }
   },
   "db_growth": [
