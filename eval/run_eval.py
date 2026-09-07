@@ -416,6 +416,22 @@ def write_summary(payload: dict) -> None:
     for p in payload["db_growth"]:
         w(f"| {p['observations']} | {p['entries']} | {p['total_rows']} | {p['kb']} KB |")
 
+    adv = payload["adversarial"]
+    w("\n## Adversarial false positives\n")
+    w("The table above is scored on cases this author wrote. This one is not: it runs "
+      "sentences that contain nothing the user has ever taught Kivi and asks whether "
+      "memory stays out of the way. Full report in "
+      "[adversarial.md](adversarial.md).\n")
+    w(f"**{adv['total_sentences']} sentences, {adv['total_interventions']} interventions "
+      f"(rate {adv['false_positive_rate']}).** Control group recall "
+      f"{adv['control_recall']} — the pipeline does fire when it should, so the zero is "
+      f"not an inert system.\n")
+    w("| corpus | sentences | interventions |")
+    w("|---|---:|---:|")
+    for name, r in adv["by_corpus"].items():
+        note = " *(control, expected to fire)*" if r.get("expects_interventions") else ""
+        w(f"| {name}{note} | {r['sentences']} | {r['interventions']} |")
+
     w("\n## Decision-branch coverage\n")
     w("Every outcome the policy in `app/resolver.py` can produce, and how many cases "
       "reach it. A branch with no cases is a rule the evaluation does not actually "
@@ -470,6 +486,19 @@ def main() -> int:
     if missing:
         print(f"note: {len(missing)} policy branch(es) not exercised: {', '.join(missing)}")
 
+    # The adversarial harness answers the question the curated dataset cannot: does
+    # memory stay out of the way of text it has never been taught anything about?
+    print("running adversarial false-positive harness ...")
+    from eval import adversarial as adv
+
+    adv_payload = adv.run()
+    (RESULTS_DIR / "adversarial.json").write_text(
+        json.dumps(adv_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    adv.write_report(adv_payload)
+    # The harness points KIVI_DB_PATH at its own scratch file; put it back.
+    os.environ["KIVI_DB_PATH"] = str(EVAL_DB)
+
     print("measuring latency ...")
     latency = latency_profile()
     print("measuring database growth ...")
@@ -487,6 +516,13 @@ def main() -> int:
         "model_calls": 0,
         "cost_inr": 0.0,
         "known_hard_count": sum(1 for r in records if r["known_hard"]),
+        "adversarial": {
+            "total_sentences": adv_payload["total_sentences"],
+            "total_interventions": adv_payload["total_interventions"],
+            "false_positive_rate": adv_payload["false_positive_rate"],
+            "control_recall": adv_payload["control_recall"],
+            "by_corpus": adv_payload["by_corpus"],
+        },
         "branch_coverage": coverage,
         "uncovered_branches": sorted(POLICY_BRANCHES - set(coverage)),
         "cases": records,

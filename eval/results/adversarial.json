@@ -1,0 +1,41 @@
+{
+  "seed": 20260907,
+  "total_sentences": 1598,
+  "all_sentences_including_control": 1603,
+  "total_interventions": 0,
+  "false_positive_rate": 0.0,
+  "elapsed_s": 1.71,
+  "per_sentence_ms": 1.0685,
+  "distinct_names_tested": 200,
+  "control_names": [
+    "Aditya"
+  ],
+  "control_recall": 1.0,
+  "by_corpus": {
+    "neutral": {
+      "sentences": 585,
+      "interventions": 0,
+      "rate": 0.0,
+      "expects_interventions": false
+    },
+    "homophone": {
+      "sentences": 18,
+      "interventions": 0,
+      "rate": 0.0,
+      "expects_interventions": false
+    },
+    "names": {
+      "sentences": 995,
+      "interventions": 0,
+      "rate": 0.0,
+      "expects_interventions": false
+    },
+    "names_control": {
+      "sentences": 5,
+      "interventions": 5,
+      "rate": 1.0,
+      "expects_interventions": true
+    }
+  },
+  "interventions": []
+}

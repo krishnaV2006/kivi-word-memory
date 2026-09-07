@@ -284,3 +284,43 @@ The lesson is narrow and unglamorous: a plausible story about where time goes is
 measurement, and the README had confidently asserted one for several commits.
 
 **Pinned by:** the `Cost, latency and storage` section of `eval/results/summary.md`
+
+---
+
+## 11. A test that only proves a negative can be worthless
+
+**Found:** by building an adversarial harness to check the claim the curated dataset
+cannot support. Forty-five cases prove the forty-five situations their author imagined.
+They say nothing about whether memory quietly corrupts ordinary text at scale — and that
+is the failure this whole system is built to avoid.
+
+So: 1,600 sentences containing nothing the user has ever taught Kivi, including 200 real
+personal names across five sentence frames. The names corpus is the sharp one, because
+most of those names are Indian and therefore sit in exactly the phonetic neighbourhood the
+skeleton rules were tuned for, and the loose consonant key retrieves candidates among them
+constantly. Any rewrite renames a real person.
+
+The first run flagged five interventions, all of them the name `Aditya`. That is not a
+false positive — `Aditya` **is** Aaditya, the user's colleague, and rewriting it is the
+product working. The mistake was mine: I had put one of the user's own memory terms into a
+list labelled "names not in memory".
+
+**Consequence:** rather than delete the name, we turned the accident into a **control
+group**, and it fixed a real weakness in the harness. A test whose only possible result is
+"nothing happened" cannot distinguish a well-behaved system from a broken one that never
+fires at all. If the resolver silently stopped working, the false-positive suite would go
+green.
+
+Names are now split automatically on strict phonetic skeleton:
+
+| corpus | expectation | result |
+|---|---|---|
+| neutral, names, homophone | must not fire | **0 / 1598** |
+| names_control | **must** fire | **5 / 5** |
+
+The control recall is what gives the zero its meaning. The split is computed, not curated,
+so it cannot be quietly gamed by moving an inconvenient name across the line — and names
+that merely share a *loose* key with a memory deliberately stay in the scored corpus,
+because those near-misses are the entire point of running this at all.
+
+**Pinned by:** `eval/results/adversarial.md`, `eval/adversarial.py::split_names`

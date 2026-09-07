@@ -145,9 +145,10 @@ virtual environment active:
 python -m eval.run_eval
 ```
 
-Takes roughly 30–60 seconds. It creates its own scratch database at `eval/.eval.db`,
-rebuilds it from scratch for every case, and deletes it when finished. **Your demo
-database is not touched.**
+Takes roughly 1–2 minutes. It runs the 45 labelled cases across three strategies, then
+an adversarial false-positive pass over ~1,600 generated sentences. Both create their own
+scratch databases (`eval/.eval.db`, `eval/.adversarial.db`), rebuild them from scratch,
+and delete them when finished. **Your demo database is not touched.**
 
 Expected final output:
 
@@ -165,7 +166,8 @@ the case, the expectation and the actual output.
 
 | Path | Contents |
 |---|---|
-| `eval/results/summary.md` | **Start here.** Ablation table, per-category results, every failure, latency, cost, database growth. |
+| `eval/results/summary.md` | **Start here.** Ablation table, per-category results, every failure, adversarial summary, decision-branch coverage, latency, cost, database growth. |
+| `eval/results/adversarial.md` | False-positive stress test: ~1,600 sentences containing no memory term, plus a control group that must fire. |
 | `eval/results/results.json` | The same data as machine-readable JSON, including every case. |
 | `eval/results/cases/<case-id>.json` | One file per case: inputs, expected, what all three strategies actually produced, the memory state at decision time, and the reason for every span considered. |
 
@@ -173,8 +175,9 @@ These files are committed to the repository, so you can compare a fresh run agai
 committed results to confirm reproducibility.
 
 Good individual files to open:
-`eval/results/cases/fire-unseen-variant-adithya.json` (the central claim) and
-`eval/results/cases/noop-kiwi-fruit.json` (the refusal).
+`eval/results/cases/fire-unseen-variant-adithya.json` (the central claim),
+`eval/results/cases/noop-kiwi-fruit.json` (the refusal), and
+`eval/results/adversarial.md` (the claim that it stays out of the way at scale).
 
 ## 10. Reset procedure
 

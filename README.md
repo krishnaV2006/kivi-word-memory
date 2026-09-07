@@ -183,6 +183,31 @@ Every case has a full artifact at `eval/results/cases/<id>.json` with inputs, ex
 all three strategies' output, the memory state at decision time, and the reason given for
 every span considered.
 
+### The adversarial result
+
+A curated dataset only proves the cases its author imagined, and I wrote these 45. So
+there is a second harness that proves the property most likely to be quietly false: that
+memory stays out of the way of text it was never taught anything about.
+
+**1,598 sentences containing no memory term. 0 interventions.** Full report:
+[eval/results/adversarial.md](eval/results/adversarial.md).
+
+| corpus | sentences | interventions | what it attacks |
+|---|---:|---:|---|
+| neutral | 585 | **0** | ordinary workplace sentences from everyday vocabulary |
+| names | 995 | **0** | 199 real personal names that are not this user's |
+| homophone | 18 | **0** | `kiwi` the fruit, `cave`, `Sarah`, `service` in non-product contexts |
+| names_control | 5 | 5 | *control* — names that **are** the user's person; must fire |
+
+The names corpus is the sharp one. Those are real names, mostly Indian, sitting in exactly
+the phonetic neighbourhood the skeleton rules were tuned for, and the loose consonant key
+retrieves candidates constantly among them. Any rewrite would rename a real person.
+
+The control group is what makes the zero mean anything. A test that only proves a negative
+is worthless if the pipeline is inert, so names that genuinely *are* the user's person
+under another spelling are split out automatically — by strict phonetic skeleton, not by
+hand — and must be rewritten. They are, 5 of 5.
+
 ### The failure
 
 One case fails, and it is in the dataset on purpose.
@@ -264,7 +289,8 @@ Everything here has been run and verified from a clean clone.
 | `migrations/` | Schema as plain SQL, applied by `app/db.py` |
 | `seed/seed.json` | Reproducible seed, expressed as observations |
 | `eval/cases/` | 44 labelled cases |
-| `eval/run_eval.py` | The harness |
+| `eval/run_eval.py` | The harness (also runs the adversarial pass) |
+| `eval/adversarial.py` | False-positive stress test over ~1,600 generated sentences |
 | `eval/results/` | Committed generated results |
 | `tests/test_phonetics.py` | `python -m tests.test_phonetics`, no pytest needed |
 | `DISCOVERIES.md` | The failure modes found while building, linked to their cases |

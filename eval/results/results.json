@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 19:18:03",
+  "generated_at": "2026-09-07 19:23:05",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -49,41 +49,41 @@
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 4.833,
-      "p95_ms": 5.459,
-      "max_ms": 5.797,
-      "mean_ms": 4.74,
+      "p50_ms": 2.17,
+      "p95_ms": 4.654,
+      "max_ms": 5.024,
+      "mean_ms": 2.706,
       "stage_means_ms": {
-        "load_memory": 2.08,
-        "span_generation": 0.194,
-        "scoring_and_decision": 1.867,
-        "rewrite_and_prompt": 0.409,
-        "total": 4.55
+        "load_memory": 1.186,
+        "span_generation": 0.124,
+        "scoring_and_decision": 1.04,
+        "rewrite_and_prompt": 0.24,
+        "total": 2.59
       }
     },
     "warm": {
-      "p50_ms": 2.453,
-      "p95_ms": 3.157,
-      "max_ms": 3.262,
-      "mean_ms": 2.563,
+      "p50_ms": 1.9,
+      "p95_ms": 2.536,
+      "max_ms": 2.563,
+      "mean_ms": 1.98,
       "stage_means_ms": {
-        "load_memory": 0.001,
-        "span_generation": 0.191,
-        "scoring_and_decision": 1.787,
-        "rewrite_and_prompt": 0.393,
-        "total": 2.372
+        "load_memory": 0.0,
+        "span_generation": 0.151,
+        "scoring_and_decision": 1.356,
+        "rewrite_and_prompt": 0.327,
+        "total": 1.835
       }
     },
-    "p50_ms": 4.833,
-    "p95_ms": 5.459,
-    "max_ms": 5.797,
-    "mean_ms": 4.74,
+    "p50_ms": 2.17,
+    "p95_ms": 4.654,
+    "max_ms": 5.024,
+    "mean_ms": 2.706,
     "stage_means_ms": {
-      "load_memory": 2.08,
-      "span_generation": 0.194,
-      "scoring_and_decision": 1.867,
-      "rewrite_and_prompt": 0.409,
-      "total": 4.55
+      "load_memory": 1.186,
+      "span_generation": 0.124,
+      "scoring_and_decision": 1.04,
+      "rewrite_and_prompt": 0.24,
+      "total": 2.59
     }
   },
   "db_growth": [
@@ -112,6 +112,38 @@
   "model_calls": 0,
   "cost_inr": 0.0,
   "known_hard_count": 1,
+  "adversarial": {
+    "total_sentences": 1598,
+    "total_interventions": 0,
+    "false_positive_rate": 0.0,
+    "control_recall": 1.0,
+    "by_corpus": {
+      "neutral": {
+        "sentences": 585,
+        "interventions": 0,
+        "rate": 0.0,
+        "expects_interventions": false
+      },
+      "homophone": {
+        "sentences": 18,
+        "interventions": 0,
+        "rate": 0.0,
+        "expects_interventions": false
+      },
+      "names": {
+        "sentences": 995,
+        "interventions": 0,
+        "rate": 0.0,
+        "expects_interventions": false
+      },
+      "names_control": {
+        "sentences": 5,
+        "interventions": 5,
+        "rate": 1.0,
+        "expects_interventions": true
+      }
+    }
+  },
   "branch_coverage": {
     "apply": 23,
     "noop_already_correct": 3,
