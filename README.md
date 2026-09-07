@@ -86,6 +86,41 @@ can see what Kivi believes and overrule it. A pinned entry — one the user adde
 explicitly — survives contradictions entirely: an inferred signal must never silently
 overturn a direct instruction.
 
+## How memories relate to one another
+
+The brief names this as one of the decisions it will not specify, so here is the answer
+and the reasoning behind it.
+
+**Memories are not linked to each other directly. They are linked through the world they
+share.** Every entry accumulates `context_terms` — the words it tends to appear near,
+mined from the sentences the user actually wrote. Two memories are related when their
+context overlaps, and a relation between two *specific* memories emerges for free when
+one memory's context term happens to name another entry. In the seeded state that has
+produced exactly two such links:
+
+```
+Kivi   → Sarvam    (weight 1.0)
+Sarvam → Bulbul    (weight 1.0)
+```
+
+Nothing created those. They are what the persona happened to say.
+
+This is deliberately weaker than a relation graph, and the reason is the brief's closing
+instruction: *build the smallest one that makes Kivi feel as though it has met this
+person before*. An explicit graph — entities, typed edges, co-reference — is the shape of
+the largest system I could describe, and it would need its own learning rules, its own
+decay, and its own failure modes, to buy something the context terms already deliver:
+
+> `Ask Aditya to review the Sarvam Kiwi service.` → `Kiwi` becomes `Kivi`, because
+> `Sarvam` and `service` are in Kivi's world.
+> `I ate a kiwi for breakfast.` → untouched, because nothing in that sentence is.
+
+That is the whole job a relation was needed for. The three limits are stated plainly: the
+links are **undirected in effect but asymmetric in storage**, they are **unweighted by
+recency**, and they carry **no type** — Kivi does not know that Sarvam is its employer
+rather than its author. A real personal AI would need all three, and would earn them from
+episodic and semantic memory, which the brief explicitly puts outside this task's edge.
+
 ## Architecture
 
 ```
