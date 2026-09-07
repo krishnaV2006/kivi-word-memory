@@ -318,9 +318,9 @@ Honest ones, in rough order of how much they would matter in production.
    scale.** The HTTP layer reads memory fresh on every call, deliberately: observations
    mutate it between requests and a stale-cache bug that silently applied a suppressed
    entry would cost far more than the milliseconds. Resolution itself is flat in the size
-   of memory (about 2 ms at 10 entries and at 10,000), but loading is linear — cold p50
-   reaches roughly 160 ms at 10,000 entries. So the trade-off is free at seed scale and costs
-   about 160 ms at 10,000 entries; the fix is a cache invalidated on write. See
+   of memory (about 2 ms at 10 entries, about 4 ms at 10,000), but loading is linear —
+   cold p50 reaches roughly 230 ms at 10,000 entries. So the trade-off is free at seed scale and costs
+   about 225 ms at 10,000 entries; the fix is a cache invalidated on write. See
    [eval/results/scale.md](eval/results/scale.md). Two earlier versions of this
    limitation were wrong about the cause, both times because they asserted instead of
    measuring — DISCOVERIES.md §10 and §13.

@@ -17,6 +17,7 @@ Exit code is 1 if any claim is stale, so this can gate a commit.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -113,6 +114,19 @@ def main() -> int:
                 f"warm p50 at {last['total_entries']} entries is "
                 f"{last['warm']['p50_ms']} ms; README claims resolution is flat in the "
                 f"size of memory")
+        # The README states the 10k cold figure in prose. Tie it to the measurement, with
+        # a wide tolerance because this one genuinely varies run to run -- I have now got
+        # this number wrong twice by quoting a stale run rather than re-measuring.
+        claimed = re.search(r"cold p50 reaches roughly (\d+) ms at 10,000 entries", readme)
+        if claimed is None:
+            failures.append("README no longer states a 10k cold p50 figure; "
+                            "check_docs cannot verify it")
+        else:
+            want, got = int(claimed.group(1)), last["cold"]["p50_ms"]
+            if not (0.6 * got <= want <= 1.4 * got):
+                failures.append(
+                    f"README claims cold p50 of ~{want} ms at 10,000 entries; "
+                    f"scale.json measured {got} ms")
         if not last["correct"]:
             failures.append(
                 f"scale assertions fail at {last['total_entries']} entries, but the "
