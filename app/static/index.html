@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Words Kivi Keeps</title>
+<style>
+  :root {
+    --bg: #0b0d0c; --panel: #141816; --line: #26302b; --ink: #eceee9;
+    --dim: #8b968f; --accent: #7bd63f; --warn: #e8b64c; --bad: #e2664f;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 22px 28px 16px; border-bottom: 1px solid var(--line);
+           display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  h1 { font-size: 19px; margin: 0; font-weight: 650; letter-spacing: -.2px; }
+  h1 em { color: var(--accent); font-style: normal; }
+  .sub { color: var(--dim); font-size: 13px; }
+  .spacer { flex: 1; }
+  main { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+         gap: 18px; padding: 20px 28px 60px; align-items: start; }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line);
+            border-radius: 10px; padding: 16px 18px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
+       color: var(--dim); margin: 0 0 12px; font-weight: 600; }
+  label { display: block; font-size: 12px; color: var(--dim); margin: 10px 0 4px; }
+  input, textarea, select, button {
+    font-family: inherit; font-size: 13px; color: var(--ink);
+    background: #0e1210; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+  }
+  input, textarea, select { width: 100%; }
+  textarea { resize: vertical; min-height: 46px; }
+  button { cursor: pointer; background: #1b241e; border-color: #35422f; font-weight: 550; }
+  button:hover { background: #22302a; }
+  button.primary { background: var(--accent); color: #08170a; border-color: var(--accent); }
+  button.primary:hover { filter: brightness(1.08); }
+  button.ghost { background: transparent; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .row > * { flex: 1; }
+  .row > button { flex: 0 0 auto; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 6px; }
+  .tabs button { flex: 0 0 auto; font-size: 12px; padding: 5px 10px; }
+  .tabs button[aria-selected="true"] { background: var(--accent); color: #08170a; border-color: var(--accent); }
+  pre, code, .mono { font-family: var(--mono); }
+  .out { background: #0e1210; border: 1px solid var(--line); border-radius: 7px;
+         padding: 11px 13px; margin-top: 10px; white-space: pre-wrap; word-break: break-word; }
+  .out .lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em;
+              color: var(--dim); display: block; margin-bottom: 3px; }
+  ins { background: rgba(123,214,63,.22); color: var(--accent); text-decoration: none;
+        border-radius: 3px; padding: 0 2px; font-weight: 600; }
+  del { color: var(--bad); opacity: .75; }
+  .trace { margin-top: 12px; }
+  .d { border-left: 2px solid var(--line); padding: 7px 0 7px 11px; margin-bottom: 7px; }
+  .d.apply { border-color: var(--accent); }
+  .d.abstain { border-color: var(--warn); }
+  .d.noop { border-color: #3a5f7a; }
+  .d .head { font-size: 12px; font-weight: 620; }
+  .d .why { color: var(--dim); font-size: 12.5px; margin-top: 2px; }
+  .tag { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+         padding: 1px 6px; border-radius: 20px; border: 1px solid var(--line); color: var(--dim); }
+  .tag.active { color: var(--accent); border-color: #35502a; }
+  .tag.candidate { color: var(--warn); border-color: #56492a; }
+  .tag.suppressed { color: var(--bad); border-color: #5a3128; }
+  .entry { border-top: 1px solid var(--line); padding: 11px 0; }
+  .entry:first-of-type { border-top: 0; }
+  .entry .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .entry .name { font-weight: 640; font-size: 14.5px; }
+  .entry .meta { color: var(--dim); font-size: 12px; margin-top: 4px; }
+  .entry .keys { font-family: var(--mono); font-size: 11.5px; color: #6f8f5c; margin-top: 3px;
+                 word-break: break-all; }
+  .entry .acts { margin-left: auto; display: flex; gap: 5px; }
+  .entry .acts button { font-size: 11px; padding: 3px 8px; }
+  .empty { color: var(--dim); font-style: italic; padding: 14px 0; }
+  .note { color: var(--dim); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+  .stat { color: var(--dim); font-size: 11.5px; font-family: var(--mono); }
+  .ex { background: transparent; border: 0; color: var(--accent); cursor: pointer;
+        font-size: 12px; padding: 2px 0; text-align: left; text-decoration: underline;
+        text-underline-offset: 2px; width: auto; }
+  .exlist { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>The Words <em>Kivi</em> Keeps</h1>
+  <span class="sub">word-level phonetic memory &mdash; teach it, inspect it, watch it decide</span>
+  <span class="spacer"></span>
+  <span class="stat" id="dbstat"></span>
+  <button class="ghost" id="reset">Reset to seed</button>
+</header>
+
+<main>
+  <div>
+    <section>
+      <h2>1 &middot; Transcribe &mdash; ASR and formatted in, memory-aware out</h2>
+      <label for="asr">ASR output (level 1, raw)</label>
+      <textarea id="asr" placeholder="ask aditya to review the sarvam kiwi service"></textarea>
+      <label for="fmt">Formatted output (level 2, what Kivi's LM produced)</label>
+      <textarea id="fmt" placeholder="Ask Aditya to review the Sarvam Kiwi service."></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" id="go">Resolve &rarr; memory-aware</button>
+      </div>
+      <div class="exlist" id="examples"></div>
+      <div id="result"></div>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2>2 &middot; Teach &mdash; the observations memory learns from</h2>
+      <div class="tabs" id="tabs">
+        <button data-k="correction" aria-selected="true">Correction</button>
+        <button data-k="dictionary_add" aria-selected="false">Dictionary add</button>
+        <button data-k="usage" aria-selected="false">Usage</button>
+        <button data-k="revert" aria-selected="false">Revert</button>
+      </div>
+      <div id="form"></div>
+      <div class="note" id="formnote"></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>3 &middot; Memory state <span id="mcount" class="stat"></span></h2>
+    <div id="memory"><div class="empty">loading&hellip;</div></div>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => (s ?? "").replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+const EXAMPLES = [
+  ["The brief's example", "ask aditya to review the sarvam kiwi service", "Ask Aditya to review the Sarvam Kiwi service."],
+  ["A spelling never observed", "adithya is joining the call", "Adithya is joining the call."],
+  ["The fruit, not the product", "i ate a kiwi for breakfast", "I ate a kiwi for breakfast."],
+  ["Inside an email address", "email aditya at sarvam dot ai", "Email aditya@sarvam.ai before noon."],
+  ["Two people who sound alike", "ask aditi to join the sync", "Ask Aditi to join the sync."],
+  ["Romanisation drift", "krishna vakaria submitted the form", "Krishna Vakaria submitted the form."],
+];
+
+const FORMS = {
+  correction: {
+    note: "The user edited a transcript. Two independent corrections promote a candidate to active — one edit is a hypothesis, not a memory.",
+    fields: [["before","What Kivi wrote","aditya"],["after","What it should say","Aaditya"],["context","Sentence it appeared in (optional, teaches context)","ask aditya to review the pull request"]],
+    kindSelect: true
+  },
+  dictionary_add: {
+    note: "The user stated the word outright. Trusted immediately and pinned, so later inferred contradictions cannot silently overturn it.",
+    fields: [["canonical","The word","Nandini"]], kindSelect: true
+  },
+  usage: {
+    note: "The user wrote this themselves, so every word is spelled how they want. Weak confirmation for any memory mentioned, plus context for all of them.",
+    fields: [["text","Something the user typed","Kivi is the dictation product we ship at Sarvam."]], kindSelect: false
+  },
+  revert: {
+    note: "The user undid a rewrite. Two reverts suppress the entry — it stays visible and still explains why it stopped acting.",
+    fields: [["applied","The word Kivi inserted","Bulbul"],["reverted_to","What the user put back","Bulbool"]], kindSelect: false
+  }
+};
+
+let tab = "correction";
+
+function renderExamples() {
+  $("#examples").innerHTML = EXAMPLES.map((e,i) =>
+    `<button class="ex" data-i="${i}">try: ${esc(e[0])}</button>`).join("");
+  document.querySelectorAll(".ex").forEach(b => b.onclick = () => {
+    const e = EXAMPLES[+b.dataset.i];
+    $("#asr").value = e[1]; $("#fmt").value = e[2];
+  });
+}
+
+function renderForm() {
+  const f = FORMS[tab];
+  let html = f.fields.map(([id,label,ph]) =>
+    `<label for="f_${id}">${esc(label)}</label>` +
+    (id === "text" || id === "context"
+      ? `<textarea id="f_${id}" placeholder="${esc(ph)}"></textarea>`
+      : `<input id="f_${id}" placeholder="${esc(ph)}">`)).join("");
+  if (f.kindSelect) html += `<label for="f_entry_kind">Kind</label>
+    <select id="f_entry_kind"><option>person</option><option>product</option><option>term</option><option>acronym</option></select>`;
+  html += `<div class="row" style="margin-top:12px"><button class="primary" id="teach">Record observation</button></div>`;
+  $("#form").innerHTML = html;
+  $("#formnote").textContent = f.note;
+  $("#teach").onclick = teach;
+}
+
+async function teach() {
+  const f = FORMS[tab];
+  const body = { kind: tab };
+  for (const [id] of f.fields) { const v = $("#f_"+id)?.value.trim(); if (v) body[id] = v; }
+  if (f.kindSelect) body.entry_kind = $("#f_entry_kind").value;
+  const r = await fetch("/api/observe", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+  const j = await r.json();
+  $("#formnote").textContent = r.ok
+    ? "Recorded. " + JSON.stringify(j.result)
+    : "Error: " + (j.detail || "bad request");
+  loadMemory();
+}
+
+function diff(a, b) {
+  const aw = (a||"").split(/(\s+)/), bw = (b||"").split(/(\s+)/);
+  if (aw.length !== bw.length) return esc(b);
+  return bw.map((w,i) => w !== aw[i] ? `<ins>${esc(w)}</ins>` : esc(w)).join("");
+}
+
+const CLS = a => a === "apply" ? "apply" : a.startsWith("noop") ? "noop" : "abstain";
+
+async function resolveNow() {
+  const body = { asr: $("#asr").value, formatted: $("#fmt").value };
+  const r = await fetch("/api/resolve", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+  const j = await r.json();
+  const shown = j.decisions.filter(d => d.action !== "no_candidate");
+  $("#result").innerHTML = `
+    <div class="out"><span class="lbl">Memory-aware output (level 3)</span>${diff(j.formatted, j.memory_aware)}</div>
+    <div class="trace">
+      <h2 style="margin-bottom:8px">Why &mdash; every span the system considered</h2>
+      ${shown.length ? shown.map(d => `
+        <div class="d ${CLS(d.action)}">
+          <div class="head">${esc(d.span)} &rarr; <span class="mono">${esc(d.action)}</span></div>
+          <div class="why">${esc(d.reason)}</div>
+        </div>`).join("") : `<div class="empty">No span matched any memory. Nothing to decide.</div>`}
+      <div class="stat" style="margin-top:8px">
+        ${j.intervened ? "intervened" : "no intervention"} &middot;
+        ${j.timings_ms.total} ms total &middot; 0 model calls &middot; request ${j.request_id}
+      </div>
+      <details style="margin-top:10px"><summary class="stat" style="cursor:pointer">memory block that would be injected into a formatting prompt</summary>
+        <div class="out mono" style="font-size:12px">${esc(j.memory_prompt_block)}</div></details>
+    </div>`;
+  loadMemory();
+}
+
+async function loadMemory() {
+  const j = await (await fetch("/api/memory")).json();
+  $("#mcount").textContent = `${j.entries.length} entries`;
+  $("#dbstat").textContent = `${j.db.total_rows} rows · ${(j.db.bytes/1024).toFixed(0)} KB`;
+  if (!j.entries.length) { $("#memory").innerHTML = `<div class="empty">Memory is empty. Teach it something, or reset to the seed.</div>`; return; }
+  $("#memory").innerHTML = j.entries.map(e => {
+    const k = e.phonetic_keys.filter(x => x.algo !== "metaphone").map(x => x.key);
+    const uniq = [...new Set(k)].slice(0, 6).join("  ");
+    const surf = e.surfaces.map(s => s.surface).join(", ");
+    const ctx = e.context_terms.slice(0,6).map(c => c.term).join(", ");
+    return `<div class="entry">
+      <div class="top">
+        <span class="name">${esc(e.canonical)}</span>
+        <span class="tag ${e.status}">${e.status}</span>
+        <span class="tag">${e.kind}</span>
+        ${e.protected ? '<span class="tag active">pinned</span>' : ''}
+        <span class="acts">
+          <button data-pin="${e.id}" data-v="${e.protected ? 0 : 1}">${e.protected ? "unpin" : "pin"}</button>
+          <button data-sup="${e.id}" data-v="${e.status === 'suppressed' ? 'active' : 'suppressed'}">${e.status === 'suppressed' ? "re-enable" : "suppress"}</button>
+          <button data-del="${e.id}">delete</button>
+        </span>
+      </div>
+      <div class="meta">confidence ${e.confidence} &middot; ${e.evidence.confirmations} confirmed &middot; ${e.evidence.contradictions} contradicted &middot; applied ${e.evidence.applications}&times;</div>
+      <div class="meta">heard as: ${esc(surf)}</div>
+      ${ctx ? `<div class="meta">context: ${esc(ctx)}</div>` : ""}
+      <div class="keys">${esc(uniq)}</div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll("[data-pin]").forEach(b => b.onclick = async () => {
+    await fetch(`/api/memory/${b.dataset.pin}/pin?protected=${b.dataset.v === "1"}`, {method:"POST"}); loadMemory(); });
+  document.querySelectorAll("[data-sup]").forEach(b => b.onclick = async () => {
+    await fetch(`/api/memory/${b.dataset.sup}/status`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({status:b.dataset.v})}); loadMemory(); });
+  document.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => {
+    await fetch(`/api/memory/${b.dataset.del}`, {method:"DELETE"}); loadMemory(); });
+}
+
+$("#go").onclick = resolveNow;
+$("#reset").onclick = async () => {
+  if (!confirm("Delete the database and reload the seed?")) return;
+  await fetch("/api/reset", {method:"POST"});
+  $("#result").innerHTML = ""; loadMemory();
+};
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
+  tab = b.dataset.k;
+  document.querySelectorAll("#tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  renderForm();
+});
+
+renderExamples(); renderForm(); loadMemory();
+</script>
+</body>
+</html>
