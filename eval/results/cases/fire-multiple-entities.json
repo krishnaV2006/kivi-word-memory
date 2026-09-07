@@ -1,0 +1,348 @@
+{
+  "id": "fire-multiple-entities",
+  "category": "should_fire/multiword",
+  "description": "Three identities in one sentence, all wrong.",
+  "rationale": "Independent spans must each be decided on their own evidence.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "ask aditya whether sarwam shipped the kiwi build",
+    "formatted": "Ask Aditya whether Sarwam shipped the Kiwi build.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Ask Aaditya whether Sarvam shipped the Kivi build.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Ask Aditya whether Sarwam shipped the Kiwi build.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.007
+    },
+    "exact_dict": {
+      "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 0.298
+    },
+    "phonetic": {
+      "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 12.809
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 12.809,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Aditya",
+      "start": 4,
+      "end": 10,
+      "action": "apply",
+      "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+      "entry_id": 1,
+      "canonical": "Aaditya",
+      "score": 0.9708,
+      "runner_up": 0.796,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Aaditya",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.3333,
+          "score": 0.9708
+        },
+        {
+          "entry_id": 9,
+          "canonical": "Aditi",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.95,
+          "similarity": 0.8061,
+          "route": "indic_loose",
+          "context_boost": 0.0,
+          "score": 0.796
+        }
+      ]
+    },
+    {
+      "span": "Sarwam",
+      "start": 19,
+      "end": 25,
+      "action": "apply",
+      "reason": "'Sarwam' matches 'Sarvam' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+      "entry_id": 3,
+      "canonical": "Sarvam",
+      "score": 0.9833,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 3,
+          "canonical": "Sarvam",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.3333,
+          "score": 0.9833
+        }
+      ]
+    },
+    {
+      "span": "Kiwi",
+      "start": 38,
+      "end": 42,
+      "action": "apply",
+      "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 1.0) scoring 1.0",
+      "entry_id": 2,
+      "canonical": "Kivi",
+      "score": 1.0,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 2,
+          "canonical": "Kivi",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8333,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 1.0,
+          "score": 1.0
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "id": "noop-sarah-real-name",
+  "category": "should_not_fire/ambiguous",
+  "description": "Sarah is a real person's name that sounds close to the Saaras model.",
+  "rationale": "Authored expecting a false intervention. It passes because Sarah and Saaras share no phonetic key at all -- 'sarah' skeletonises to srh and 'saaras' to srs -- so retrieval never surfaces the model. The case is kept because that separation is a property worth protecting.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "sarah from marketing sent the deck",
+    "formatted": "Sarah from marketing sent the deck.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Sarah from marketing sent the deck.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Sarah from marketing sent the deck.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.005
+    },
+    "exact_dict": {
+      "actual": "Sarah from marketing sent the deck.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.482
+    },
+    "phonetic": {
+      "actual": "Sarah from marketing sent the deck.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 7.337
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 7.337,
+  "status_check": null,
+  "decision_trace": [],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

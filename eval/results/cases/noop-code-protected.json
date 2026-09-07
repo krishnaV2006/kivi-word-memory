@@ -1,0 +1,277 @@
+{
+  "id": "noop-code-protected",
+  "category": "should_not_fire/protected_span",
+  "description": "Inline code is verbatim by definition.",
+  "rationale": "A command name is not prose. Backticked spans are masked.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "run kiwi help to see options",
+    "formatted": "Run `kiwi --help` to see options.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Run `kiwi --help` to see options.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Run `kiwi --help` to see options.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.005
+    },
+    "exact_dict": {
+      "actual": "Run `Kivi --help` to see options.",
+      "intervened": true,
+      "outcome": "false_intervention",
+      "passed": false,
+      "latency_ms": 0.353
+    },
+    "phonetic": {
+      "actual": "Run `kiwi --help` to see options.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 13.236
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 13.236,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "kiwi",
+      "start": 5,
+      "end": 9,
+      "action": "abstain_protected_span",
+      "reason": "span sits inside an email address, URL, handle or code block",
+      "entry_id": null,
+      "canonical": null,
+      "score": null,
+      "runner_up": null,
+      "candidates": []
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

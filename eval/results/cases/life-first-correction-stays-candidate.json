@@ -1,0 +1,107 @@
+{
+  "id": "life-first-correction-stays-candidate",
+  "category": "lifecycle/promotion",
+  "description": "One correction creates a hypothesis. It must not act yet.",
+  "rationale": "A single edit could be a typo, a one-off, or the user changing their mind. Learning must be cheap to start and slow to act.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "gauri owns the eval harness",
+    "formatted": "Gauri owns the eval harness.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "gauri",
+        "after": "Gowri",
+        "entry_kind": "person",
+        "context": "gauri owns the eval harness"
+      }
+    ]
+  },
+  "expected": "Gauri owns the eval harness.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Gauri owns the eval harness.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.006
+    },
+    "exact_dict": {
+      "actual": "Gowri owns the eval harness.",
+      "intervened": true,
+      "outcome": "false_intervention",
+      "passed": false,
+      "latency_ms": 0.364
+    },
+    "phonetic": {
+      "actual": "Gauri owns the eval harness.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 8.181
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 8.181,
+  "status_check": {
+    "expected": {
+      "Gowri": "candidate"
+    },
+    "actual": {
+      "Gowri": "candidate"
+    },
+    "passed": true
+  },
+  "decision_trace": [
+    {
+      "span": "Gauri",
+      "start": 0,
+      "end": 5,
+      "action": "abstain_low_evidence",
+      "reason": "'Gowri' has been seen once and is still a candidate; two confirmations are required before acting",
+      "entry_id": 1,
+      "canonical": "Gowri",
+      "score": 0.9833,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Gowri",
+          "kind": "person",
+          "status": "candidate",
+          "confidence": 0.6667,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.6667,
+          "score": 0.9833
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Gowri",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Gowri",
+        "gauri"
+      ],
+      "context_terms": [
+        "eval",
+        "gauri",
+        "harne",
+        "own"
+      ]
+    }
+  ]
+}

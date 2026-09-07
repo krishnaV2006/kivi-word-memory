@@ -104,8 +104,16 @@
     "category": "should_not_fire/suppressed",
     "description": "The user rejected this rewrite twice. The system must stop doing it.",
     "observations": [
-      {"kind": "revert", "applied": "Bulbul", "reverted_to": "Bulbool"},
-      {"kind": "revert", "applied": "Bulbul", "reverted_to": "Bulbool"}
+      {
+        "kind": "revert",
+        "applied": "Bulbul",
+        "reverted_to": "Bulbool"
+      },
+      {
+        "kind": "revert",
+        "applied": "Bulbul",
+        "reverted_to": "Bulbool"
+      }
     ],
     "asr": "bulbool has thirty nine voices",
     "formatted": "Bulbool has thirty nine voices.",
@@ -136,13 +144,12 @@
   {
     "id": "noop-sarah-real-name",
     "category": "should_not_fire/ambiguous",
-    "description": "KNOWN HARD. Sarah is a real person's name that sounds close to the Saaras model.",
+    "description": "Sarah is a real person's name that sounds close to the Saaras model.",
     "asr": "sarah from marketing sent the deck",
     "formatted": "Sarah from marketing sent the deck.",
     "expected": "Sarah from marketing sent the deck.",
     "expect_intervention": false,
-    "known_hard": true,
-    "rationale": "The person context ('from marketing') is the only signal separating a colleague from a model name, and we do not model that. If this fires it is a genuine false intervention and is reported as one."
+    "rationale": "Authored expecting a false intervention. It passes because Sarah and Saaras share no phonetic key at all -- 'sarah' skeletonises to srh and 'saaras' to srs -- so retrieval never surfaces the model. The case is kept because that separation is a property worth protecting."
   },
   {
     "id": "noop-partial-token-kiwifruit",

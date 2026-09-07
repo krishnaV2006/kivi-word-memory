@@ -1,0 +1,113 @@
+{
+  "id": "life-usage-mines-context",
+  "category": "lifecycle/context",
+  "description": "Usage observations teach the world a word lives in, which is what later separates the product from the fruit.",
+  "rationale": "'service' was mined from the usage sentence and now supports the product reading. Without it this sentence would look like the fruit case.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "the kiwi service crashed",
+    "formatted": "The Kiwi service crashed.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "kiwi",
+        "after": "Kivi",
+        "entry_kind": "product",
+        "context": "the kiwi build is broken"
+      },
+      {
+        "kind": "correction",
+        "before": "kiwi",
+        "after": "Kivi",
+        "entry_kind": "product",
+        "context": "ship the kiwi release"
+      },
+      {
+        "kind": "usage",
+        "text": "Kivi is the dictation service we ship at Sarvam."
+      }
+    ]
+  },
+  "expected": "The Kivi service crashed.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "The Kiwi service crashed.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.007
+    },
+    "exact_dict": {
+      "actual": "The Kivi service crashed.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 0.556
+    },
+    "phonetic": {
+      "actual": "The Kivi service crashed.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 7.516
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 7.516,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Kiwi",
+      "start": 4,
+      "end": 8,
+      "action": "apply",
+      "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+      "entry_id": 1,
+      "canonical": "Kivi",
+      "score": 0.9833,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Kivi",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.3333,
+          "score": 0.9833
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "ship",
+        "broken",
+        "build",
+        "dictation",
+        "release",
+        "sarvam",
+        "service"
+      ]
+    }
+  ]
+}

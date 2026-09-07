@@ -1,0 +1,44 @@
+{
+  "id": "noop-empty-state",
+  "category": "should_not_fire/unknown",
+  "description": "A system that has learned nothing must change nothing.",
+  "rationale": "The same input as the brief example, with no memory. This isolates memory as the cause of the rewrite rather than any formatting cleverness.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "ask aditya to review the sarvam kiwi service",
+    "formatted": "Ask Aditya to review the Sarvam Kiwi service.",
+    "seeded": false,
+    "case_observations": []
+  },
+  "expected": "Ask Aditya to review the Sarvam Kiwi service.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.007
+    },
+    "exact_dict": {
+      "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.207
+    },
+    "phonetic": {
+      "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 7.428
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 7.428,
+  "status_check": null,
+  "decision_trace": [],
+  "memory_state": []
+}

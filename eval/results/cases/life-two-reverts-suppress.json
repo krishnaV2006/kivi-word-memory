@@ -1,0 +1,308 @@
+{
+  "id": "life-two-reverts-suppress",
+  "category": "lifecycle/contradiction",
+  "description": "Twice rejected means stop.",
+  "rationale": "Suppression is reversible and inspectable rather than a deletion. The user can see why Kivi stopped and turn it back on.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "chinmai is reviewing the design",
+    "formatted": "Chinmai is reviewing the design.",
+    "seeded": true,
+    "case_observations": [
+      {
+        "kind": "revert",
+        "applied": "Chinmay",
+        "reverted_to": "Chinmai"
+      },
+      {
+        "kind": "revert",
+        "applied": "Chinmay",
+        "reverted_to": "Chinmai"
+      }
+    ]
+  },
+  "expected": "Chinmai is reviewing the design.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Chinmai is reviewing the design.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.006
+    },
+    "exact_dict": {
+      "actual": "Chinmay is reviewing the design.",
+      "intervened": true,
+      "outcome": "false_intervention",
+      "passed": false,
+      "latency_ms": 0.281
+    },
+    "phonetic": {
+      "actual": "Chinmai is reviewing the design.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 10.247
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 10.247,
+  "status_check": {
+    "expected": {
+      "Chinmay": "suppressed"
+    },
+    "actual": {
+      "Chinmay": "suppressed"
+    },
+    "passed": true
+  },
+  "decision_trace": [
+    {
+      "span": "Chinmai",
+      "start": 0,
+      "end": 7,
+      "action": "abstain_suppressed",
+      "reason": "'Chinmay' was reverted by the user and is suppressed; it stays in memory but will not act",
+      "entry_id": 7,
+      "canonical": "Chinmay",
+      "score": 0.975,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 7,
+          "canonical": "Chinmay",
+          "kind": "person",
+          "status": "suppressed",
+          "confidence": 0.5,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 1.0,
+          "score": 0.975
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "suppressed",
+      "confidence": 0.5,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 2,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

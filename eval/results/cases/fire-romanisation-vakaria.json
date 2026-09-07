@@ -1,0 +1,289 @@
+{
+  "id": "fire-romanisation-vakaria",
+  "category": "should_fire/romanisation",
+  "description": "Interior vowel drift defeats the strict key; the loose consonant key must catch it.",
+  "rationale": "vekariya and vakaria share the consonant skeleton vkr but not the strict skeleton.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "krishna vakaria submitted the form",
+    "formatted": "Krishna Vakaria submitted the form.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Krishna Vekariya submitted the form.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Krishna Vakaria submitted the form.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.006
+    },
+    "exact_dict": {
+      "actual": "Krishna Vakaria submitted the form.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.543
+    },
+    "phonetic": {
+      "actual": "Krishna Vekariya submitted the form.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 10.365
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 10.365,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Vakaria",
+      "start": 8,
+      "end": 15,
+      "action": "apply",
+      "reason": "'Vakaria' matches 'Vekariya' via metaphone (similarity 0.8643, confidence 0.75, context 0.6667) scoring 0.8769",
+      "entry_id": 6,
+      "canonical": "Vekariya",
+      "score": 0.8769,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 6,
+          "canonical": "Vekariya",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 0.8643,
+          "route": "metaphone",
+          "context_boost": 0.6667,
+          "score": 0.8769
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

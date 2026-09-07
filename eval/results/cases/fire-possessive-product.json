@@ -1,0 +1,289 @@
+{
+  "id": "fire-possessive-product",
+  "category": "should_fire/morphology",
+  "description": "Possessive on a product identity.",
+  "rationale": "'dictionary' is a Kivi context term, supporting the product reading.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "kiwi's dictionary needs a reset",
+    "formatted": "Kiwi's dictionary needs a reset.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Kivi's dictionary needs a reset.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Kiwi's dictionary needs a reset.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.006
+    },
+    "exact_dict": {
+      "actual": "Kivi's dictionary needs a reset.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 0.322
+    },
+    "phonetic": {
+      "actual": "Kivi's dictionary needs a reset.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 10.559
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 10.559,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Kiwi's",
+      "start": 0,
+      "end": 6,
+      "action": "apply",
+      "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.3333) scoring 0.9917",
+      "entry_id": 2,
+      "canonical": "Kivi",
+      "score": 0.9917,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 2,
+          "canonical": "Kivi",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8333,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.3333,
+          "score": 0.9917
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

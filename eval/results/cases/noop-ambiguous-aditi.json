@@ -1,0 +1,300 @@
+{
+  "id": "noop-ambiguous-aditi",
+  "category": "should_not_fire/ambiguous",
+  "description": "Two real people whose names nearly collide. Aaditya and Aditi are both active entries.",
+  "rationale": "similarity(aaditya, aditi) is 0.93 -- phonetics alone cannot separate them. Aditi is itself a known entry and matches exactly, so the margin rule must keep it.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "ask aditi to join the sync",
+    "formatted": "Ask Aditi to join the sync.",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Ask Aditi to join the sync.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Ask Aditi to join the sync.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.006
+    },
+    "exact_dict": {
+      "actual": "Ask Aditi to join the sync.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 0.316
+    },
+    "phonetic": {
+      "actual": "Ask Aditi to join the sync.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true,
+      "latency_ms": 13.078
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "latency_ms": 13.078,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Aditi",
+      "start": 4,
+      "end": 9,
+      "action": "noop_already_correct",
+      "reason": "span already matches active memory 'Aditi' exactly; nearest competitor 'Aaditya' scored 0.789 and was not close enough to displace it",
+      "entry_id": 9,
+      "canonical": "Aditi",
+      "score": 0.9875,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 9,
+          "canonical": "Aditi",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.95,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.0,
+          "score": 0.9875
+        },
+        {
+          "entry_id": 1,
+          "canonical": "Aaditya",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 0.8061,
+          "route": "indic_loose",
+          "context_boost": 0.3333,
+          "score": 0.789
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

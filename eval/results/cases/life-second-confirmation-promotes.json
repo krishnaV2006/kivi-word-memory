@@ -1,0 +1,117 @@
+{
+  "id": "life-second-confirmation-promotes",
+  "category": "lifecycle/promotion",
+  "description": "The same correction a second time promotes candidate to active, and now it fires.",
+  "rationale": "Two independent confirmations is the threshold. This is the single most consequential number in the product and it is stated, not hidden.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "gauri owns the eval harness",
+    "formatted": "Gauri owns the eval harness.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "gauri",
+        "after": "Gowri",
+        "entry_kind": "person",
+        "context": "gauri owns the eval harness"
+      },
+      {
+        "kind": "correction",
+        "before": "gauri",
+        "after": "Gowri",
+        "entry_kind": "person",
+        "context": "ask gauri about the numbers"
+      }
+    ]
+  },
+  "expected": "Gowri owns the eval harness.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Gauri owns the eval harness.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.007
+    },
+    "exact_dict": {
+      "actual": "Gowri owns the eval harness.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 0.442
+    },
+    "phonetic": {
+      "actual": "Gowri owns the eval harness.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 8.942
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 8.942,
+  "status_check": {
+    "expected": {
+      "Gowri": "active"
+    },
+    "actual": {
+      "Gowri": "active"
+    },
+    "passed": true
+  },
+  "decision_trace": [
+    {
+      "span": "Gauri",
+      "start": 0,
+      "end": 5,
+      "action": "apply",
+      "reason": "'Gauri' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 1.0) scoring 1.0",
+      "entry_id": 1,
+      "canonical": "Gowri",
+      "score": 1.0,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Gowri",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 1.0,
+          "score": 1.0
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Gowri",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Gowri",
+        "gauri"
+      ],
+      "context_terms": [
+        "gauri",
+        "about",
+        "ask",
+        "eval",
+        "harne",
+        "number",
+        "own"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "life-promotion-generalises-immediately",
+  "category": "lifecycle/promotion",
+  "description": "Once promoted, the entry covers variants that were never part of either correction.",
+  "rationale": "Neither correction contained 'gowree'. The generalisation is the whole point of storing a phonetic identity.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "gowree owns the eval harness",
+    "formatted": "Gowree owns the eval harness.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "gauri",
+        "after": "Gowri",
+        "entry_kind": "person",
+        "context": "gauri owns the eval harness"
+      },
+      {
+        "kind": "correction",
+        "before": "gauri",
+        "after": "Gowri",
+        "entry_kind": "person",
+        "context": "ask gauri about the numbers"
+      }
+    ]
+  },
+  "expected": "Gowri owns the eval harness.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Gowree owns the eval harness.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.007
+    },
+    "exact_dict": {
+      "actual": "Gowree owns the eval harness.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false,
+      "latency_ms": 0.418
+    },
+    "phonetic": {
+      "actual": "Gowri owns the eval harness.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true,
+      "latency_ms": 9.421
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "latency_ms": 9.421,
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Gowree",
+      "start": 0,
+      "end": 6,
+      "action": "apply",
+      "reason": "'Gowree' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+      "entry_id": 1,
+      "canonical": "Gowri",
+      "score": 0.9708,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Gowri",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.3333,
+          "score": 0.9708
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Gowri",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Gowri",
+        "gauri"
+      ],
+      "context_terms": [
+        "gauri",
+        "about",
+        "ask",
+        "eval",
+        "harne",
+        "number",
+        "own"
+      ]
+    }
+  ]
+}

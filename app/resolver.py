@@ -188,10 +188,12 @@ def _decide(
                         reason="no memory entry shares a phonetic key with this span",
                         candidates=payload)
 
-    # Already correct: the span matches a known entry's canonical form exactly. Doing
-    # nothing here is the right answer, and it must not be counted as an intervention.
+    # Already correct: applying this memory would not change the text. Note this is
+    # asked as "would the rewrite be a no-op", not "do the strings match ignoring case".
+    # For an acronym the casing IS the memory -- 'Iitm' is not already 'IITM'.
     for c in candidates:
-        if stem.lower() == c.canonical.lower() and c.status == "active":
+        would_write = apply_mod.render_replacement(stem, c.canonical, c.kind)
+        if would_write == stem and c.status == "active":
             others = [x for x in candidates if x.entry_id != c.entry_id]
             note = ""
             if others:
