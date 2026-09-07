@@ -84,54 +84,80 @@ class ResolveResult:
         return d
 
 
-# --- helpers ----------------------------------------------------------------------
+# --- the memory view ----------------------------------------------------------------
 
-def _common_words(conn: sqlite3.Connection) -> set[str]:
-    return {r["word"] for r in conn.execute("SELECT word FROM common_words")}
+@dataclass
+class MemoryView:
+    """Everything resolution needs, read from SQLite in one pass.
+
+    Resolution used to issue a query per retrieval key and another per candidate entry,
+    which made the database the dominant cost of a request. Loading once is both faster
+    and easier to reason about: a decision is now a pure function of this snapshot.
+
+    Callers that resolve many utterances against unchanging memory (the evaluation, the
+    adversarial harness) build one view and reuse it. The HTTP layer deliberately does
+    NOT: it loads fresh per request, because observations mutate memory between requests
+    and a stale-cache bug that silently applies a suppressed entry would be far worse
+    than a few milliseconds. See README limitations.
+    """
+    entries: dict[int, dict]
+    surfaces: dict[int, list[str]]
+    key_index: dict[tuple[str, str], list[int]]
+    ctx_index: dict[int, dict[str, float]]
+    common: set[str]
 
 
-def _context_index(conn: sqlite3.Connection) -> dict[int, dict[str, float]]:
-    """entry_id -> {phonetic skeleton of term: weight}. Skeletons, so a context term
-    learned as 'sarvam' still matches when the ASR writes 'sarwam'."""
-    idx: dict[int, dict[str, float]] = {}
-    for r in conn.execute("SELECT entry_id, term, weight FROM context_terms"):
-        idx.setdefault(r["entry_id"], {})[indic_skeleton(r["term"])] = r["weight"]
-    return idx
+def load_view(conn: sqlite3.Connection) -> MemoryView:
+    entries = {
+        r["id"]: {
+            "id": r["id"], "canonical": r["canonical"], "kind": r["kind"],
+            "status": r["status"], "confidence": r["confidence"],
+            "protected": r["protected"],
+        }
+        for r in conn.execute("SELECT * FROM entries")
+    }
 
-
-def _surfaces_by_entry(conn: sqlite3.Connection) -> dict[int, list[str]]:
-    out: dict[int, list[str]] = {}
+    surfaces: dict[int, list[str]] = {}
     for r in conn.execute("SELECT entry_id, surface FROM surfaces"):
-        out.setdefault(r["entry_id"], []).append(r["surface"])
-    return out
+        surfaces.setdefault(r["entry_id"], []).append(r["surface"])
+
+    key_index: dict[tuple[str, str], list[int]] = {}
+    for r in conn.execute("SELECT entry_id, key, algo FROM phonetic_keys"):
+        key_index.setdefault((r["key"], r["algo"]), []).append(r["entry_id"])
+
+    # Context terms are stored as written but matched as skeletons, so a term learned as
+    # 'sarvam' still fires when the ASR writes 'sarwam'.
+    ctx_index: dict[int, dict[str, float]] = {}
+    for r in conn.execute("SELECT entry_id, term, weight FROM context_terms"):
+        ctx_index.setdefault(r["entry_id"], {})[indic_skeleton(r["term"])] = r["weight"]
+
+    common = {r["word"] for r in conn.execute("SELECT word FROM common_words")}
+
+    return MemoryView(entries, surfaces, key_index, ctx_index, common)
 
 
-def _retrieve(conn: sqlite3.Connection, span: str) -> dict[int, str]:
+# --- retrieval and scoring ----------------------------------------------------------
+
+def _retrieve(view: MemoryView, span: str) -> dict[int, str]:
     """entry_id -> best retrieval route for this span. 'indic' beats 'metaphone'
     beats 'indic_loose'."""
     rank = {"indic": 0, "metaphone": 1, "indic_loose": 2}
     hits: dict[int, str] = {}
     for key, algo in keys_for(span):
-        rows = conn.execute(
-            "SELECT entry_id FROM phonetic_keys WHERE key = ? AND algo = ?", (key, algo)
-        ).fetchall()
-        for row in rows:
-            eid = row["entry_id"]
+        for eid in view.key_index.get((key, algo), ()):
             if eid not in hits or rank[algo] < rank[hits[eid]]:
                 hits[eid] = algo
     return hits
 
 
 def _score_candidates(
-    conn: sqlite3.Connection,
+    view: MemoryView,
     span: str,
     sentence_skeletons: dict[str, int],
-    surfaces: dict[int, list[str]],
-    ctx_index: dict[int, dict[str, float]],
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
-    for entry_id, route in _retrieve(conn, span).items():
-        entry = conn.execute("SELECT * FROM entries WHERE id = ?", (entry_id,)).fetchone()
+    for entry_id, route in _retrieve(view, span).items():
+        entry = view.entries.get(entry_id)
         if entry is None:
             continue
 
@@ -141,7 +167,7 @@ def _score_candidates(
             sim = 1.0
         else:
             best = max(
-                (similarity(span, s) for s in surfaces.get(entry_id, [entry["canonical"]])),
+                (similarity(span, s) for s in view.surfaces.get(entry_id, [entry["canonical"]])),
                 default=0.0,
             )
             sim = best * LOOSE_PENALTY if route == "indic_loose" else best
@@ -149,7 +175,8 @@ def _score_candidates(
                 continue
 
         matched_weight = sum(
-            w for skel, w in ctx_index.get(entry_id, {}).items() if skel in sentence_skeletons
+            w for skel, w in view.ctx_index.get(entry_id, {}).items()
+            if skel in sentence_skeletons
         )
         boost = min(1.0, matched_weight / CONTEXT_SATURATION)
 
@@ -253,7 +280,7 @@ def _decide(
                     runner_up=runner_up, candidates=payload)
 
 
-def build_memory_prompt_block(conn: sqlite3.Connection, sentence: str) -> str:
+def build_memory_prompt_block(view: MemoryView, sentence: str) -> str:
     """The memory context that would be injected into a formatting prompt.
 
     We do not need an LLM to produce the memory-aware output -- the deterministic path
@@ -262,34 +289,42 @@ def build_memory_prompt_block(conn: sqlite3.Connection, sentence: str) -> str:
     """
     skeletons = {indic_skeleton(t.stem) for t in apply_mod.tokenize(sentence)}
     lines: list[str] = []
-    for e in conn.execute(
-        "SELECT * FROM entries WHERE status = 'active' ORDER BY canonical"
-    ).fetchall():
-        hits = conn.execute(
-            "SELECT surface FROM surfaces WHERE entry_id = ?", (e["id"],)
-        ).fetchall()
-        if any(indic_skeleton(h["surface"]) in skeletons for h in hits):
-            variants = sorted({h["surface"] for h in hits if h["surface"].lower() != e["canonical"].lower()})
+    for entry in sorted(view.entries.values(), key=lambda e: e["canonical"]):
+        if entry["status"] != "active":
+            continue
+        surfaces = view.surfaces.get(entry["id"], [])
+        if any(indic_skeleton(s) in skeletons for s in surfaces):
+            variants = sorted({
+                s for s in surfaces if s.lower() != entry["canonical"].lower()
+            })
             hint = f" (heard as: {', '.join(variants)})" if variants else ""
-            lines.append(f"- {e['canonical']} [{e['kind']}]{hint}")
+            lines.append(f"- {entry['canonical']} [{entry['kind']}]{hint}")
     if not lines:
         return "# Known personal terms\n(none relevant to this utterance)"
     return "# Known personal terms\n" + "\n".join(lines)
 
 
-def resolve(conn: sqlite3.Connection, asr: str, formatted: str) -> ResolveResult:
+def resolve(
+    conn: sqlite3.Connection,
+    asr: str,
+    formatted: str,
+    view: MemoryView | None = None,
+    record: bool = True,
+) -> ResolveResult:
     """Level 2 (formatted) -> level 3 (memory-aware).
 
     We rewrite the formatted text, because that is what reaches the user. The ASR text
     is carried through for the record and for the prompt block.
+
+    Pass `view` to reuse a memory snapshot across many calls; leave it None and memory
+    is read fresh, which is what the HTTP layer does. Set `record=False` to skip writing
+    the decision trace, for bulk runs that would otherwise bloat the database.
     """
     request_id = uuid.uuid4().hex[:12]
     t0 = time.perf_counter()
 
     text = formatted if (formatted or "").strip() else (asr or "")
-    common = _common_words(conn)
-    ctx_index = _context_index(conn)
-    surfaces = _surfaces_by_entry(conn)
+    view = view if view is not None else load_view(conn)
     t_load = time.perf_counter()
 
     ranges = apply_mod.protected_ranges(text)
@@ -314,7 +349,7 @@ def resolve(conn: sqlite3.Connection, asr: str, formatted: str) -> ResolveResult
         if any(start < c_end and end > c_start for c_start, c_end in consumed):
             continue
         if apply_mod.overlaps_protected(start, end, ranges):
-            if _retrieve(conn, stem):
+            if _retrieve(view, stem):
                 decisions.append(Decision(
                     span=span_text, start=start, end=end, action="abstain_protected_span",
                     reason="span sits inside an email address, URL, handle or code block",
@@ -322,11 +357,11 @@ def resolve(conn: sqlite3.Connection, asr: str, formatted: str) -> ResolveResult
                 consumed.append((start, end))
             continue
 
-        candidates = _score_candidates(conn, stem, sentence_skeletons, surfaces, ctx_index)
+        candidates = _score_candidates(view, stem, sentence_skeletons)
         if not candidates:
             continue
 
-        decision = _decide(span_text, stem, start, end, candidates, common)
+        decision = _decide(span_text, stem, start, end, candidates, view.common)
         decisions.append(decision)
         consumed.append((start, end))
 
@@ -335,21 +370,23 @@ def resolve(conn: sqlite3.Connection, asr: str, formatted: str) -> ResolveResult
             suffix = span_text[len(stem):] if span_text.startswith(stem) else ""
             replacement = apply_mod.render_replacement(stem, decision.canonical, top.kind) + suffix
             edits.append((start, end, replacement))
-            note_application(conn, top.entry_id)
+            if record:
+                note_application(conn, top.entry_id)
 
     t_decide = time.perf_counter()
     memory_aware = apply_mod.apply_edits(text, edits)
-    prompt_block = build_memory_prompt_block(conn, text)
+    prompt_block = build_memory_prompt_block(view, text)
     t_end = time.perf_counter()
 
-    for d in decisions:
-        conn.execute(
-            """INSERT INTO decisions (request_id, span, entry_id, action, reason, score,
-                                      runner_up, created_at)
-               VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
-            (request_id, d.span, d.entry_id, d.action, d.reason, d.score, d.runner_up),
-        )
-    conn.commit()
+    if record:
+        for d in decisions:
+            conn.execute(
+                """INSERT INTO decisions (request_id, span, entry_id, action, reason, score,
+                                          runner_up, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
+                (request_id, d.span, d.entry_id, d.action, d.reason, d.score, d.runner_up),
+            )
+        conn.commit()
 
     ms = lambda a, b: round((b - a) * 1000, 4)  # noqa: E731
     return ResolveResult(

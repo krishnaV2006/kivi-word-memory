@@ -127,7 +127,7 @@ a trusted entry still has to actually sound like the span.
 
 The brief does not ask for one, and every model call is a way for a reviewer's run to
 fail. The deterministic path produces the memory-aware output on its own, which makes the
-cost and latency numbers exact rather than estimated: **0 model calls, ₹0, ~13 ms.**
+cost and latency numbers exact rather than estimated: **0 model calls, ₹0, ~4.8 ms.**
 
 What memory owes a language model is still here and is a first-class output. Every
 `/api/resolve` response includes `memory_prompt_block` — the memory context that would be
@@ -206,10 +206,13 @@ Honest ones, in rough order of how much they would matter in production.
    context support the static list is what stands between Kivi and rewriting the fruit. A
    name colliding with an ordinary word *outside* that list would not be protected. A
    frequency-ranked lexicon, or a part-of-speech signal, would be the correct fix.
-2. **Memory is loaded per request with no cache.** `load_memory` and per-candidate SQL
-   dominate the ~13 ms. That is fine at seed scale and would not be at 10,000 entries;
-   an in-process cache invalidated on write is the obvious next step. The number reported
-   is the real one, measured warm over 30 repetitions.
+2. **Memory is loaded per request with no cache.** The HTTP layer reads memory fresh on
+   every call, because observations mutate it between requests and a stale-cache bug that
+   silently applied a suppressed entry would cost more than the milliseconds. Measured
+   cold p50 is 4.8 ms; reusing a `MemoryView` (what a cache would buy) is 2.5 ms, and the
+   evaluation reports both. This limitation previously claimed memory loading dominated
+   the request — that was wrong, and measuring it is how we found the real cost was the
+   decision-trace commit. See DISCOVERIES.md §10.
 3. **Context terms are a bag of words with no notion of recency or session.** In a real
    Kivi they should probably decay, and the active application would be a strong signal
    the model currently has no access to.

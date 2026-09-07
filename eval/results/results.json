@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 18:53:56",
+  "generated_at": "2026-09-07 19:18:03",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -46,18 +46,44 @@
     }
   },
   "latency": {
-    "repeats": 30,
-    "warm": true,
-    "p50_ms": 17.168,
-    "p95_ms": 19.906,
-    "max_ms": 40.602,
-    "mean_ms": 17.829,
+    "repeats": 40,
+    "journal_mode": "wal",
+    "cold": {
+      "p50_ms": 4.833,
+      "p95_ms": 5.459,
+      "max_ms": 5.797,
+      "mean_ms": 4.74,
+      "stage_means_ms": {
+        "load_memory": 2.08,
+        "span_generation": 0.194,
+        "scoring_and_decision": 1.867,
+        "rewrite_and_prompt": 0.409,
+        "total": 4.55
+      }
+    },
+    "warm": {
+      "p50_ms": 2.453,
+      "p95_ms": 3.157,
+      "max_ms": 3.262,
+      "mean_ms": 2.563,
+      "stage_means_ms": {
+        "load_memory": 0.001,
+        "span_generation": 0.191,
+        "scoring_and_decision": 1.787,
+        "rewrite_and_prompt": 0.393,
+        "total": 2.372
+      }
+    },
+    "p50_ms": 4.833,
+    "p95_ms": 5.459,
+    "max_ms": 5.797,
+    "mean_ms": 4.74,
     "stage_means_ms": {
-      "load_memory": 2.306,
-      "span_generation": 0.222,
-      "scoring_and_decision": 8.579,
-      "rewrite_and_prompt": 0.589,
-      "total": 11.696
+      "load_memory": 2.08,
+      "span_generation": 0.194,
+      "scoring_and_decision": 1.867,
+      "rewrite_and_prompt": 0.409,
+      "total": 4.55
     }
   },
   "db_growth": [
@@ -65,22 +91,22 @@
       "observations": 10,
       "entries": 4,
       "total_rows": 497,
-      "bytes": 106496,
-      "kb": 104.0
+      "bytes": 90112,
+      "kb": 88.0
     },
     {
       "observations": 50,
       "entries": 10,
       "total_rows": 620,
-      "bytes": 118784,
-      "kb": 116.0
+      "bytes": 90112,
+      "kb": 88.0
     },
     {
       "observations": 200,
       "entries": 10,
       "total_rows": 770,
-      "bytes": 143360,
-      "kb": 140.0
+      "bytes": 131072,
+      "kb": 128.0
     }
   ],
   "model_calls": 0,

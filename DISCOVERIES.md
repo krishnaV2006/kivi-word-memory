@@ -236,3 +236,51 @@ which of its own rules it never exercised. A dataset can pass every case and sti
 branches of the policy completely untested.
 
 **Pinned by:** the `Decision-branch coverage` table in `eval/results/summary.md`
+
+---
+
+## 10. We optimised the wrong thing first, and the measurement said so
+
+**Found:** while acting on limitation 2 of the README, which asserted that loading memory
+per request and the per-candidate SQL "dominate the ~13 ms".
+
+The fix looked obvious: stop issuing a query per retrieval key and per candidate entry,
+and load memory once into a `MemoryView`. That refactor was done, and it verifiably did
+not change a single one of the 45 case results. Then we measured it.
+
+| configuration | mean |
+|---|---:|
+| cold — fresh read, trace written | 12.8 ms |
+| warm — view reused, trace written | 10.6 ms |
+| warm — view reused, **no trace write** | 1.9 ms |
+
+The view saved 2.2 ms. Removing the decision-trace write saved **8.7 ms**. The README's
+stated cause was wrong: memory loading was never the bottleneck. The synchronous commit
+of the inspection log was, because SQLite's default rollback journal fsyncs on every
+commit and this system commits once per resolution.
+
+**Consequence:** the actual fix was two lines in `app/db.py` — `journal_mode = WAL` and
+`synchronous = NORMAL`:
+
+| | before | after |
+|---|---:|---:|
+| cold p50 | 13.05 ms | **4.83 ms** |
+| warm p50 | — | **2.45 ms** |
+
+WAL also forced a correctness fix worth noting. Under WAL the `.db` file alone is no
+longer the whole database, so both the reset procedure and the evaluation's per-case
+teardown had to delete the `-wal` and `-shm` sidecars too. Deleting only the main file
+would have let one evaluation case inherit uncheckpointed pages from the case before it —
+precisely the contamination `fresh_db()` exists to prevent, reintroduced by a performance
+change.
+
+The `MemoryView` was kept, because it makes a decision a pure function of a snapshot and
+it is what the adversarial harness reuses to run thousands of sentences. But it is now
+reported for what it is: worth 2 ms, not 9. The evaluation prints cold and warm side by
+side so the difference between "what we ship" and "what a cache would buy" is visible
+rather than argued.
+
+The lesson is narrow and unglamorous: a plausible story about where time goes is not a
+measurement, and the README had confidently asserted one for several commits.
+
+**Pinned by:** the `Cost, latency and storage` section of `eval/results/summary.md`

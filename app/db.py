@@ -29,6 +29,13 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
     conn = sqlite3.connect(target)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    # Write-ahead logging, because every resolution commits a decision trace and the
+    # default rollback journal makes that commit the dominant cost of a request
+    # (measured: 12.8 ms -> 5.5 ms). synchronous=NORMAL under WAL survives application
+    # crashes and risks only the most recent commits on OS or power failure, which is
+    # the right trade for an inspection log.
+    conn.execute("PRAGMA journal_mode = WAL")
+    conn.execute("PRAGMA synchronous = NORMAL")
     return conn
 
 
@@ -75,10 +82,14 @@ def migrate(conn: sqlite3.Connection | None = None, verbose: bool = True) -> lis
 def reset(verbose: bool = True) -> None:
     """Delete the database file and re-migrate. The documented reset procedure."""
     target = db_path()
-    if target.exists():
-        target.unlink()
-        if verbose:
-            print(f"removed {target.name}")
+    # WAL leaves -wal and -shm beside the database. A reset that removed only the main
+    # file would leave committed-but-uncheckpointed pages behind.
+    for path in (target, target.with_name(target.name + "-wal"),
+                 target.with_name(target.name + "-shm")):
+        if path.exists():
+            path.unlink()
+            if verbose:
+                print(f"removed {path.name}")
     migrate(verbose=verbose)
 
 

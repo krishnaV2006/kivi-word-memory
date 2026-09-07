@@ -34,6 +34,19 @@ RESULTS_DIR = REPO_ROOT / "eval" / "results"
 CASE_RESULTS_DIR = RESULTS_DIR / "cases"
 EVAL_DB = REPO_ROOT / "eval" / ".eval.db"
 
+
+def _drop_eval_db() -> None:
+    """Remove the scratch database and its write-ahead-log sidecars.
+
+    Under WAL the main file alone is not the whole database, so unlinking only it would
+    let one case inherit uncheckpointed pages from the previous one -- exactly the
+    contamination fresh_db() exists to prevent.
+    """
+    for suffix in ("", "-wal", "-shm"):
+        path = EVAL_DB.with_name(EVAL_DB.name + suffix)
+        if path.exists():
+            path.unlink()
+
 # Point every import at a scratch database so the reviewer's demo data is never touched.
 os.environ["KIVI_DB_PATH"] = str(EVAL_DB)
 
@@ -55,8 +68,7 @@ def load_cases() -> list[dict]:
 
 def fresh_db(case: dict):
     """A clean database in the state this case describes."""
-    if EVAL_DB.exists():
-        EVAL_DB.unlink()
+    _drop_eval_db()
     db_mod.migrate(verbose=False)
     conn = db_mod.connect()
     if not case.get("skip_seed"):
@@ -113,37 +125,57 @@ def branch_coverage(records: list[dict]) -> dict[str, int]:
 
 # --------------------------------------------------------------------------- measuring
 
-def latency_profile(repeats: int = 30) -> dict:
-    """Warm-path timing on a fixed sentence, measured after a discarded warm-up run.
+def latency_profile(repeats: int = 40) -> dict:
+    """Warm-path timing on a fixed sentence, after a discarded warm-up run.
 
-    Reported honestly: this is a per-request cold read of the whole memory from SQLite
-    with no caching layer, which is the dominant cost. See README limitations.
+    Two numbers, because they answer different questions:
+
+      cold   memory read fresh from SQLite on every call -- what the HTTP layer does,
+             and the number that describes the shipped product
+      warm   one MemoryView reused across calls -- what a cache would buy, measured
+             rather than asserted
+
+    Measuring both is how we found that loading memory was never the bottleneck: the
+    synchronous commit of the decision trace was. See README limitations.
     """
+    from app.resolver import load_view
+
     case = {"skip_seed": False, "observations": []}
     conn = fresh_db(case)
     asr = "ask aditya to review the sarvam kiwi service"
     fmt = "Ask Aditya to review the Sarvam Kiwi service."
-    resolve(conn, asr, fmt)                       # warm-up, discarded
-    samples, stages = [], []
-    for _ in range(repeats):
-        t0 = time.perf_counter()
-        r = resolve(conn, asr, fmt)
-        samples.append((time.perf_counter() - t0) * 1000)
-        stages.append(r.timings_ms)
+    journal = conn.execute("PRAGMA journal_mode").fetchone()[0]
+    view = load_view(conn)
+
+    def measure(use_view):
+        resolve(conn, asr, fmt, view=use_view)          # warm-up, discarded
+        xs, stages = [], []
+        for _ in range(repeats):
+            t0 = time.perf_counter()
+            r = resolve(conn, asr, fmt, view=use_view)
+            xs.append((time.perf_counter() - t0) * 1000)
+            stages.append(r.timings_ms)
+        xs.sort()
+        pct = lambda p: round(xs[min(len(xs) - 1, int(len(xs) * p))], 3)  # noqa: E731
+        return {
+            "p50_ms": pct(0.50), "p95_ms": pct(0.95),
+            "max_ms": round(max(xs), 3), "mean_ms": round(statistics.mean(xs), 3),
+            "stage_means_ms": {
+                k: round(statistics.mean(st[k] for st in stages), 3) for k in stages[0]
+            },
+        }
+
+    cold, warm = measure(None), measure(view)
     conn.close()
-    samples.sort()
-    pct = lambda p: round(samples[min(len(samples) - 1, int(len(samples) * p))], 3)  # noqa: E731
-    stage_means = {
-        k: round(statistics.mean(s[k] for s in stages), 3) for k in stages[0]
-    }
     return {
         "repeats": repeats,
-        "warm": True,
-        "p50_ms": pct(0.50),
-        "p95_ms": pct(0.95),
-        "max_ms": round(max(samples), 3),
-        "mean_ms": round(statistics.mean(samples), 3),
-        "stage_means_ms": stage_means,
+        "journal_mode": journal,
+        "cold": cold,
+        "warm": warm,
+        # Kept at the top level so older readers of results.json still find a headline.
+        "p50_ms": cold["p50_ms"], "p95_ms": cold["p95_ms"],
+        "max_ms": cold["max_ms"], "mean_ms": cold["mean_ms"],
+        "stage_means_ms": cold["stage_means_ms"],
     }
 
 
@@ -152,8 +184,7 @@ def db_growth_curve(points=(10, 50, 200)) -> list[dict]:
     seed_obs = json.loads((REPO_ROOT / "seed" / "seed.json").read_text(encoding="utf-8"))["observations"]
     curve = []
     for n in points:
-        if EVAL_DB.exists():
-            EVAL_DB.unlink()
+        _drop_eval_db()
         db_mod.migrate(verbose=False)
         conn = db_mod.connect()
         from seed.seed import load_common_words
@@ -356,17 +387,26 @@ def write_summary(payload: dict) -> None:
     w("## Cost, latency and storage\n")
     w(f"**Model calls: 0. Monetary cost: Rs 0.00.** The resolution path is deterministic "
       f"and makes no network request, so these are exact rather than estimated.\n")
-    w(f"\nLatency, warm, {lat['repeats']} repetitions after a discarded warm-up, measured "
-      f"on {payload['machine']['platform']} / Python {payload['machine']['python']}:\n")
-    w("| p50 | p95 | max | mean |")
-    w("|---:|---:|---:|---:|")
-    w(f"| {lat['p50_ms']} ms | {lat['p95_ms']} ms | {lat['max_ms']} ms | {lat['mean_ms']} ms |")
-    w("\nMean time per stage. These sum to less than the p50 above because the outer "
-      "measurement also covers writing the decision trace to the database and committing it, "
-      "which happens after the stage timers stop:\n")
+    w(f"\nLatency over {lat['repeats']} repetitions after a discarded warm-up, on "
+      f"{payload['machine']['platform']} / Python {payload['machine']['python']}, "
+      f"SQLite journal mode `{lat['journal_mode']}`.\n")
+    w("**cold** reads memory fresh from SQLite on every call — this is what the HTTP layer "
+      "actually does, and is the number that describes the shipped product. **warm** reuses "
+      "one `MemoryView` across calls, which is what a cache would buy, measured rather than "
+      "asserted:\n")
+    w("| | p50 | p95 | max | mean |")
+    w("|---|---:|---:|---:|---:|")
+    for label in ("cold", "warm"):
+        d = lat[label]
+        w(f"| {label} | {d['p50_ms']} ms | {d['p95_ms']} ms | {d['max_ms']} ms "
+          f"| {d['mean_ms']} ms |")
+    w("\nMean time per stage (cold). These sum to less than the p50 above because the outer "
+      "measurement also covers writing the decision trace and committing it, after the stage "
+      "timers stop — and that commit, not memory loading, turned out to be the dominant "
+      "cost. See DISCOVERIES.md §10:\n")
     w("| stage | ms |")
     w("|---|---:|")
-    for k, v in lat["stage_means_ms"].items():
+    for k, v in lat["cold"]["stage_means_ms"].items():
         w(f"| {k} | {v} |")
     w("\nDatabase growth with ordinary use. Growth is sub-linear because repeated "
       "observations reinforce existing entries rather than creating new ones, and context "
@@ -456,8 +496,7 @@ def main() -> int:
     )
     write_summary(payload)
 
-    if EVAL_DB.exists():
-        EVAL_DB.unlink()
+    _drop_eval_db()
 
     a = payload["aggregate"]["phonetic"]
     unexpected = [r for r in records if not r["passed"] and not r["known_hard"]]
