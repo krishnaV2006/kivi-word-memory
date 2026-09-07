@@ -4,47 +4,132 @@
     "note": "An intern at Sarvam working on Kivi. Memory is LEARNED from these observations, never inserted directly -- the seed is a transcript of ordinary use, not a configuration file."
   },
   "observations": [
-    {"kind": "correction", "before": "aditya", "after": "Aaditya", "entry_kind": "person",
-     "context": "ask aditya to review the pull request"},
-    {"kind": "correction", "before": "aditya", "after": "Aaditya", "entry_kind": "person",
-     "context": "aditya said the latency budget is fine"},
-
-    {"kind": "correction", "before": "kiwi", "after": "Kivi", "entry_kind": "product",
-     "context": "the kiwi dictation service crashed on launch"},
-    {"kind": "correction", "before": "kiwi", "after": "Kivi", "entry_kind": "product",
-     "context": "push the kiwi build to staging"},
-    {"kind": "usage", "text": "Kivi is the dictation product we ship at Sarvam, and the Kivi service handles the formatting."},
-
-    {"kind": "correction", "before": "sarwam", "after": "Sarvam", "entry_kind": "product",
-     "context": "the sarwam office in bengaluru"},
-    {"kind": "correction", "before": "sarwam", "after": "Sarvam", "entry_kind": "product",
-     "context": "sarwam builds indian language models"},
-
-    {"kind": "correction", "before": "saras", "after": "Saaras", "entry_kind": "product",
-     "context": "the saras model transcribes twenty three languages"},
-    {"kind": "correction", "before": "saras", "after": "Saaras", "entry_kind": "product",
-     "context": "swap saras for the newer checkpoint"},
-    {"kind": "usage", "text": "Saaras is the speech recognition model and Bulbul is the text to speech model at Sarvam."},
-
-    {"kind": "correction", "before": "bulbool", "after": "Bulbul", "entry_kind": "product",
-     "context": "bulbool has thirty nine voices"},
-    {"kind": "correction", "before": "bulbool", "after": "Bulbul", "entry_kind": "product",
-     "context": "route the audio through bulbool"},
-
-    {"kind": "correction", "before": "vekaria", "after": "Vekariya", "entry_kind": "person",
-     "context": "krishna vekaria submitted the task"},
-    {"kind": "correction", "before": "vekaria", "after": "Vekariya", "entry_kind": "person",
-     "context": "email vekaria about the interview"},
-
-    {"kind": "correction", "before": "chinmai", "after": "Chinmay", "entry_kind": "person",
-     "context": "chinmai is reviewing the design"},
-    {"kind": "correction", "before": "chinmai", "after": "Chinmay", "entry_kind": "person",
-     "context": "ping chinmai when the build is green"},
-
-    {"kind": "dictionary_add", "canonical": "IITM", "entry_kind": "acronym"},
-    {"kind": "dictionary_add", "canonical": "Aditi", "entry_kind": "person"},
-
-    {"kind": "correction", "before": "prateek", "after": "Prateik", "entry_kind": "person",
-     "context": "prateek joined the standup"}
+    {
+      "kind": "correction",
+      "before": "aditya",
+      "after": "Aaditya",
+      "entry_kind": "person",
+      "context": "ask aditya to review the pull request"
+    },
+    {
+      "kind": "correction",
+      "before": "aditya",
+      "after": "Aaditya",
+      "entry_kind": "person",
+      "context": "aditya said the latency budget is fine"
+    },
+    {
+      "kind": "correction",
+      "before": "kiwi",
+      "after": "Kivi",
+      "entry_kind": "product",
+      "context": "the kiwi dictation service crashed on launch"
+    },
+    {
+      "kind": "correction",
+      "before": "kiwi",
+      "after": "Kivi",
+      "entry_kind": "product",
+      "context": "push the kiwi build to staging"
+    },
+    {
+      "kind": "usage",
+      "text": "Kivi is the dictation product we ship at Sarvam, and the Kivi service handles the formatting."
+    },
+    {
+      "kind": "correction",
+      "before": "sarwam",
+      "after": "Sarvam",
+      "entry_kind": "product",
+      "context": "the sarwam office in bengaluru"
+    },
+    {
+      "kind": "correction",
+      "before": "sarwam",
+      "after": "Sarvam",
+      "entry_kind": "product",
+      "context": "sarwam builds indian language models"
+    },
+    {
+      "kind": "correction",
+      "before": "saras",
+      "after": "Saaras",
+      "entry_kind": "product",
+      "context": "the saras model transcribes twenty three languages"
+    },
+    {
+      "kind": "correction",
+      "before": "saras",
+      "after": "Saaras",
+      "entry_kind": "product",
+      "context": "swap saras for the newer checkpoint"
+    },
+    {
+      "kind": "usage",
+      "text": "Saaras is the speech recognition model and Bulbul is the text to speech model at Sarvam."
+    },
+    {
+      "kind": "correction",
+      "before": "bulbool",
+      "after": "Bulbul",
+      "entry_kind": "product",
+      "context": "bulbool has thirty nine voices"
+    },
+    {
+      "kind": "correction",
+      "before": "bulbool",
+      "after": "Bulbul",
+      "entry_kind": "product",
+      "context": "route the audio through bulbool"
+    },
+    {
+      "kind": "correction",
+      "before": "vekaria",
+      "after": "Vekariya",
+      "entry_kind": "person",
+      "context": "krishna vekaria submitted the task"
+    },
+    {
+      "kind": "correction",
+      "before": "vekaria",
+      "after": "Vekariya",
+      "entry_kind": "person",
+      "context": "email vekaria about the interview"
+    },
+    {
+      "kind": "correction",
+      "before": "chinmai",
+      "after": "Chinmay",
+      "entry_kind": "person",
+      "context": "chinmai is reviewing the design"
+    },
+    {
+      "kind": "correction",
+      "before": "chinmai",
+      "after": "Chinmay",
+      "entry_kind": "person",
+      "context": "ping chinmai when the build is green"
+    },
+    {
+      "kind": "dictionary_add",
+      "canonical": "IITM",
+      "entry_kind": "acronym"
+    },
+    {
+      "kind": "dictionary_add",
+      "canonical": "Aditi",
+      "entry_kind": "person"
+    },
+    {
+      "kind": "correction",
+      "before": "prateek",
+      "after": "Prateik",
+      "entry_kind": "person",
+      "context": "prateek joined the standup"
+    },
+    {
+      "kind": "usage",
+      "text": "The Kivi dictionary keeps the words I correct, and the Kivi build ships weekly."
+    }
   ]
 }
