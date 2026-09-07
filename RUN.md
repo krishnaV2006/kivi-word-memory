@@ -141,6 +141,21 @@ reverted by the user and will not act.
 **f. Reset.** Click **Reset to seed** in the top right. Memory returns to the seeded
 state. (Command-line equivalent in section 10.)
 
+**Also worth trying**, since Kivi is built for Indian users and these are the least
+obvious behaviours:
+
+- **try: Hinglish** — a learned name and a learned product inside a Hindi sentence.
+  Nothing in the design is English-specific.
+- **try: Hinglish, but the fruit** — `Main kiwi kha raha hoon` is left alone. The guard
+  does not degrade when the carrier language changes.
+- **try: Devanagari — never taught in this script** — `आदित्य` becomes `Aaditya`. That
+  word was only ever taught in Latin script; Devanagari is transliterated into the same
+  phonetic skeleton, so one correction covers both scripts.
+- **try: Devanagari, but the fruit** — and the guard still holds there.
+- **try: b/v drift, with context** vs **b/v drift, no context** — the same span and the
+  same memory, decided differently. The over-permissive b/v tier only fires when the
+  sentence independently supports it.
+
 ## 8. Run the evaluation
 
 Stop the server first, or open a second terminal. From the repository root, with the
