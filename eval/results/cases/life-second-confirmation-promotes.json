@@ -33,26 +33,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.007
+      "latency_ms": 0.008
     },
     "exact_dict": {
       "actual": "Gowri owns the eval harness.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.442
+      "latency_ms": 0.249
     },
     "phonetic": {
       "actual": "Gowri owns the eval harness.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 8.942
+      "latency_ms": 10.299
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 8.942,
+  "latency_ms": 10.299,
   "status_check": {
     "expected": {
       "Gowri": "active"

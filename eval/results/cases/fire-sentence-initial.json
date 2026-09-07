@@ -25,19 +25,19 @@
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.313
+      "latency_ms": 0.312
     },
     "phonetic": {
       "actual": "Aaditya will merge it tonight.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 10.692
+      "latency_ms": 12.117
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.692,
+  "latency_ms": 12.117,
   "status_check": null,
   "decision_trace": [
     {

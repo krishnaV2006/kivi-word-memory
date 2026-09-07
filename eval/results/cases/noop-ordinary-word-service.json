@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.007
+      "latency_ms": 0.006
     },
     "exact_dict": {
       "actual": "The service is down again.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.28
+      "latency_ms": 0.315
     },
     "phonetic": {
       "actual": "The service is down again.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 6.09
+      "latency_ms": 7.063
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 6.09,
+  "latency_ms": 7.063,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

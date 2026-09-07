@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.003
+      "latency_ms": 0.006
     },
     "exact_dict": {
       "actual": "Kiwis are cheap in summer.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.258
+      "latency_ms": 0.257
     },
     "phonetic": {
       "actual": "Kiwis are cheap in summer.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 6.581
+      "latency_ms": 6.776
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 6.581,
+  "latency_ms": 6.776,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

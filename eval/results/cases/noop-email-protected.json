@@ -25,19 +25,19 @@
       "intervened": true,
       "outcome": "false_intervention",
       "passed": false,
-      "latency_ms": 0.297
+      "latency_ms": 0.283
     },
     "phonetic": {
       "actual": "Email aditya@sarvam.ai before noon.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 13.294
+      "latency_ms": 13.077
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 13.294,
+  "latency_ms": 13.077,
   "status_check": null,
   "decision_trace": [
     {

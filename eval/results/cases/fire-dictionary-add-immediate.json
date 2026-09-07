@@ -24,26 +24,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.009
+      "latency_ms": 0.005
     },
     "exact_dict": {
       "actual": "Nandhini owns the release.",
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.291
+      "latency_ms": 0.378
     },
     "phonetic": {
       "actual": "Nandini owns the release.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 8.716
+      "latency_ms": 9.014
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 8.716,
+  "latency_ms": 9.014,
   "status_check": null,
   "decision_trace": [
     {

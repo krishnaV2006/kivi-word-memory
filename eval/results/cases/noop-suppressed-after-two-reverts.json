@@ -36,19 +36,19 @@
       "intervened": true,
       "outcome": "false_intervention",
       "passed": false,
-      "latency_ms": 0.305
+      "latency_ms": 0.3
     },
     "phonetic": {
       "actual": "Bulbool has thirty nine voices.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 12.781
+      "latency_ms": 11.466
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 12.781,
+  "latency_ms": 11.466,
   "status_check": null,
   "decision_trace": [
     {

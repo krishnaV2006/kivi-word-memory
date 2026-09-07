@@ -36,19 +36,19 @@
       "intervened": true,
       "outcome": "false_intervention",
       "passed": false,
-      "latency_ms": 0.281
+      "latency_ms": 0.294
     },
     "phonetic": {
       "actual": "Chinmai is reviewing the design.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 10.247
+      "latency_ms": 11.729
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 10.247,
+  "latency_ms": 11.729,
   "status_check": {
     "expected": {
       "Chinmay": "suppressed"

@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.008
+      "latency_ms": 0.007
     },
     "exact_dict": {
       "actual": "Ask Aaditya to review the Sarvam Kivi service.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.602
+      "latency_ms": 1.179
     },
     "phonetic": {
       "actual": "Ask Aaditya to review the Sarvam Kivi service.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 11.906
+      "latency_ms": 14.416
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 11.906,
+  "latency_ms": 14.416,
   "status_check": null,
   "decision_trace": [
     {

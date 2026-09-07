@@ -24,26 +24,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.007
+      "latency_ms": 0.005
     },
     "exact_dict": {
       "actual": "Chinmay is reviewing the design.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.268
+      "latency_ms": 0.285
     },
     "phonetic": {
       "actual": "Chinmay is reviewing the design.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 9.16
+      "latency_ms": 10.599
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 9.16,
+  "latency_ms": 10.599,
   "status_check": {
     "expected": {
       "Chinmay": "active"

@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.005
+      "latency_ms": 0.004
     },
     "exact_dict": {
       "actual": "The Sarras model handles code mixing.",
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.326
+      "latency_ms": 0.764
     },
     "phonetic": {
       "actual": "The Saaras model handles code mixing.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 10.607
+      "latency_ms": 11.62
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.607,
+  "latency_ms": 11.62,
   "status_check": null,
   "decision_trace": [
     {

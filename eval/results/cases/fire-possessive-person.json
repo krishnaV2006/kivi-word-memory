@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.007
+      "latency_ms": 0.005
     },
     "exact_dict": {
       "actual": "This is Aaditya's branch.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.383
+      "latency_ms": 0.613
     },
     "phonetic": {
       "actual": "This is Aaditya's branch.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 12.104
+      "latency_ms": 11.416
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 12.104,
+  "latency_ms": 11.416,
   "status_check": null,
   "decision_trace": [
     {

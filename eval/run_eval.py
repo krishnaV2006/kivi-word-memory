@@ -345,12 +345,16 @@ def write_summary(payload: dict) -> None:
     w("| p50 | p95 | max | mean |")
     w("|---:|---:|---:|---:|")
     w(f"| {lat['p50_ms']} ms | {lat['p95_ms']} ms | {lat['max_ms']} ms | {lat['mean_ms']} ms |")
-    w("\nMean time per stage:\n")
+    w("\nMean time per stage. These sum to less than the p50 above because the outer "
+      "measurement also covers writing the decision trace to the database and committing it, "
+      "which happens after the stage timers stop:\n")
     w("| stage | ms |")
     w("|---|---:|")
     for k, v in lat["stage_means_ms"].items():
         w(f"| {k} | {v} |")
-    w("\nDatabase growth with ordinary use:\n")
+    w("\nDatabase growth with ordinary use. Growth is sub-linear because repeated "
+      "observations reinforce existing entries rather than creating new ones, and context "
+      "terms are capped at 25 per entry. The floor is the 414-row common-word guard list:\n")
     w("| observations | entries | rows | size |")
     w("|---:|---:|---:|---:|")
     for p in payload["db_growth"]:

@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.004
+      "latency_ms": 0.007
     },
     "exact_dict": {
       "actual": "We had toast, coffee and a Kivi.",
       "intervened": true,
       "outcome": "false_intervention",
       "passed": false,
-      "latency_ms": 0.317
+      "latency_ms": 0.3
     },
     "phonetic": {
       "actual": "We had toast, coffee and a kiwi.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 16.728
+      "latency_ms": 13.516
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 16.728,
+  "latency_ms": 13.516,
   "status_check": null,
   "decision_trace": [
     {

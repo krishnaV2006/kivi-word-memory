@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.007
+      "latency_ms": 0.005
     },
     "exact_dict": {
       "actual": "Ask Aditya to review the Sarvam Kiwi service.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.207
+      "latency_ms": 0.169
     },
     "phonetic": {
       "actual": "Ask Aditya to review the Sarvam Kiwi service.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 7.428
+      "latency_ms": 6.248
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 7.428,
+  "latency_ms": 6.248,
   "status_check": null,
   "decision_trace": [],
   "memory_state": []

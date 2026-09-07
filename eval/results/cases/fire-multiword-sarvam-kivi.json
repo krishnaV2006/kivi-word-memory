@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.007
+      "latency_ms": 0.006
     },
     "exact_dict": {
       "actual": "The Sarvam Kivi service is slow today.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.718
+      "latency_ms": 0.286
     },
     "phonetic": {
       "actual": "The Sarvam Kivi service is slow today.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 17.27
+      "latency_ms": 12.636
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 17.27,
+  "latency_ms": 12.636,
   "status_check": null,
   "decision_trace": [
     {

@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.006
+      "latency_ms": 0.004
     },
     "exact_dict": {
       "actual": "Kivi's dictionary needs a reset.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.322
+      "latency_ms": 0.58
     },
     "phonetic": {
       "actual": "Kivi's dictionary needs a reset.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 10.559
+      "latency_ms": 11.228
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.559,
+  "latency_ms": 11.228,
   "status_check": null,
   "decision_trace": [
     {

@@ -44,19 +44,19 @@
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.556
+      "latency_ms": 0.242
     },
     "phonetic": {
       "actual": "The Kivi service crashed.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 7.516
+      "latency_ms": 8.884
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 7.516,
+  "latency_ms": 8.884,
   "status_check": null,
   "decision_trace": [
     {

@@ -25,19 +25,19 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.29
+      "latency_ms": 0.286
     },
     "phonetic": {
       "actual": "We explored a cave near the office.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 8.002
+      "latency_ms": 7.947
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 8.002,
+  "latency_ms": 7.947,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

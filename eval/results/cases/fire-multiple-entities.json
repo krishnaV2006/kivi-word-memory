@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.007
+      "latency_ms": 0.006
     },
     "exact_dict": {
       "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 0.298
+      "latency_ms": 0.308
     },
     "phonetic": {
       "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 12.809
+      "latency_ms": 13.65
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 12.809,
+  "latency_ms": 13.65,
   "status_check": null,
   "decision_trace": [
     {

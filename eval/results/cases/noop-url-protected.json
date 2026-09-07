@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 0.009
+      "latency_ms": 0.007
     },
     "exact_dict": {
       "actual": "Docs are at https://Kivi.example.com/guide.",
       "intervened": true,
       "outcome": "false_intervention",
       "passed": false,
-      "latency_ms": 0.434
+      "latency_ms": 0.578
     },
     "phonetic": {
       "actual": "Docs are at https://kiwi.example.com/guide.",
       "intervened": false,
       "outcome": "correct_abstention",
       "passed": true,
-      "latency_ms": 14.326
+      "latency_ms": 16.453
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 14.326,
+  "latency_ms": 16.453,
   "status_check": null,
   "decision_trace": [
     {

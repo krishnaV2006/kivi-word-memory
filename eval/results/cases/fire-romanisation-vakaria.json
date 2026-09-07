@@ -18,26 +18,26 @@
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.006
+      "latency_ms": 0.007
     },
     "exact_dict": {
       "actual": "Krishna Vakaria submitted the form.",
       "intervened": false,
       "outcome": "missed_intervention",
       "passed": false,
-      "latency_ms": 0.543
+      "latency_ms": 0.293
     },
     "phonetic": {
       "actual": "Krishna Vekariya submitted the form.",
       "intervened": true,
       "outcome": "useful_intervention",
       "passed": true,
-      "latency_ms": 10.365
+      "latency_ms": 10.666
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.365,
+  "latency_ms": 10.666,
   "status_check": null,
   "decision_trace": [
     {
