@@ -262,6 +262,14 @@ The names corpus is the sharp one. Those are real names, mostly Indian, sitting 
 the phonetic neighbourhood the skeleton rules were tuned for, and the loose consonant key
 retrieves candidates constantly among them. Any rewrite would rename a real person.
 
+The same report also measures the **precision of the phonetic key itself**, independently
+of any memory state: across 614 common English words and personal names, the strict key
+produces only **six** collision groups, and every one is a genuine near-homophone —
+`feel`/`fill`, `three`/`tree`, `were`/`where`, `of`/`off`, `part`/`parth` — plus
+`aakash`/`akash`, which is one name spelled two ways. That is a key doing exactly what a
+phonetic key should. It is also the coverage this project was missing when a soft-c bug
+survived seventeen findings unnoticed.
+
 The control group is what makes the zero mean anything. A test that only proves a negative
 is worthless if the pipeline is inert, so names that genuinely *are* the user's person
 under another spelling are split out automatically — by strict phonetic skeleton, not by

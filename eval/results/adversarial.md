@@ -31,6 +31,28 @@ A curated dataset proves the cases its author imagined. This proves the property
 None. No sentence in any corpus was modified.
 
 
+## Precision of the phonetic key itself
+
+Measured independently of any memory state: across a fixed vocabulary, how often do two genuinely different words land on the same key? This is the mechanism by which a phonetic bug becomes a wrong rewrite — retrieval hands the decision stage candidates it should never have seen, and eventually one wins a span it should not have. It is also the coverage this project was missing when a soft-c bug survived eighteen findings: the decision policy was measured exhaustively, the alphabet never was.
+
+| vocabulary | words | strict-key collision groups | loose-key groups | largest loose group |
+|---|---:|---:|---:|---:|
+| common english | 414 | 4 | 65 | 5 |
+| personal names | 200 | 1 | 10 | 2 |
+| combined | 614 | 6 | 87 | 5 |
+
+Every strict-key collision in the combined vocabulary, in full:
+
+- `akas` &larr; aakash, akash
+- `fil` &larr; feel, fill
+- `of` &larr; of, off
+- `part` &larr; part, parth
+- `tri` &larr; three, tree
+- `vere` &larr; were, where
+
+These are the collisions a phonetic key is *supposed* to make: genuine near-homophones, plus one name spelled two ways. The loose key collides far more often, which is precisely why a loose-only match carries a penalty and why the b/v tier is gated on context.
+
+
 ## Cost
 
 1631 resolutions, reusing one `MemoryView`. Timing is recorded in `adversarial.json` rather than here, so that this report stays byte-identical across runs and can be diffed against the committed copy. 0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it does not distort the database-growth figures reported in `summary.md`.

@@ -4,13 +4,83 @@
   "all_sentences_including_control": 1631,
   "total_interventions": 0,
   "false_positive_rate": 0.0,
-  "elapsed_s": 3.96,
-  "per_sentence_ms": 2.4252,
+  "elapsed_s": 3.59,
+  "per_sentence_ms": 2.2013,
   "distinct_names_tested": 200,
   "control_names": [
     "Aditya"
   ],
   "control_recall": 1.0,
+  "key_collisions": {
+    "common_english": {
+      "words": 414,
+      "strict_collision_groups": 4,
+      "strict_collisions": {
+        "fil": [
+          "feel",
+          "fill"
+        ],
+        "of": [
+          "of",
+          "off"
+        ],
+        "tri": [
+          "three",
+          "tree"
+        ],
+        "vere": [
+          "were",
+          "where"
+        ]
+      },
+      "loose_collision_groups": 65,
+      "largest_loose_group": 5
+    },
+    "personal_names": {
+      "words": 200,
+      "strict_collision_groups": 1,
+      "strict_collisions": {
+        "akas": [
+          "aakash",
+          "akash"
+        ]
+      },
+      "loose_collision_groups": 10,
+      "largest_loose_group": 2
+    },
+    "combined": {
+      "words": 614,
+      "strict_collision_groups": 6,
+      "strict_collisions": {
+        "akas": [
+          "aakash",
+          "akash"
+        ],
+        "fil": [
+          "feel",
+          "fill"
+        ],
+        "of": [
+          "of",
+          "off"
+        ],
+        "part": [
+          "part",
+          "parth"
+        ],
+        "tri": [
+          "three",
+          "tree"
+        ],
+        "vere": [
+          "were",
+          "where"
+        ]
+      },
+      "loose_collision_groups": 87,
+      "largest_loose_group": 5
+    }
+  },
   "by_corpus": {
     "neutral": {
       "sentences": 585,

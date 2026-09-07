@@ -688,3 +688,48 @@ happened to avoid it. Coverage of the decision policy was measured; coverage of 
 
 **Pinned by:** `tests/test_phonetics.py::test_soft_and_hard_c`,
 `codemix-devanagari-should-fire`
+
+---
+
+## 19. Measuring the alphabet, not just the policy
+
+**Found:** as the direct consequence of §18. A phonetic rule that was wrong about `city`,
+`nice`, `price` and `service` survived seventeen findings' worth of scrutiny — including a
+branch-coverage table built specifically to find untested rules — because every test term
+happened to avoid it. The coverage measured was of the **decision policy**. Nothing
+measured the **alphabet**.
+
+So: across a fixed vocabulary, independent of any memory state, how often do two genuinely
+different words land on the same key?
+
+| vocabulary | words | strict-key collision groups | loose-key groups |
+|---|---:|---:|---:|
+| common English | 414 | 4 | 65 |
+| personal names | 200 | 1 | 10 |
+| combined | 614 | **6** | 87 |
+
+Six groups in 614 words, and every one is a collision a phonetic key is *supposed* to
+make:
+
+```
+fil   <- feel, fill          tri   <- three, tree
+of    <- of, off             vere  <- were, where
+part  <- part, parth         akas  <- aakash, akash
+```
+
+Near-homophones, plus one name spelled two ways. Nothing spurious. The loose key collides
+fourteen times more often, which is the quantified justification for penalising a
+loose-only match and for gating the b/v tier on context — previously that was an argument,
+and now it is a ratio.
+
+**Why this belongs in the evaluation rather than in a notebook:** it is a property of the
+index that no case can express. A case asserts what happens to one sentence given one
+memory state. This asserts something about the key that holds before any memory exists,
+and it would have caught the soft-c bug the moment `service` and `servike` diverged from
+anything sensible — had it been looking.
+
+It is the third distinct kind of evidence in this repository, after the labelled cases and
+the adversarial corpora, and the three fail in different ways on purpose.
+
+**Pinned by:** the `Precision of the phonetic key itself` section of
+`eval/results/adversarial.md`, `eval/adversarial.py::key_collisions`

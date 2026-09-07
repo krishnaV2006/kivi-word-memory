@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 20:47:02",
+  "generated_at": "2026-09-07 20:52:31",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -49,41 +49,41 @@
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 6.632,
-      "p95_ms": 9.178,
-      "max_ms": 9.205,
-      "mean_ms": 6.754,
+      "p50_ms": 7.283,
+      "p95_ms": 8.054,
+      "max_ms": 8.941,
+      "mean_ms": 7.29,
       "stage_means_ms": {
-        "load_memory": 4.9,
-        "span_generation": 0.185,
-        "scoring_and_decision": 1.371,
-        "rewrite_and_prompt": 0.118,
-        "total": 6.574
+        "load_memory": 5.285,
+        "span_generation": 0.192,
+        "scoring_and_decision": 1.499,
+        "rewrite_and_prompt": 0.112,
+        "total": 7.088
       }
     },
     "warm": {
-      "p50_ms": 1.671,
-      "p95_ms": 1.938,
-      "max_ms": 2.411,
-      "mean_ms": 1.707,
+      "p50_ms": 1.788,
+      "p95_ms": 2.597,
+      "max_ms": 2.746,
+      "mean_ms": 1.896,
       "stage_means_ms": {
         "load_memory": 0.0,
-        "span_generation": 0.18,
-        "scoring_and_decision": 1.328,
-        "rewrite_and_prompt": 0.087,
-        "total": 1.596
+        "span_generation": 0.194,
+        "scoring_and_decision": 1.459,
+        "rewrite_and_prompt": 0.092,
+        "total": 1.745
       }
     },
-    "p50_ms": 6.632,
-    "p95_ms": 9.178,
-    "max_ms": 9.205,
-    "mean_ms": 6.754,
+    "p50_ms": 7.283,
+    "p95_ms": 8.054,
+    "max_ms": 8.941,
+    "mean_ms": 7.29,
     "stage_means_ms": {
-      "load_memory": 4.9,
-      "span_generation": 0.185,
-      "scoring_and_decision": 1.371,
-      "rewrite_and_prompt": 0.118,
-      "total": 6.574
+      "load_memory": 5.285,
+      "span_generation": 0.192,
+      "scoring_and_decision": 1.499,
+      "rewrite_and_prompt": 0.112,
+      "total": 7.088
     }
   },
   "db_growth": [
@@ -120,7 +120,7 @@
       "utterances": 1000,
       "decision_rows": 1191,
       "total_rows": 1780,
-      "kb": 320.0
+      "kb": 324.0
     },
     {
       "utterances": 5000,
@@ -177,8 +177,8 @@
     }
   },
   "branch_coverage": {
-    "apply": 35,
     "noop_already_correct": 3,
+    "apply": 35,
     "abstain_common_word": 6,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,

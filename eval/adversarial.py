@@ -48,7 +48,7 @@ ADV_DB = REPO_ROOT / "eval" / ".adversarial.db"
 os.environ.setdefault("KIVI_DB_PATH", str(ADV_DB))
 
 from app import db as db_mod                      # noqa: E402
-from app.phonetics import indic_skeleton          # noqa: E402
+from app.phonetics import consonant_skeleton, indic_skeleton  # noqa: E402
 from app.resolver import load_view, resolve       # noqa: E402
 from seed.seed import seed as run_seed            # noqa: E402
 
@@ -227,6 +227,50 @@ def memory_terms(conn) -> set[str]:
     return out
 
 
+def key_collisions() -> dict:
+    """How often do two genuinely different words land on the same phonetic key?
+
+    This is the precision of the index itself, measured independently of any memory
+    state. It is the mechanism by which a phonetic bug becomes a wrong rewrite: if the
+    strict key collides freely, retrieval hands the decision stage candidates it should
+    never have seen, and eventually one of them wins a span.
+
+    A soft-c bug survived eighteen findings here because coverage of the *decision
+    policy* was measured and coverage of the *alphabet* never was. This measures the
+    alphabet.
+    """
+    import collections
+
+    words = [
+        w.strip() for w in (REPO_ROOT / "seed" / "common_words.txt")
+        .read_text(encoding="utf-8").splitlines()
+        if w.strip() and not w.strip().startswith("#")
+    ]
+    vocabularies = {
+        "common_english": words,
+        "personal_names": list(NAMES),
+        "combined": words + list(NAMES),
+    }
+
+    out: dict[str, dict] = {}
+    for label, vocab in vocabularies.items():
+        buckets: dict[str, set[str]] = collections.defaultdict(set)
+        loose: dict[str, set[str]] = collections.defaultdict(set)
+        for w in vocab:
+            buckets[indic_skeleton(w)].add(w.lower())
+            loose[consonant_skeleton(w)].add(w.lower())
+        collisions = {k: sorted(v) for k, v in buckets.items() if len(v) > 1}
+        loose_groups = [v for v in loose.values() if len(v) > 1]
+        out[label] = {
+            "words": len(vocab),
+            "strict_collision_groups": len(collisions),
+            "strict_collisions": dict(sorted(collisions.items())),
+            "loose_collision_groups": len(loose_groups),
+            "largest_loose_group": max((len(v) for v in loose_groups), default=0),
+        }
+    return out
+
+
 def _drop_adv_db() -> None:
     for suffix in ("", "-wal", "-shm"):
         p = ADV_DB.with_name(ADV_DB.name + suffix)
@@ -313,6 +357,7 @@ def _run() -> dict:
         "control_recall": round(
             results["names_control"]["interventions"] / results["names_control"]["sentences"], 4
         ) if results.get("names_control", {}).get("sentences") else None,
+        "key_collisions": key_collisions(),
         "by_corpus": results,
         "interventions": all_hits,
     }
@@ -369,6 +414,31 @@ def write_report(payload: dict) -> None:
             w(f"\n…and {len(hits) - 60} more; see `adversarial.json`.\n")
         w("\nEach of these is a false positive unless the flagged span genuinely is the "
           "user's own term reappearing. Reasons are in `adversarial.json`.\n")
+
+    kc = payload.get("key_collisions")
+    if kc:
+        w("\n## Precision of the phonetic key itself\n")
+        w("Measured independently of any memory state: across a fixed vocabulary, how often "
+          "do two genuinely different words land on the same key? This is the mechanism by "
+          "which a phonetic bug becomes a wrong rewrite — retrieval hands the decision stage "
+          "candidates it should never have seen, and eventually one wins a span it should "
+          "not have. It is also the coverage this project was missing when a soft-c bug "
+          "survived eighteen findings: the decision policy was measured exhaustively, the "
+          "alphabet never was.\n")
+        w("| vocabulary | words | strict-key collision groups | loose-key groups | largest loose group |")
+        w("|---|---:|---:|---:|---:|")
+        for label, r in kc.items():
+            w(f"| {label.replace('_', ' ')} | {r['words']} | {r['strict_collision_groups']} "
+              f"| {r['loose_collision_groups']} | {r['largest_loose_group']} |")
+        groups = kc.get("combined", {}).get("strict_collisions", {})
+        if groups:
+            w("\nEvery strict-key collision in the combined vocabulary, in full:\n")
+            for key, members in groups.items():
+                w(f"- `{key}` &larr; {', '.join(members)}")
+            w("\nThese are the collisions a phonetic key is *supposed* to make: genuine "
+              "near-homophones, plus one name spelled two ways. The loose key collides far "
+              "more often, which is precisely why a loose-only match carries a penalty and "
+              "why the b/v tier is gated on context.\n")
 
     w(f"\n## Cost\n")
     # Deliberately no wall-clock number here: this report is meant to be byte-identical
