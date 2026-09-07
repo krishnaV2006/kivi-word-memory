@@ -17,27 +17,23 @@
       "actual": "Bulbhul has thirty nine voices.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.009
+      "passed": false
     },
     "exact_dict": {
       "actual": "Bulbhul has thirty nine voices.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.274
+      "passed": false
     },
     "phonetic": {
       "actual": "Bulbul has thirty nine voices.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 10.667
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.667,
   "status_check": null,
   "decision_trace": [
     {

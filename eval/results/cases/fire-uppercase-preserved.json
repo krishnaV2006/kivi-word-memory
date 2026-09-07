@@ -17,27 +17,23 @@
       "actual": "ADITYA approved it.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.007
+      "passed": false
     },
     "exact_dict": {
       "actual": "Aaditya approved it.",
       "intervened": true,
       "outcome": "wrong_intervention",
-      "passed": false,
-      "latency_ms": 0.29
+      "passed": false
     },
     "phonetic": {
       "actual": "AADITYA approved it.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 10.181
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 10.181,
   "status_check": null,
   "decision_trace": [
     {

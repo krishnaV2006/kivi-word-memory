@@ -17,27 +17,23 @@
       "actual": "Aditya will merge it tonight.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.007
+      "passed": false
     },
     "exact_dict": {
       "actual": "Aaditya will merge it tonight.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 0.312
+      "passed": true
     },
     "phonetic": {
       "actual": "Aaditya will merge it tonight.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 12.117
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 12.117,
   "status_check": null,
   "decision_trace": [
     {

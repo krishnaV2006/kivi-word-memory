@@ -17,27 +17,23 @@
       "actual": "Send Aadithya the latency numbers.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.006
+      "passed": false
     },
     "exact_dict": {
       "actual": "Send Aadithya the latency numbers.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.322
+      "passed": false
     },
     "phonetic": {
       "actual": "Send Aaditya the latency numbers.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 11.142
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 11.142,
   "status_check": null,
   "decision_trace": [
     {

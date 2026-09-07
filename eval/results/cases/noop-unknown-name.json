@@ -17,27 +17,23 @@
       "actual": "Ask Rahul to review the pull request.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.006
+      "passed": true
     },
     "exact_dict": {
       "actual": "Ask Rahul to review the pull request.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.392
+      "passed": true
     },
     "phonetic": {
       "actual": "Ask Rahul to review the pull request.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 8.988
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 8.988,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

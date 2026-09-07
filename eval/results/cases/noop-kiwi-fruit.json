@@ -17,27 +17,23 @@
       "actual": "I ate a kiwi for breakfast.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.007
+      "passed": true
     },
     "exact_dict": {
       "actual": "I ate a Kivi for breakfast.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.297
+      "passed": false
     },
     "phonetic": {
       "actual": "I ate a kiwi for breakfast.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 12.796
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 12.796,
   "status_check": null,
   "decision_trace": [
     {

@@ -17,27 +17,23 @@
       "actual": "Ask Aditi to join the sync.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.007
+      "passed": true
     },
     "exact_dict": {
       "actual": "Ask Aditi to join the sync.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.304
+      "passed": true
     },
     "phonetic": {
       "actual": "Ask Aditi to join the sync.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 12.249
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 12.249,
   "status_check": null,
   "decision_trace": [
     {

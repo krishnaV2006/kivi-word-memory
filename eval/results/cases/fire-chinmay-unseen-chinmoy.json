@@ -17,27 +17,23 @@
       "actual": "Chinmoy is reviewing the design.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.006
+      "passed": false
     },
     "exact_dict": {
       "actual": "Chinmoy is reviewing the design.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.279
+      "passed": false
     },
     "phonetic": {
       "actual": "Chinmay is reviewing the design.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 12.939
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 12.939,
   "status_check": null,
   "decision_trace": [
     {

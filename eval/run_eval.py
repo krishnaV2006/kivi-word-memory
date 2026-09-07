@@ -158,24 +158,19 @@ def run_case(case: dict) -> dict:
     trace: list[dict] = []
     mem_snapshot: list[dict] = []
     status_check: dict | None = None
-    elapsed_ms = 0.0
 
     for strategy in baselines.STRATEGIES:
         conn = fresh_db(case)
         try:
-            t0 = time.perf_counter()
             actual, intervened = baselines.run(strategy, conn, case["asr"], case["formatted"])
-            dt = (time.perf_counter() - t0) * 1000
             outcome = classify(case, actual)
             per_strategy[strategy] = {
                 "actual": actual,
                 "intervened": intervened,
                 "outcome": outcome,
                 "passed": outcome in GOOD,
-                "latency_ms": round(dt, 3),
             }
             if strategy == "phonetic":
-                elapsed_ms = round(dt, 3)
                 result = resolve(conn, case["asr"], case["formatted"])
                 trace = [
                     {k: v for k, v in d.__dict__.items() if k != "candidates"} | {
@@ -223,7 +218,6 @@ def run_case(case: dict) -> dict:
         "strategies": per_strategy,
         "passed": per_strategy["phonetic"]["passed"],
         "outcome": per_strategy["phonetic"]["outcome"],
-        "latency_ms": elapsed_ms,
         "status_check": status_check,
         "decision_trace": trace,
         "memory_state": mem_snapshot,
@@ -359,6 +353,14 @@ def write_summary(payload: dict) -> None:
     w("|---:|---:|---:|---:|")
     for p in payload["db_growth"]:
         w(f"| {p['observations']} | {p['entries']} | {p['total_rows']} | {p['kb']} KB |")
+
+    w("\n## Reproducibility\n")
+    w("Per-case artifacts under `eval/results/cases/` contain no timing data and are "
+      "byte-identical across runs on the same commit. After re-running this harness, "
+      "`git diff -- eval/results/cases` should report **no changes at all**; only the "
+      "measured latency numbers in `results.json` and in this file will move. Timing is "
+      "reported once, from the dedicated warm-path measurement above, rather than as 44 "
+      "noisy single-shot samples.\n")
 
     w("\n## Where to look next\n")
     w("Every case has a full artifact in `eval/results/cases/<id>.json` containing the "

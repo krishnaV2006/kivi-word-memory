@@ -25,27 +25,23 @@
       "actual": "Gauri owns the eval harness.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.008
+      "passed": true
     },
     "exact_dict": {
       "actual": "Gowri owns the eval harness.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.343
+      "passed": false
     },
     "phonetic": {
       "actual": "Gauri owns the eval harness.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 8.885
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 8.885,
   "status_check": {
     "expected": {
       "Gowri": "candidate"

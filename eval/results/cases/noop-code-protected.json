@@ -17,27 +17,23 @@
       "actual": "Run `kiwi --help` to see options.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.005
+      "passed": true
     },
     "exact_dict": {
       "actual": "Run `Kivi --help` to see options.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.3
+      "passed": false
     },
     "phonetic": {
       "actual": "Run `kiwi --help` to see options.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 12.503
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 12.503,
   "status_check": null,
   "decision_trace": [
     {

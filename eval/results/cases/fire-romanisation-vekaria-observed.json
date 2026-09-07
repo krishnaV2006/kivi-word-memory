@@ -17,27 +17,23 @@
       "actual": "Email Vekaria about the interview.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.005
+      "passed": false
     },
     "exact_dict": {
       "actual": "Email Vekariya about the interview.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 0.349
+      "passed": true
     },
     "phonetic": {
       "actual": "Email Vekariya about the interview.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 11.255
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 11.255,
   "status_check": null,
   "decision_trace": [
     {

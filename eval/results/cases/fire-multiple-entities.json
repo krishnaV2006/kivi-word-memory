@@ -17,27 +17,23 @@
       "actual": "Ask Aditya whether Sarwam shipped the Kiwi build.",
       "intervened": false,
       "outcome": "missed_intervention",
-      "passed": false,
-      "latency_ms": 0.006
+      "passed": false
     },
     "exact_dict": {
       "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 0.308
+      "passed": true
     },
     "phonetic": {
       "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
       "intervened": true,
       "outcome": "useful_intervention",
-      "passed": true,
-      "latency_ms": 13.65
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "useful_intervention",
-  "latency_ms": 13.65,
   "status_check": null,
   "decision_trace": [
     {

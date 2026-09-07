@@ -17,27 +17,23 @@
       "actual": "We explored a cave near the office.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.005
+      "passed": true
     },
     "exact_dict": {
       "actual": "We explored a cave near the office.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.286
+      "passed": true
     },
     "phonetic": {
       "actual": "We explored a cave near the office.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 7.947
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 7.947,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

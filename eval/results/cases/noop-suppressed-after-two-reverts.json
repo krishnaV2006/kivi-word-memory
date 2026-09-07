@@ -28,27 +28,23 @@
       "actual": "Bulbool has thirty nine voices.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.007
+      "passed": true
     },
     "exact_dict": {
       "actual": "Bulbul has thirty nine voices.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.3
+      "passed": false
     },
     "phonetic": {
       "actual": "Bulbool has thirty nine voices.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 11.466
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 11.466,
   "status_check": null,
   "decision_trace": [
     {

@@ -17,27 +17,23 @@
       "actual": "Email aditya@sarvam.ai before noon.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.005
+      "passed": true
     },
     "exact_dict": {
       "actual": "Email Aaditya@sarvam.ai before noon.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.283
+      "passed": false
     },
     "phonetic": {
       "actual": "Email aditya@sarvam.ai before noon.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 13.077
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 13.077,
   "status_check": null,
   "decision_trace": [
     {

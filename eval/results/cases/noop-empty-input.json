@@ -17,27 +17,23 @@
       "actual": "",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.006
+      "passed": true
     },
     "exact_dict": {
       "actual": "",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.495
+      "passed": true
     },
     "phonetic": {
       "actual": "",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 2.888
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 2.888,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

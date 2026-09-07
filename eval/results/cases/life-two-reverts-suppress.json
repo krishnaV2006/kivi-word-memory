@@ -28,27 +28,23 @@
       "actual": "Chinmai is reviewing the design.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.006
+      "passed": true
     },
     "exact_dict": {
       "actual": "Chinmay is reviewing the design.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.294
+      "passed": false
     },
     "phonetic": {
       "actual": "Chinmai is reviewing the design.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 11.729
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 11.729,
   "status_check": {
     "expected": {
       "Chinmay": "suppressed"

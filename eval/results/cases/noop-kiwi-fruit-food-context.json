@@ -17,27 +17,23 @@
       "actual": "We had toast, coffee and a kiwi.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.007
+      "passed": true
     },
     "exact_dict": {
       "actual": "We had toast, coffee and a Kivi.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.3
+      "passed": false
     },
     "phonetic": {
       "actual": "We had toast, coffee and a kiwi.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 13.516
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 13.516,
   "status_check": null,
   "decision_trace": [
     {

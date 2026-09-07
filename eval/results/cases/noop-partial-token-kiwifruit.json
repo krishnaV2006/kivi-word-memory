@@ -17,27 +17,23 @@
       "actual": "Kiwifruit is a good snack.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.007
+      "passed": true
     },
     "exact_dict": {
       "actual": "Kiwifruit is a good snack.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.284
+      "passed": true
     },
     "phonetic": {
       "actual": "Kiwifruit is a good snack.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 5.857
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 5.857,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

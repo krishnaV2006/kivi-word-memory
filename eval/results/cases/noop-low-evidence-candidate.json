@@ -17,27 +17,23 @@
       "actual": "Prateek joined the standup.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.006
+      "passed": true
     },
     "exact_dict": {
       "actual": "Prateik joined the standup.",
       "intervened": true,
       "outcome": "false_intervention",
-      "passed": false,
-      "latency_ms": 0.294
+      "passed": false
     },
     "phonetic": {
       "actual": "Prateek joined the standup.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 9.114
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 9.114,
   "status_check": null,
   "decision_trace": [
     {

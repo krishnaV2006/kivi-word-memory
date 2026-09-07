@@ -17,27 +17,23 @@
       "actual": "Sarah from marketing sent the deck.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.006
+      "passed": true
     },
     "exact_dict": {
       "actual": "Sarah from marketing sent the deck.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 0.292
+      "passed": true
     },
     "phonetic": {
       "actual": "Sarah from marketing sent the deck.",
       "intervened": false,
       "outcome": "correct_abstention",
-      "passed": true,
-      "latency_ms": 8.216
+      "passed": true
     }
   },
   "passed": true,
   "outcome": "correct_abstention",
-  "latency_ms": 8.216,
   "status_check": null,
   "decision_trace": [],
   "memory_state": [

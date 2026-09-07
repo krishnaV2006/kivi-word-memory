@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 18:37:44",
+  "generated_at": "2026-09-07 18:41:23",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -48,16 +48,16 @@
   "latency": {
     "repeats": 30,
     "warm": true,
-    "p50_ms": 13.089,
-    "p95_ms": 15.557,
-    "max_ms": 16.693,
-    "mean_ms": 13.193,
+    "p50_ms": 12.94,
+    "p95_ms": 15.474,
+    "max_ms": 16.828,
+    "mean_ms": 13.258,
     "stage_means_ms": {
-      "load_memory": 1.668,
-      "span_generation": 0.163,
-      "scoring_and_decision": 5.45,
-      "rewrite_and_prompt": 0.394,
-      "total": 7.675
+      "load_memory": 1.715,
+      "span_generation": 0.181,
+      "scoring_and_decision": 5.803,
+      "rewrite_and_prompt": 0.454,
+      "total": 8.153
     }
   },
   "db_growth": [
@@ -106,27 +106,23 @@
           "actual": "Ask Aditya to review the Sarvam Kiwi service.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "Ask Aaditya to review the Sarvam Kivi service.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 1.179
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Aaditya to review the Sarvam Kivi service.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 14.416
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 14.416,
       "status_check": null,
       "decision_trace": [
         {
@@ -454,27 +450,23 @@
           "actual": "Adithya is joining the call.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "Adithya is joining the call.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.519
+          "passed": false
         },
         "phonetic": {
           "actual": "Aaditya is joining the call.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.354
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.354,
       "status_check": null,
       "decision_trace": [
         {
@@ -754,27 +746,23 @@
           "actual": "Adhitya reviewed the design doc.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "Adhitya reviewed the design doc.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.372
+          "passed": false
         },
         "phonetic": {
           "actual": "Aaditya reviewed the design doc.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.231
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.231,
       "status_check": null,
       "decision_trace": [
         {
@@ -1054,27 +1042,23 @@
           "actual": "Send Aadithya the latency numbers.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.006
+          "passed": false
         },
         "exact_dict": {
           "actual": "Send Aadithya the latency numbers.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.322
+          "passed": false
         },
         "phonetic": {
           "actual": "Send Aaditya the latency numbers.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.142
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.142,
       "status_check": null,
       "decision_trace": [
         {
@@ -1354,27 +1338,23 @@
           "actual": "The Sarwam Kiwi service is slow today.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.006
+          "passed": false
         },
         "exact_dict": {
           "actual": "The Sarvam Kivi service is slow today.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.286
+          "passed": true
         },
         "phonetic": {
           "actual": "The Sarvam Kivi service is slow today.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 12.636
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 12.636,
       "status_check": null,
       "decision_trace": [
         {
@@ -1667,27 +1647,23 @@
           "actual": "This is Aditya's branch.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "This is Aaditya's branch.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.613
+          "passed": true
         },
         "phonetic": {
           "actual": "This is Aaditya's branch.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.416
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.416,
       "status_check": null,
       "decision_trace": [
         {
@@ -1967,27 +1943,23 @@
           "actual": "Kiwi's dictionary needs a reset.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.004
+          "passed": false
         },
         "exact_dict": {
           "actual": "Kivi's dictionary needs a reset.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.58
+          "passed": true
         },
         "phonetic": {
           "actual": "Kivi's dictionary needs a reset.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.228
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.228,
       "status_check": null,
       "decision_trace": [
         {
@@ -2256,27 +2228,23 @@
           "actual": "I studied at Iitm.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "I studied at Iitm.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.346
+          "passed": false
         },
         "phonetic": {
           "actual": "I studied at IITM.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.722
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.722,
       "status_check": null,
       "decision_trace": [
         {
@@ -2545,27 +2513,23 @@
           "actual": "Krishna Vakaria submitted the form.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "Krishna Vakaria submitted the form.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.293
+          "passed": false
         },
         "phonetic": {
           "actual": "Krishna Vekariya submitted the form.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.666
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.666,
       "status_check": null,
       "decision_trace": [
         {
@@ -2834,27 +2798,23 @@
           "actual": "Email Vekaria about the interview.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "Email Vekariya about the interview.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.349
+          "passed": true
         },
         "phonetic": {
           "actual": "Email Vekariya about the interview.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.255
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.255,
       "status_check": null,
       "decision_trace": [
         {
@@ -3123,27 +3083,23 @@
           "actual": "The Sarras model handles code mixing.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.004
+          "passed": false
         },
         "exact_dict": {
           "actual": "The Sarras model handles code mixing.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.764
+          "passed": false
         },
         "phonetic": {
           "actual": "The Saaras model handles code mixing.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.62
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.62,
       "status_check": null,
       "decision_trace": [
         {
@@ -3412,27 +3368,23 @@
           "actual": "Bulbhul has thirty nine voices.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.009
+          "passed": false
         },
         "exact_dict": {
           "actual": "Bulbhul has thirty nine voices.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.274
+          "passed": false
         },
         "phonetic": {
           "actual": "Bulbul has thirty nine voices.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.667
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.667,
       "status_check": null,
       "decision_trace": [
         {
@@ -3701,27 +3653,23 @@
           "actual": "Chinmoy is reviewing the design.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.006
+          "passed": false
         },
         "exact_dict": {
           "actual": "Chinmoy is reviewing the design.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.279
+          "passed": false
         },
         "phonetic": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 12.939
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 12.939,
       "status_check": null,
       "decision_trace": [
         {
@@ -3990,27 +3938,23 @@
           "actual": "Ask Aditya whether Sarwam shipped the Kiwi build.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.006
+          "passed": false
         },
         "exact_dict": {
           "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.308
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Aaditya whether Sarvam shipped the Kivi build.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 13.65
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 13.65,
       "status_check": null,
       "decision_trace": [
         {
@@ -4338,27 +4282,23 @@
           "actual": "Aditya will merge it tonight.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "Aaditya will merge it tonight.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.312
+          "passed": true
         },
         "phonetic": {
           "actual": "Aaditya will merge it tonight.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 12.117
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 12.117,
       "status_check": null,
       "decision_trace": [
         {
@@ -4638,27 +4578,23 @@
           "actual": "Aditya, can you review this?",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.006
+          "passed": false
         },
         "exact_dict": {
           "actual": "Aaditya, can you review this?",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.311
+          "passed": true
         },
         "phonetic": {
           "actual": "Aaditya, can you review this?",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.476
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.476,
       "status_check": null,
       "decision_trace": [
         {
@@ -4938,27 +4874,23 @@
           "actual": "ADITYA approved it.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "Aaditya approved it.",
           "intervened": true,
           "outcome": "wrong_intervention",
-          "passed": false,
-          "latency_ms": 0.29
+          "passed": false
         },
         "phonetic": {
           "actual": "AADITYA approved it.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.181
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.181,
       "status_check": null,
       "decision_trace": [
         {
@@ -5244,27 +5176,23 @@
           "actual": "Nandhini owns the release.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "Nandhini owns the release.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.378
+          "passed": false
         },
         "phonetic": {
           "actual": "Nandini owns the release.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 9.014
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 9.014,
       "status_check": null,
       "decision_trace": [
         {
@@ -5548,27 +5476,23 @@
           "actual": "Krishna Bekariya submitted the form.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.01
+          "passed": false
         },
         "exact_dict": {
           "actual": "Krishna Bekariya submitted the form.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.282
+          "passed": false
         },
         "phonetic": {
           "actual": "Krishna Bekariya submitted the form.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 8.338
+          "passed": false
         }
       },
       "passed": false,
       "outcome": "missed_intervention",
-      "latency_ms": 8.338,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -5812,27 +5736,23 @@
           "actual": "I ate a kiwi for breakfast.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "I ate a Kivi for breakfast.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.297
+          "passed": false
         },
         "phonetic": {
           "actual": "I ate a kiwi for breakfast.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 12.796
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 12.796,
       "status_check": null,
       "decision_trace": [
         {
@@ -6101,27 +6021,23 @@
           "actual": "Kiwis are cheap in summer.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "Kiwis are cheap in summer.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.257
+          "passed": true
         },
         "phonetic": {
           "actual": "Kiwis are cheap in summer.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 6.776
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 6.776,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -6365,27 +6281,23 @@
           "actual": "We had toast, coffee and a kiwi.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "We had toast, coffee and a Kivi.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.3
+          "passed": false
         },
         "phonetic": {
           "actual": "We had toast, coffee and a kiwi.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 13.516
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 13.516,
       "status_check": null,
       "decision_trace": [
         {
@@ -6654,27 +6566,23 @@
           "actual": "Ask Aaditya to review the Sarvam Kivi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "Ask Aaditya to review the Sarvam Kivi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.286
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Aaditya to review the Sarvam Kivi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 18.546
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 18.546,
       "status_check": null,
       "decision_trace": [
         {
@@ -7002,27 +6910,23 @@
           "actual": "Email aditya@sarvam.ai before noon.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.005
+          "passed": true
         },
         "exact_dict": {
           "actual": "Email Aaditya@sarvam.ai before noon.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.283
+          "passed": false
         },
         "phonetic": {
           "actual": "Email aditya@sarvam.ai before noon.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 13.077
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 13.077,
       "status_check": null,
       "decision_trace": [
         {
@@ -7291,27 +7195,23 @@
           "actual": "Docs are at https://kiwi.example.com/guide.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "Docs are at https://Kivi.example.com/guide.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.578
+          "passed": false
         },
         "phonetic": {
           "actual": "Docs are at https://kiwi.example.com/guide.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 16.453
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 16.453,
       "status_check": null,
       "decision_trace": [
         {
@@ -7568,27 +7468,23 @@
           "actual": "Run `kiwi --help` to see options.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.005
+          "passed": true
         },
         "exact_dict": {
           "actual": "Run `Kivi --help` to see options.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.3
+          "passed": false
         },
         "phonetic": {
           "actual": "Run `kiwi --help` to see options.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 12.503
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 12.503,
       "status_check": null,
       "decision_trace": [
         {
@@ -7845,27 +7741,23 @@
           "actual": "@aditya please take a look.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.005
+          "passed": true
         },
         "exact_dict": {
           "actual": "@Aaditya please take a look.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.437
+          "passed": false
         },
         "phonetic": {
           "actual": "@aditya please take a look.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 9.859
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 9.859,
       "status_check": null,
       "decision_trace": [
         {
@@ -8122,27 +8014,23 @@
           "actual": "Ask Aditi to join the sync.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "Ask Aditi to join the sync.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.304
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Aditi to join the sync.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 12.249
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 12.249,
       "status_check": null,
       "decision_trace": [
         {
@@ -8422,27 +8310,23 @@
           "actual": "Prateek joined the standup.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "Prateik joined the standup.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.294
+          "passed": false
         },
         "phonetic": {
           "actual": "Prateek joined the standup.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 9.114
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 9.114,
       "status_check": null,
       "decision_trace": [
         {
@@ -8722,27 +8606,23 @@
           "actual": "Bulbool has thirty nine voices.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "Bulbul has thirty nine voices.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.3
+          "passed": false
         },
         "phonetic": {
           "actual": "Bulbool has thirty nine voices.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 11.466
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 11.466,
       "status_check": null,
       "decision_trace": [
         {
@@ -9011,27 +8891,23 @@
           "actual": "Ask Rahul to review the pull request.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "Ask Rahul to review the pull request.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.392
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Rahul to review the pull request.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 8.988
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 8.988,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -9275,27 +9151,23 @@
           "actual": "The service is down again.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "The service is down again.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.315
+          "passed": true
         },
         "phonetic": {
           "actual": "The service is down again.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 7.063
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 7.063,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -9539,27 +9411,23 @@
           "actual": "Sarah from marketing sent the deck.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "Sarah from marketing sent the deck.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.292
+          "passed": true
         },
         "phonetic": {
           "actual": "Sarah from marketing sent the deck.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 8.216
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 8.216,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -9803,27 +9671,23 @@
           "actual": "Kiwifruit is a good snack.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.007
+          "passed": true
         },
         "exact_dict": {
           "actual": "Kiwifruit is a good snack.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.284
+          "passed": true
         },
         "phonetic": {
           "actual": "Kiwifruit is a good snack.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 5.857
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 5.857,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -10067,27 +9931,23 @@
           "actual": "We explored a cave near the office.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.005
+          "passed": true
         },
         "exact_dict": {
           "actual": "We explored a cave near the office.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.286
+          "passed": true
         },
         "phonetic": {
           "actual": "We explored a cave near the office.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 7.947
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 7.947,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -10331,27 +10191,23 @@
           "actual": "Ask Aditya to review the Sarvam Kiwi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.005
+          "passed": true
         },
         "exact_dict": {
           "actual": "Ask Aditya to review the Sarvam Kiwi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.169
+          "passed": true
         },
         "phonetic": {
           "actual": "Ask Aditya to review the Sarvam Kiwi service.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 6.248
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 6.248,
       "status_check": null,
       "decision_trace": [],
       "memory_state": []
@@ -10375,27 +10231,23 @@
           "actual": "",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.495
+          "passed": true
         },
         "phonetic": {
           "actual": "",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 2.888
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 2.888,
       "status_check": null,
       "decision_trace": [],
       "memory_state": [
@@ -10647,27 +10499,23 @@
           "actual": "Gauri owns the eval harness.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.008
+          "passed": true
         },
         "exact_dict": {
           "actual": "Gowri owns the eval harness.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.343
+          "passed": false
         },
         "phonetic": {
           "actual": "Gauri owns the eval harness.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 8.885
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 8.885,
       "status_check": {
         "expected": {
           "Gowri": "candidate"
@@ -10761,27 +10609,23 @@
           "actual": "Gauri owns the eval harness.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.008
+          "passed": false
         },
         "exact_dict": {
           "actual": "Gowri owns the eval harness.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.249
+          "passed": true
         },
         "phonetic": {
           "actual": "Gowri owns the eval harness.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.299
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.299,
       "status_check": {
         "expected": {
           "Gowri": "active"
@@ -10878,27 +10722,23 @@
           "actual": "Gowree owns the eval harness.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.008
+          "passed": false
         },
         "exact_dict": {
           "actual": "Gowree owns the eval harness.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.259
+          "passed": false
         },
         "phonetic": {
           "actual": "Gowri owns the eval harness.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 9.935
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 9.935,
       "status_check": null,
       "decision_trace": [
         {
@@ -10978,27 +10818,23 @@
           "actual": "Chinmai is reviewing the design.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.285
+          "passed": true
         },
         "phonetic": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 10.599
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 10.599,
       "status_check": {
         "expected": {
           "Chinmay": "active"
@@ -11286,27 +11122,23 @@
           "actual": "Chinmai is reviewing the design.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 0.006
+          "passed": true
         },
         "exact_dict": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "false_intervention",
-          "passed": false,
-          "latency_ms": 0.294
+          "passed": false
         },
         "phonetic": {
           "actual": "Chinmai is reviewing the design.",
           "intervened": false,
           "outcome": "correct_abstention",
-          "passed": true,
-          "latency_ms": 11.729
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "correct_abstention",
-      "latency_ms": 11.729,
       "status_check": {
         "expected": {
           "Chinmay": "suppressed"
@@ -11599,27 +11431,23 @@
           "actual": "Chinmai is reviewing the design.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.005
+          "passed": false
         },
         "exact_dict": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.295
+          "passed": true
         },
         "phonetic": {
           "actual": "Chinmay is reviewing the design.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 11.331
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 11.331,
       "status_check": {
         "expected": {
           "Chinmay": "active"
@@ -11915,27 +11743,23 @@
           "actual": "The Kiwi service crashed.",
           "intervened": false,
           "outcome": "missed_intervention",
-          "passed": false,
-          "latency_ms": 0.007
+          "passed": false
         },
         "exact_dict": {
           "actual": "The Kivi service crashed.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 0.242
+          "passed": true
         },
         "phonetic": {
           "actual": "The Kivi service crashed.",
           "intervened": true,
           "outcome": "useful_intervention",
-          "passed": true,
-          "latency_ms": 8.884
+          "passed": true
         }
       },
       "passed": true,
       "outcome": "useful_intervention",
-      "latency_ms": 8.884,
       "status_check": null,
       "decision_trace": [
         {
