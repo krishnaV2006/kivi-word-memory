@@ -41,7 +41,7 @@
       "start": 4,
       "end": 10,
       "action": "apply",
-      "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
+      "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 1.0) scoring 1.0",
       "entry_id": 1,
       "canonical": "Aaditya",
       "score": 1.0,
@@ -55,7 +55,7 @@
           "confidence": 0.75,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.6667,
+          "context_boost": 1.0,
           "score": 1.0
         },
         {

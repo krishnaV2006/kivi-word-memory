@@ -26,25 +26,25 @@
       "passed": false
     },
     "phonetic": {
-      "actual": "कीवी सर्विस ठीक है।",
-      "intervened": false,
-      "outcome": "missed_intervention",
-      "passed": false
+      "actual": "Kivi सर्विस ठीक है।",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true
     }
   },
-  "passed": false,
-  "outcome": "missed_intervention",
+  "passed": true,
+  "outcome": "useful_intervention",
   "status_check": null,
   "decision_trace": [
     {
       "span": "कीवी",
       "start": 0,
       "end": 4,
-      "action": "abstain_common_word",
-      "reason": "'कीवी' is an ordinary English word and nothing in this sentence belongs to 'Kivi'; leaving it alone",
+      "action": "apply",
+      "reason": "'कीवी' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.6667) scoring 1.0",
       "entry_id": 2,
       "canonical": "Kivi",
-      "score": 0.9583,
+      "score": 1.0,
       "runner_up": null,
       "candidates": [
         {
@@ -55,8 +55,8 @@
           "confidence": 0.8333,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.0,
-          "score": 0.9583
+          "context_boost": 0.6667,
+          "score": 1.0
         }
       ]
     }
@@ -171,7 +171,7 @@
       "evidence": {
         "confirmations": 4,
         "contradictions": 0,
-        "applications": 0
+        "applications": 2
       },
       "surfaces": [
         "Kivi",

@@ -56,10 +56,10 @@
       "start": 0,
       "end": 6,
       "action": "apply",
-      "reason": "'Gowree' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+      "reason": "'Gowree' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
       "entry_id": 1,
       "canonical": "Gowri",
-      "score": 0.9708,
+      "score": 1.0,
       "runner_up": null,
       "candidates": [
         {
@@ -70,8 +70,8 @@
           "confidence": 0.75,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.3333,
-          "score": 0.9708
+          "context_boost": 0.6667,
+          "score": 1.0
         }
       ]
     }

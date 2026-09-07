@@ -55,7 +55,7 @@
           "confidence": 0.75,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.6667,
+          "context_boost": 1.0,
           "score": 1.0
         },
         {

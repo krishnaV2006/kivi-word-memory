@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 20:30:54",
+  "generated_at": "2026-09-07 20:39:52",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -32,58 +32,58 @@
       "f1": 0.4375
     },
     "phonetic": {
-      "useful_intervention": 34,
-      "missed_intervention": 1,
+      "useful_intervention": 35,
+      "missed_intervention": 0,
       "wrong_intervention": 0,
       "correct_abstention": 27,
       "false_intervention": 0,
-      "passed": 61,
+      "passed": 62,
       "total": 62,
-      "pass_rate": 0.9839,
+      "pass_rate": 1.0,
       "precision": 1.0,
-      "recall": 0.9714,
-      "f1": 0.9855
+      "recall": 1.0,
+      "f1": 1.0
     }
   },
   "latency": {
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 7.179,
-      "p95_ms": 8.266,
-      "max_ms": 10.532,
-      "mean_ms": 7.229,
+      "p50_ms": 6.802,
+      "p95_ms": 7.425,
+      "max_ms": 9.863,
+      "mean_ms": 6.904,
       "stage_means_ms": {
-        "load_memory": 5.108,
-        "span_generation": 0.14,
-        "scoring_and_decision": 1.676,
-        "rewrite_and_prompt": 0.112,
-        "total": 7.035
+        "load_memory": 4.955,
+        "span_generation": 0.19,
+        "scoring_and_decision": 1.485,
+        "rewrite_and_prompt": 0.095,
+        "total": 6.725
       }
     },
     "warm": {
-      "p50_ms": 2.064,
-      "p95_ms": 2.598,
-      "max_ms": 2.716,
-      "mean_ms": 2.112,
+      "p50_ms": 1.784,
+      "p95_ms": 2.23,
+      "max_ms": 2.265,
+      "mean_ms": 1.834,
       "stage_means_ms": {
         "load_memory": 0.0,
-        "span_generation": 0.128,
-        "scoring_and_decision": 1.715,
-        "rewrite_and_prompt": 0.116,
-        "total": 1.959
+        "span_generation": 0.182,
+        "scoring_and_decision": 1.408,
+        "rewrite_and_prompt": 0.1,
+        "total": 1.691
       }
     },
-    "p50_ms": 7.179,
-    "p95_ms": 8.266,
-    "max_ms": 10.532,
-    "mean_ms": 7.229,
+    "p50_ms": 6.802,
+    "p95_ms": 7.425,
+    "max_ms": 9.863,
+    "mean_ms": 6.904,
     "stage_means_ms": {
-      "load_memory": 5.108,
-      "span_generation": 0.14,
-      "scoring_and_decision": 1.676,
-      "rewrite_and_prompt": 0.112,
-      "total": 7.035
+      "load_memory": 4.955,
+      "span_generation": 0.19,
+      "scoring_and_decision": 1.485,
+      "rewrite_and_prompt": 0.095,
+      "total": 6.725
     }
   },
   "db_growth": [
@@ -120,7 +120,7 @@
       "utterances": 1000,
       "decision_rows": 1191,
       "total_rows": 1780,
-      "kb": 320.0
+      "kb": 324.0
     },
     {
       "utterances": 5000,
@@ -177,9 +177,9 @@
     }
   },
   "branch_coverage": {
-    "apply": 34,
     "noop_already_correct": 3,
-    "abstain_common_word": 7,
+    "apply": 35,
+    "abstain_common_word": 6,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
     "abstain_suppressed": 2,
@@ -231,7 +231,7 @@
           "start": 4,
           "end": 10,
           "action": "apply",
-          "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
+          "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 1.0) scoring 1.0",
           "entry_id": 1,
           "canonical": "Aaditya",
           "score": 1.0,
@@ -245,7 +245,7 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
+              "context_boost": 1.0,
               "score": 1.0
             },
             {
@@ -1167,10 +1167,10 @@
           "start": 5,
           "end": 13,
           "action": "apply",
-          "reason": "'Aadithya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+          "reason": "'Aadithya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
           "entry_id": 1,
           "canonical": "Aaditya",
-          "score": 0.9708,
+          "score": 1.0,
           "runner_up": 0.7743,
           "candidates": [
             {
@@ -1181,8 +1181,8 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9708
+              "context_boost": 0.6667,
+              "score": 1.0
             },
             {
               "entry_id": 9,
@@ -2068,10 +2068,10 @@
           "start": 0,
           "end": 6,
           "action": "apply",
-          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.3333) scoring 0.9917",
+          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.6667) scoring 1.0",
           "entry_id": 2,
           "canonical": "Kivi",
-          "score": 0.9917,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -2082,8 +2082,8 @@
               "confidence": 0.8333,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9917
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         }
@@ -2638,10 +2638,10 @@
           "start": 8,
           "end": 15,
           "action": "apply",
-          "reason": "'Vakaria' matches 'Vekariya' via metaphone (similarity 0.8643, confidence 0.75, context 0.6667) scoring 0.8769",
+          "reason": "'Vakaria' matches 'Vekariya' via metaphone (similarity 0.8643, confidence 0.75, context 1.0) scoring 0.9103",
           "entry_id": 6,
           "canonical": "Vekariya",
-          "score": 0.8769,
+          "score": 0.9103,
           "runner_up": null,
           "candidates": [
             {
@@ -2652,8 +2652,8 @@
               "confidence": 0.75,
               "similarity": 0.8643,
               "route": "metaphone",
-              "context_boost": 0.6667,
-              "score": 0.8769
+              "context_boost": 1.0,
+              "score": 0.9103
             }
           ]
         }
@@ -3208,10 +3208,10 @@
           "start": 4,
           "end": 10,
           "action": "apply",
-          "reason": "'Sarras' matches 'Saaras' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+          "reason": "'Sarras' matches 'Saaras' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
           "entry_id": 4,
           "canonical": "Saaras",
-          "score": 0.9708,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -3222,8 +3222,8 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9708
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         }
@@ -3493,7 +3493,7 @@
           "start": 0,
           "end": 7,
           "action": "apply",
-          "reason": "'Bulbhul' matches 'Bulbul' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
+          "reason": "'Bulbhul' matches 'Bulbul' via indic (similarity 1.0, confidence 0.75, context 1.0) scoring 1.0",
           "entry_id": 5,
           "canonical": "Bulbul",
           "score": 1.0,
@@ -3507,7 +3507,7 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
+              "context_boost": 1.0,
               "score": 1.0
             }
           ]
@@ -3778,10 +3778,10 @@
           "start": 0,
           "end": 7,
           "action": "apply",
-          "reason": "'Chinmoy' matches 'Chinmay' via metaphone (similarity 0.9357, confidence 0.75, context 0.6667) scoring 0.9439",
+          "reason": "'Chinmoy' matches 'Chinmay' via metaphone (similarity 0.9357, confidence 0.75, context 1.0) scoring 0.9772",
           "entry_id": 7,
           "canonical": "Chinmay",
-          "score": 0.9439,
+          "score": 0.9772,
           "runner_up": null,
           "candidates": [
             {
@@ -3792,8 +3792,8 @@
               "confidence": 0.75,
               "similarity": 0.9357,
               "route": "metaphone",
-              "context_boost": 0.6667,
-              "score": 0.9439
+              "context_boost": 1.0,
+              "score": 0.9772
             }
           ]
         }
@@ -4098,10 +4098,10 @@
           "start": 19,
           "end": 25,
           "action": "apply",
-          "reason": "'Sarwam' matches 'Sarvam' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+          "reason": "'Sarwam' matches 'Sarvam' via indic (similarity 1.0, confidence 0.8, context 0.6667) scoring 1.0",
           "entry_id": 3,
           "canonical": "Sarvam",
-          "score": 0.9833,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -4112,8 +4112,8 @@
               "confidence": 0.8,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9833
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         },
@@ -4703,10 +4703,10 @@
           "start": 0,
           "end": 6,
           "action": "apply",
-          "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+          "reason": "'Aditya' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
           "entry_id": 1,
           "canonical": "Aaditya",
-          "score": 0.9708,
+          "score": 1.0,
           "runner_up": 0.796,
           "candidates": [
             {
@@ -4717,8 +4717,8 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9708
+              "context_boost": 0.6667,
+              "score": 1.0
             },
             {
               "entry_id": 9,
@@ -5601,10 +5601,10 @@
           "start": 8,
           "end": 16,
           "action": "apply",
-          "reason": "'Bekariya' matches 'Vekariya' via indic_fuzzy (similarity 0.7262, confidence 0.75, context 0.6667) scoring 0.7474",
+          "reason": "'Bekariya' matches 'Vekariya' via indic_fuzzy (similarity 0.7262, confidence 0.75, context 1.0) scoring 0.7808",
           "entry_id": 6,
           "canonical": "Vekariya",
-          "score": 0.7474,
+          "score": 0.7808,
           "runner_up": null,
           "candidates": [
             {
@@ -5615,8 +5615,8 @@
               "confidence": 0.75,
               "similarity": 0.7262,
               "route": "indic_fuzzy",
-              "context_boost": 0.6667,
-              "score": 0.7474
+              "context_boost": 1.0,
+              "score": 0.7808
             }
           ]
         }
@@ -6730,7 +6730,7 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
+              "context_boost": 1.0,
               "score": 1.0
             },
             {
@@ -8759,7 +8759,7 @@
           "reason": "'Bulbul' was reverted by the user and is suppressed; it stays in memory but will not act",
           "entry_id": 5,
           "canonical": "Bulbul",
-          "score": 0.9417,
+          "score": 0.975,
           "runner_up": null,
           "candidates": [
             {
@@ -8770,8 +8770,8 @@
               "confidence": 0.5,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
-              "score": 0.9417
+              "context_boost": 1.0,
+              "score": 0.975
             }
           ]
         }
@@ -11273,7 +11273,7 @@
           "reason": "'Gowri' has been seen once and is still a candidate; two confirmations are required before acting",
           "entry_id": 1,
           "canonical": "Gowri",
-          "score": 0.9833,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -11284,8 +11284,8 @@
               "confidence": 0.6667,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
-              "score": 0.9833
+              "context_boost": 1.0,
+              "score": 1.0
             }
           ]
         }
@@ -11485,10 +11485,10 @@
           "start": 0,
           "end": 6,
           "action": "apply",
-          "reason": "'Gowree' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 0.3333) scoring 0.9708",
+          "reason": "'Gowree' matches 'Gowri' via indic (similarity 1.0, confidence 0.75, context 0.6667) scoring 1.0",
           "entry_id": 1,
           "canonical": "Gowri",
-          "score": 0.9708,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -11499,8 +11499,8 @@
               "confidence": 0.75,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9708
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         }
@@ -12506,10 +12506,10 @@
           "start": 4,
           "end": 8,
           "action": "apply",
-          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8, context 0.6667) scoring 1.0",
           "entry_id": 1,
           "canonical": "Kivi",
-          "score": 0.9833,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -12520,8 +12520,8 @@
               "confidence": 0.8,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.3333,
-              "score": 0.9833
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         }
@@ -12927,7 +12927,7 @@
           "start": 21,
           "end": 25,
           "action": "apply",
-          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.6667) scoring 1.0",
+          "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 1.0) scoring 1.0",
           "entry_id": 2,
           "canonical": "Kivi",
           "score": 1.0,
@@ -12941,7 +12941,7 @@
               "confidence": 0.8333,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.6667,
+              "context_boost": 1.0,
               "score": 1.0
             }
           ]
@@ -15237,25 +15237,25 @@
           "passed": false
         },
         "phonetic": {
-          "actual": "कीवी सर्विस ठीक है।",
-          "intervened": false,
-          "outcome": "missed_intervention",
-          "passed": false
+          "actual": "Kivi सर्विस ठीक है।",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
         }
       },
-      "passed": false,
-      "outcome": "missed_intervention",
+      "passed": true,
+      "outcome": "useful_intervention",
       "status_check": null,
       "decision_trace": [
         {
           "span": "कीवी",
           "start": 0,
           "end": 4,
-          "action": "abstain_common_word",
-          "reason": "'कीवी' is an ordinary English word and nothing in this sentence belongs to 'Kivi'; leaving it alone",
+          "action": "apply",
+          "reason": "'कीवी' matches 'Kivi' via indic (similarity 1.0, confidence 0.8333, context 0.6667) scoring 1.0",
           "entry_id": 2,
           "canonical": "Kivi",
-          "score": 0.9583,
+          "score": 1.0,
           "runner_up": null,
           "candidates": [
             {
@@ -15266,8 +15266,8 @@
               "confidence": 0.8333,
               "similarity": 1.0,
               "route": "indic",
-              "context_boost": 0.0,
-              "score": 0.9583
+              "context_boost": 0.6667,
+              "score": 1.0
             }
           ]
         }
@@ -15382,7 +15382,7 @@
           "evidence": {
             "confirmations": 4,
             "contradictions": 0,
-            "applications": 0
+            "applications": 2
           },
           "surfaces": [
             "Kivi",
@@ -15975,10 +15975,10 @@
           "start": 0,
           "end": 5,
           "action": "apply",
-          "reason": "'Meira' matches 'Miira' via metaphone (similarity 0.9283, confidence 0.75, context 0.3333) scoring 0.9036",
+          "reason": "'Meira' matches 'Miira' via metaphone (similarity 0.9283, confidence 0.75, context 0.6667) scoring 0.9369",
           "entry_id": 1,
           "canonical": "Miira",
-          "score": 0.9036,
+          "score": 0.9369,
           "runner_up": null,
           "candidates": [
             {
@@ -15989,8 +15989,8 @@
               "confidence": 0.75,
               "similarity": 0.9283,
               "route": "metaphone",
-              "context_boost": 0.3333,
-              "score": 0.9036
+              "context_boost": 0.6667,
+              "score": 0.9369
             }
           ]
         }

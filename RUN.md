@@ -178,12 +178,10 @@ and delete them when finished. **Your demo database is not touched.**
 Expected final output:
 
 ```
-61/62 passed  (precision 1.0, recall 0.9714, f1 0.9855)
-useful 34  false 0  missed 1  wrong 0
+62/62 passed  (precision 1.0, recall 1.0, f1 1.0)
+useful 35  false 0  missed 0  wrong 0
 ```
 
-The one failure is `codemix-devanagari-should-fire`, marked `known_hard` in the dataset
-and expected to fail; it is explained in README.md and DISCOVERIES.md §12.
 It also prints the adversarial result (1626 sentences, 0 interventions) and notes that
 one decision branch, `abstain_low_score`, is never exercised — that is expected and is
 explained in DISCOVERIES.md §9. If any case fails, the run prints an

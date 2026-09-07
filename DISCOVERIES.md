@@ -636,3 +636,55 @@ it (§10, §13). What is different here is that nobody noticed by reading: a mac
 with a crude bound caught it, on a number a human eye would have skimmed past.
 
 **Pinned by:** the latency section of `eval/results/summary.md`, `eval/check_docs.py`
+
+---
+
+## 18. The last failing case was two bugs, one of them plain English
+
+**Found:** by refusing to leave `codemix-devanagari-should-fire` alone. It had sat as a
+documented failure with the explanation that cross-script *identity* works while
+cross-script *context* does not, which was true but incurious. `कीवी सर्विस ठीक है` was
+not corrected because the supporting word `सर्विस` — the English word *service*, borrowed
+into Hindi — never met the context term learned from English text.
+
+Looking at why, the first bug was not about Hindi at all:
+
+```
+service  ->  servike
+city     ->  kity
+nice     ->  nike
+price    ->  prike
+```
+
+Every bare `c` was mapped to `k`. But English `c` is an /s/ before `e`, `i` or `y`. The
+skeleton had been quietly wrong about a large class of ordinary English words since the
+first commit, and nothing caught it because no memory entry happened to contain a soft c.
+It only surfaced through a Hindi loanword.
+
+The naive fix introduced a second bug immediately:
+
+```python
+out.append("s" if nxt in "eiy" else "k")     # wrong
+```
+
+In Python `"" in "eiy"` is `True`, so every **word-final** `c` softened — `music` became
+`musis`, `picnic` became `piknis`. A tuple fixes it. Both directions are now pinned by
+tests, because this is exactly the kind of rule that looks obviously right in review.
+
+With soft c fixed, `service` reduces to `servise` and `सर्विस` to `sarvis` — still not
+equal on the strict key, but identical on the loose consonant key, `srvs`. So context
+terms are now indexed under both.
+
+**What made it safe to widen context** was the adversarial suite. Loosening context
+matching is exactly the sort of change that buys one case and quietly costs several, and
+before that suite existed the honest choice would have been to leave the case failing.
+The measurement: **0 false positives across 1,626 sentences before the change, and 0
+after.** The dataset went to 62/62.
+
+The uncomfortable part is worth keeping in view. A phonetic rule wrong about `city`,
+`nice` and `price` survived eighteen findings' worth of scrutiny because every test term
+happened to avoid it. Coverage of the decision policy was measured; coverage of the
+*alphabet* never was.
+
+**Pinned by:** `tests/test_phonetics.py::test_soft_and_hard_c`,
+`codemix-devanagari-should-fire`

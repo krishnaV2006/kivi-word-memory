@@ -60,10 +60,10 @@
       "start": 4,
       "end": 8,
       "action": "apply",
-      "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+      "reason": "'Kiwi' matches 'Kivi' via indic (similarity 1.0, confidence 0.8, context 0.6667) scoring 1.0",
       "entry_id": 1,
       "canonical": "Kivi",
-      "score": 0.9833,
+      "score": 1.0,
       "runner_up": null,
       "candidates": [
         {
@@ -74,8 +74,8 @@
           "confidence": 0.8,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.3333,
-          "score": 0.9833
+          "context_boost": 0.6667,
+          "score": 1.0
         }
       ]
     }

@@ -90,6 +90,30 @@ def test_multiword_indexes_as_one_identity() -> None:
     check("multiword strict key is joined", strict, "sarvamkivi")
 
 
+def test_soft_and_hard_c() -> None:
+    """English c is /s/ before e, i or y and /k/ otherwise. Getting this wrong turned
+    'service' into 'servike', and the naive fix -- `nxt in "eiy"` -- silently softened
+    every word-final c, because the empty string is a substring of everything."""
+    for word, expected in [("service", "servise"), ("city", "sity"), ("nice", "nise"),
+                           ("price", "prise"), ("circle", "sirkle")]:
+        check(f"soft c in {word}", indic_skeleton(word), expected)
+    for word, expected in [("music", "musik"), ("picnic", "piknik"), ("cat", "kat"),
+                           ("code", "kode"), ("doctor", "doktor")]:
+        check(f"hard c in {word}", indic_skeleton(word), expected)
+    check("ch is untouched by the soft-c rule", indic_skeleton("chinmay"), "cinmay")
+
+
+def test_devanagari_crosses_scripts() -> None:
+    """A term taught in one script must be found in the other."""
+    for deva, latin in [("आदित्य", "Aaditya"), ("कीवी", "Kivi"), ("सर्वम", "Sarvam"),
+                        ("कृष्ण", "Krishna")]:
+        check(f"{deva} matches {latin}", indic_skeleton(deva), indic_skeleton(latin))
+    check_true("schwa deletion is conditional: सर्वम loses it",
+               indic_skeleton("सर्वम") == indic_skeleton("Sarvam"))
+    check_true("schwa deletion is conditional: आदित्य keeps it after a conjunct",
+               indic_skeleton("आदित्य") == indic_skeleton("Aaditya"))
+
+
 def test_normalize_strips_punctuation() -> None:
     check("possessive stripped", normalize("Aaditya's"), "aadityas")
     check("skeleton of possessive", indic_skeleton("Aaditya's"), "aditias")

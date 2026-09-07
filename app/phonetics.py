@@ -158,7 +158,18 @@ def _emit(word: str) -> str:
                 break
         else:
             ch = word[i]
-            out.append(_SINGLES.get(ch, ch))
+            if ch == "c":
+                # Soft c. Before e, i or y an English c is an /s/ -- service, city, nice,
+                # price -- and mapping every bare c to k turned 'service' into 'servike'.
+                # That was wrong on its own terms, and it also kept the English context
+                # term 'service' from ever meeting Hindi 'सर्विस' (sarvis), which is the
+                # same borrowed word. 'ch' never reaches here; it is consumed above.
+                # Tuple, not a string: `"" in "eiy"` is True in Python, which silently
+                # softened every word-final c and turned 'music' into 'musis'.
+                nxt = word[i + 1] if i + 1 < n else ""
+                out.append("s" if nxt in ("e", "i", "y") else "k")
+            else:
+                out.append(_SINGLES.get(ch, ch))
             i += 1
     return "".join(out)
 

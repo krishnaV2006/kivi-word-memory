@@ -41,10 +41,10 @@
       "start": 8,
       "end": 16,
       "action": "apply",
-      "reason": "'Bekariya' matches 'Vekariya' via indic_fuzzy (similarity 0.7262, confidence 0.75, context 0.6667) scoring 0.7474",
+      "reason": "'Bekariya' matches 'Vekariya' via indic_fuzzy (similarity 0.7262, confidence 0.75, context 1.0) scoring 0.7808",
       "entry_id": 6,
       "canonical": "Vekariya",
-      "score": 0.7474,
+      "score": 0.7808,
       "runner_up": null,
       "candidates": [
         {
@@ -55,8 +55,8 @@
           "confidence": 0.75,
           "similarity": 0.7262,
           "route": "indic_fuzzy",
-          "context_boost": 0.6667,
-          "score": 0.7474
+          "context_boost": 1.0,
+          "score": 0.7808
         }
       ]
     }

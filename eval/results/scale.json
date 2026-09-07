@@ -19,14 +19,14 @@
         "mean": 1
       },
       "cold": {
-        "p50_ms": 5.692,
-        "p95_ms": 6.37,
-        "mean_ms": 5.808
+        "p50_ms": 7.841,
+        "p95_ms": 9.506,
+        "mean_ms": 8.102
       },
       "warm": {
-        "p50_ms": 1.443,
-        "p95_ms": 2.959,
-        "mean_ms": 1.556
+        "p50_ms": 2.094,
+        "p95_ms": 2.421,
+        "mean_ms": 2.187
       },
       "correctness_failures": [],
       "correct": true
@@ -42,14 +42,14 @@
         "mean": 1
       },
       "cold": {
-        "p50_ms": 6.607,
-        "p95_ms": 7.273,
-        "mean_ms": 6.699
+        "p50_ms": 10.774,
+        "p95_ms": 14.529,
+        "mean_ms": 10.989
       },
       "warm": {
-        "p50_ms": 1.533,
-        "p95_ms": 2.029,
-        "mean_ms": 1.617
+        "p50_ms": 2.08,
+        "p95_ms": 2.334,
+        "mean_ms": 2.13
       },
       "correctness_failures": [],
       "correct": true
@@ -65,14 +65,14 @@
         "mean": 1.4
       },
       "cold": {
-        "p50_ms": 17.462,
-        "p95_ms": 21.558,
-        "mean_ms": 18.044
+        "p50_ms": 18.833,
+        "p95_ms": 23.902,
+        "mean_ms": 19.287
       },
       "warm": {
-        "p50_ms": 1.95,
-        "p95_ms": 2.879,
-        "mean_ms": 2.043
+        "p50_ms": 2.066,
+        "p95_ms": 3.439,
+        "mean_ms": 2.18
       },
       "correctness_failures": [],
       "correct": true
@@ -88,14 +88,14 @@
         "mean": 1.6
       },
       "cold": {
-        "p50_ms": 110.359,
-        "p95_ms": 128.362,
-        "mean_ms": 111.743
+        "p50_ms": 114.349,
+        "p95_ms": 129.45,
+        "mean_ms": 114.652
       },
       "warm": {
-        "p50_ms": 4.14,
-        "p95_ms": 5.293,
-        "mean_ms": 4.3
+        "p50_ms": 3.79,
+        "p95_ms": 5.244,
+        "mean_ms": 4.037
       },
       "correctness_failures": [],
       "correct": true
@@ -111,14 +111,14 @@
         "mean": 1
       },
       "cold": {
-        "p50_ms": 228.907,
-        "p95_ms": 266.661,
-        "mean_ms": 228.87
+        "p50_ms": 220.039,
+        "p95_ms": 254.811,
+        "mean_ms": 221.063
       },
       "warm": {
-        "p50_ms": 3.91,
-        "p95_ms": 5.175,
-        "mean_ms": 4.079
+        "p50_ms": 4.397,
+        "p95_ms": 5.877,
+        "mean_ms": 4.627
       },
       "correctness_failures": [],
       "correct": true

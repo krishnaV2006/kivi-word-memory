@@ -76,10 +76,10 @@
       "start": 19,
       "end": 25,
       "action": "apply",
-      "reason": "'Sarwam' matches 'Sarvam' via indic (similarity 1.0, confidence 0.8, context 0.3333) scoring 0.9833",
+      "reason": "'Sarwam' matches 'Sarvam' via indic (similarity 1.0, confidence 0.8, context 0.6667) scoring 1.0",
       "entry_id": 3,
       "canonical": "Sarvam",
-      "score": 0.9833,
+      "score": 1.0,
       "runner_up": null,
       "candidates": [
         {
@@ -90,8 +90,8 @@
           "confidence": 0.8,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.3333,
-          "score": 0.9833
+          "context_boost": 0.6667,
+          "score": 1.0
         }
       ]
     },

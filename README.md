@@ -56,7 +56,7 @@ So the system abstains, with a stated reason, in eight distinct situations:
 | nothing sounds close enough | memory must not invent |
 | a b/v-folded match has no context support | that tier is over-permissive by design and must earn its place |
 
-Measured over 62 cases: **34 useful interventions, 0 false interventions** — and, on a
+Measured over 62 cases: **35 useful interventions, 0 false interventions** — and, on a
 separate adversarial suite, **0 false interventions across 1,626 sentences**. The
 exact-string dictionary baseline manages 14 useful and **13 false**.
 
@@ -224,12 +224,12 @@ documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 27 / 62 | 28 / 62 | **61 / 62** |
-| useful interventions | 0 | 14 | **34** |
-| missed | 35 | 19 | **1** |
+| cases passed | 27 / 62 | 28 / 62 | **62 / 62** |
+| useful interventions | 0 | 14 | **35** |
+| missed | 35 | 19 | **0** |
 | false interventions | 0 | **13** | **0** |
 | precision | 0.0 | 0.48 | **1.00** |
-| recall | 0.0 | 0.40 | **0.97** |
+| recall | 0.0 | 0.40 | **1.00** |
 
 The middle column is the honest strawman — whole-word replacement of every observed
 spelling, which is what most people mean by "a dictionary". It is genuinely good at what
@@ -267,43 +267,32 @@ is worthless if the pipeline is inert, so names that genuinely *are* the user's 
 under another spelling are split out automatically — by strict phonetic skeleton, not by
 hand — and must be rewritten. They are, 5 of 5.
 
-### The one failure, and how the two earlier ones were closed
+### 62/62 is a number worth distrusting, so here is how it got there
 
-One case fails, and it is in the dataset on purpose. Two others used to fail and were
-closed; neither was deleted, and the git history shows both.
+A perfect score on a dataset written by the submitter proves very little on its own. Four
+cases in this set failed at some point and were closed; none was deleted, and the git
+history shows every one.
 
-**`codemix-devanagari-should-fire`** — the live failure. Identity crosses scripts but
-context does not: `कीवी सर्विस ठीक है` is not corrected, because `सर्विस` is a
-transliterated loanword reducing to `sarvis` while the context term learned from English
-reduces to `servike`. The two never meet, so a homophone stays guarded in Devanagari even
-when the sentence does support it. Conservative rather than wrong, and reported as a
-failure rather than removed.
+| case | why it failed | how it was closed |
+|---|---|---|
+| `fire-acronym-casing` | the already-correct check compared case-insensitively, so `Iitm` looked like it was already `IITM` | ask whether applying the memory would change anything, rather than comparing strings (§4) |
+| `fire-known-hard-bekariya` | b/v drift is real, but a global `b↔v` rule would collapse `bat`/`vat` | a fourth retrieval tier that folds b/v/w and is discarded unless the sentence supplies context (§7) |
+| `codemix-devanagari-should-fire` | English `service` skeletonised to `servike`, and context matched on strict keys only, so it could never meet Hindi `सर्विस` | fix soft c, and index context under the loose key as well (§12) |
+| `noop-sarah-real-name` | written expecting a *false* intervention | it passed on the first run; the `known_hard` flag was removed once measured (§8) |
 
-**`fire-known-hard-bekariya`** — Indian ASR genuinely confuses `b` and `v`, so `Vekariya`
-comes back as `Bekariya`. For most of this project's life it failed, deliberately: a
-global `b ↔ v` rule would also collapse `bat`/`vat`, `bet`/`vet` and `ban`/`van`, and
-buying one miss with that many potential false positives contradicts the entire thesis.
+**What makes the number mean something is not the number.** It is the evidence that does
+not come from cases I wrote:
 
-It is now fixed, but not by widening the net. There is a fourth retrieval tier,
-`indic_fuzzy`, which folds b/v/w and is then **required to earn its place**: a candidate
-found only through it is discarded unless the sentence independently supplies context for
-that memory. So `Krishna Bekariya submitted the form.` is corrected — `krishna` and
-`submitted` are Vekariya context terms — and `Bekariya is here.` is left alone. The
-dataset gained `noop-fuzzy-tier-needs-context` in the same commit, because a permissive
-tier tested only in the direction that flatters it is not tested at all.
+- **0 false positives across 1,626 adversarial sentences**, including 199 real personal
+  names, with a control group proving the pipeline still fires when it should
+- **every branch of the decision policy** exercised by at least one case
+- **a second persona** — different names, different domain, a different homophone —
+  handled with no code change, and the brief's own example correctly ignored for that user
+- **correctness holding at 10,000 entries**, not just at seed scale
 
-What made that safe to ship was the adversarial suite, not the reasoning. After enabling
-the tier, false positives stayed at **0 across 1,598 sentences** and exactly **one** case
-artifact in the entire evaluation changed — the one it targeted. That is a diff, not a
-claim. Without that harness the honest choice would still have been to leave the case
-failing.
-
-**`noop-sarah-real-name`** was written expecting a *false* intervention and passed on the
-first run — `Sarah` and `Saaras` share no phonetic key at all. The `known_hard` flag was
-removed once that was measured, and the case's rationale records why it passes.
-
-One branch of the decision policy is still never exercised, and the coverage table in
-`summary.md` says so rather than hiding it. See limitation 6.
+Each of the three fixes above was checked against the adversarial suite before being
+kept. The b/v tier and the context widening each changed exactly the cases they targeted
+and left the false-positive count at zero.
 
 ## Limitations
 
@@ -328,23 +317,26 @@ Honest ones, in rough order of how much they would matter in production.
    Kivi they should probably decay, and the active application would be a strong signal
    the model currently has no access to.
 4. **Single-user.** No tenancy, no auth. Every table would need a user scope.
-5. **Cross-script identity works; cross-script context does not.** Devanagari is
-   transliterated into the skeleton alphabet, so a word taught once in Latin is found in
-   Hindi script — आदित्य resolves to `Aaditya` without ever being taught that spelling.
-   But context terms do not cross: `सर्विस` is a transliterated loanword reducing to
-   `sarvis` while the English-learned term reduces to `servike`, so homophone terms stay
-   guarded in Devanagari even when the sentence does support them. Conservative rather
-   than wrong, and pinned by a failing case. Other Indic scripts are not handled at all.
-6. ~~`APPLY_THRESHOLD` is nearly redundant.~~ **Fixed.** A branch-coverage table showed
+5. **Devanagari works; other Indic scripts do not.** Devanagari is transliterated into
+   the skeleton alphabet, so a word taught once in Latin is found in Hindi script, context
+   included. Tamil, Telugu, Bengali and the rest produce no keys at all and memory is
+   simply inert on them — the transliteration table would need extending per script, and
+   for a product aimed at twenty-two languages that is the most consequential gap left.
+6. **Context now matches on the loose consonant key as well as the strict one**, which is
+   what let a borrowed word meet its own transliteration. It is a real widening: `service`
+   and `serves` share a loose key, so either would supply context for Kivi. Measured cost
+   was zero across 1,626 adversarial sentences, but the mechanism is looser than it reads,
+   and a memory whose context terms are short common words would feel that first.
+7. ~~`APPLY_THRESHOLD` is nearly redundant.~~ **Fixed.** A branch-coverage table showed
    it was never reached, because `SIM_FLOOR` rejected almost everything first. The floor
    dropped from 0.85 to 0.60, demoting it to a cheap pre-filter and letting the score —
    which accounts for evidence and context, as a raw floor cannot — do the deciding. Same
    results, same adversarial numbers, full branch coverage, and a more truthful trace.
    Kept here rather than deleted so the arc is visible: DISCOVERIES.md §9 diagnosed it,
    §15 acted on it.
-7. **The `usage` observation confirms every entry it mentions.** A user quoting someone
+8. **The `usage` observation confirms every entry it mentions.** A user quoting someone
    else's text would strengthen memories they did not intend to.
-8. **The decision trace keeps only the most recent 200 requests.** It is an inspection
+9. **The decision trace keeps only the most recent 200 requests.** It is an inspection
    aid, not an audit log, and unbounded it outgrew the memory it explains — 2.5 MB after
    5,000 utterances against 324 KB now. A product that needed durable history would want
    a real retention policy rather than a ring buffer. See DISCOVERIES.md §14.

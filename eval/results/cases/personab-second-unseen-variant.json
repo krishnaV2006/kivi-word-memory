@@ -56,10 +56,10 @@
       "start": 0,
       "end": 5,
       "action": "apply",
-      "reason": "'Meira' matches 'Miira' via metaphone (similarity 0.9283, confidence 0.75, context 0.3333) scoring 0.9036",
+      "reason": "'Meira' matches 'Miira' via metaphone (similarity 0.9283, confidence 0.75, context 0.6667) scoring 0.9369",
       "entry_id": 1,
       "canonical": "Miira",
-      "score": 0.9036,
+      "score": 0.9369,
       "runner_up": null,
       "candidates": [
         {
@@ -70,8 +70,8 @@
           "confidence": 0.75,
           "similarity": 0.9283,
           "route": "metaphone",
-          "context_boost": 0.3333,
-          "score": 0.9036
+          "context_boost": 0.6667,
+          "score": 0.9369
         }
       ]
     }

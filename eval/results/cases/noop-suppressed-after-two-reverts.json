@@ -55,7 +55,7 @@
       "reason": "'Bulbul' was reverted by the user and is suppressed; it stays in memory but will not act",
       "entry_id": 5,
       "canonical": "Bulbul",
-      "score": 0.9417,
+      "score": 0.975,
       "runner_up": null,
       "candidates": [
         {
@@ -66,8 +66,8 @@
           "confidence": 0.5,
           "similarity": 1.0,
           "route": "indic",
-          "context_boost": 0.6667,
-          "score": 0.9417
+          "context_boost": 1.0,
+          "score": 0.975
         }
       ]
     }

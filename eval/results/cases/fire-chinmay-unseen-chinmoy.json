@@ -41,10 +41,10 @@
       "start": 0,
       "end": 7,
       "action": "apply",
-      "reason": "'Chinmoy' matches 'Chinmay' via metaphone (similarity 0.9357, confidence 0.75, context 0.6667) scoring 0.9439",
+      "reason": "'Chinmoy' matches 'Chinmay' via metaphone (similarity 0.9357, confidence 0.75, context 1.0) scoring 0.9772",
       "entry_id": 7,
       "canonical": "Chinmay",
-      "score": 0.9439,
+      "score": 0.9772,
       "runner_up": null,
       "candidates": [
         {
@@ -55,8 +55,8 @@
           "confidence": 0.75,
           "similarity": 0.9357,
           "route": "metaphone",
-          "context_boost": 0.6667,
-          "score": 0.9439
+          "context_boost": 1.0,
+          "score": 0.9772
         }
       ]
     }

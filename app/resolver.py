@@ -32,7 +32,7 @@ from typing import Any
 
 from app import apply as apply_mod
 from app.memory import note_application
-from app.phonetics import indic_skeleton, keys_for, similarity
+from app.phonetics import consonant_skeleton, indic_skeleton, keys_for, similarity
 
 # --- policy constants -------------------------------------------------------------
 # Small, few, and stated out loud. Tuning these is a product decision, not a detail.
@@ -143,9 +143,15 @@ def load_view(conn: sqlite3.Connection) -> MemoryView:
 
     # Context terms are stored as written but matched as skeletons, so a term learned as
     # 'sarvam' still fires when the ASR writes 'sarwam'.
+    # Indexed under both the strict and the loose skeleton. Strict alone could not match
+    # a borrowed word across scripts: English 'service' reduces to 'servise' and Hindi
+    # 'सर्विस' to 'sarvis', the same word written twice, never meeting.
     ctx_index: dict[int, dict[str, float]] = {}
     for r in conn.execute("SELECT entry_id, term, weight FROM context_terms"):
-        ctx_index.setdefault(r["entry_id"], {})[indic_skeleton(r["term"])] = r["weight"]
+        bucket = ctx_index.setdefault(r["entry_id"], {})
+        for key in (indic_skeleton(r["term"]), consonant_skeleton(r["term"])):
+            if key:
+                bucket[key] = max(bucket.get(key, 0.0), r["weight"])
 
     common = {r["word"] for r in conn.execute("SELECT word FROM common_words")}
     # The guard asks "is this an ordinary word", which is a question about sound, not
@@ -392,7 +398,11 @@ def resolve(
 
     ranges = apply_mod.protected_ranges(text)
     tokens = apply_mod.tokenize(text)
-    sentence_skeletons = {indic_skeleton(t.stem): 1 for t in tokens}
+    sentence_skeletons = {}
+    for t in tokens:
+        for key in (indic_skeleton(t.stem), consonant_skeleton(t.stem)):
+            if key:
+                sentence_skeletons[key] = 1
 
     # Longest spans first so that a multiword identity wins over its parts.
     spans: list[tuple[int, int, str, str]] = []
