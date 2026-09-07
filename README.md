@@ -360,7 +360,7 @@ code, not by an assistant recalling what it expected.
 
 The working method was to make claims checkable rather than to argue them, and most of
 what is good here came from a measurement contradicting something we had written down.
-`DISCOVERIES.md` is that record — thirteen findings, of which roughly half are corrections
+`DISCOVERIES.md` is that record — 19 findings, of which roughly half are corrections
 to our own earlier mistakes:
 
 - The **eval-before-implementation commit ordering** was deliberate, so the evaluation's

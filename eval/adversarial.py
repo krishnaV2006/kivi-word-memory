@@ -235,7 +235,7 @@ def key_collisions() -> dict:
     strict key collides freely, retrieval hands the decision stage candidates it should
     never have seen, and eventually one of them wins a span.
 
-    A soft-c bug survived eighteen findings here because coverage of the *decision
+    A soft-c bug survived seventeen findings here because coverage of the *decision
     policy* was measured and coverage of the *alphabet* never was. This measures the
     alphabet.
     """
@@ -423,7 +423,7 @@ def write_report(payload: dict) -> None:
           "which a phonetic bug becomes a wrong rewrite — retrieval hands the decision stage "
           "candidates it should never have seen, and eventually one wins a span it should "
           "not have. It is also the coverage this project was missing when a soft-c bug "
-          "survived eighteen findings: the decision policy was measured exhaustively, the "
+          "survived seventeen findings: the decision policy was measured exhaustively, the "
           "alphabet never was.\n")
         w("| vocabulary | words | strict-key collision groups | loose-key groups | largest loose group |")
         w("|---|---:|---:|---:|---:|")

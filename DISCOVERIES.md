@@ -682,7 +682,7 @@ The measurement: **0 false positives across 1,626 sentences before the change, a
 after.** The dataset went to 62/62.
 
 The uncomfortable part is worth keeping in view. A phonetic rule wrong about `city`,
-`nice` and `price` survived eighteen findings' worth of scrutiny because every test term
+`nice` and `price` survived seventeen findings' worth of scrutiny because every test term
 happened to avoid it. Coverage of the decision policy was measured; coverage of the
 *alphabet* never was.
 

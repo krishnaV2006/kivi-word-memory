@@ -95,6 +95,13 @@ def main() -> int:
                     f"| {corpus} | {row['sentences']} | **{row['interventions']}** |",
                     readme, "README.md"))
 
+    # The README states how many findings DISCOVERIES records. It has drifted twice.
+    discoveries = (REPO_ROOT / "DISCOVERIES.md").read_text(encoding="utf-8")
+    n_findings = len(re.findall(r"^## \d+\.", discoveries, re.M))
+    checks.append((
+        "README findings count matches DISCOVERIES.md",
+        f"{n_findings} findings, of which roughly half", readme, "README.md"))
+
     failures: list[str] = []
     for description, needle, document, doc_name in checks:
         if needle not in document:

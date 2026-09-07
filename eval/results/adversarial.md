@@ -33,7 +33,7 @@ None. No sentence in any corpus was modified.
 
 ## Precision of the phonetic key itself
 
-Measured independently of any memory state: across a fixed vocabulary, how often do two genuinely different words land on the same key? This is the mechanism by which a phonetic bug becomes a wrong rewrite — retrieval hands the decision stage candidates it should never have seen, and eventually one wins a span it should not have. It is also the coverage this project was missing when a soft-c bug survived eighteen findings: the decision policy was measured exhaustively, the alphabet never was.
+Measured independently of any memory state: across a fixed vocabulary, how often do two genuinely different words land on the same key? This is the mechanism by which a phonetic bug becomes a wrong rewrite — retrieval hands the decision stage candidates it should never have seen, and eventually one wins a span it should not have. It is also the coverage this project was missing when a soft-c bug survived seventeen findings: the decision policy was measured exhaustively, the alphabet never was.
 
 | vocabulary | words | strict-key collision groups | loose-key groups | largest loose group |
 |---|---:|---:|---:|---:|
