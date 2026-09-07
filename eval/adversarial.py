@@ -9,10 +9,11 @@ deliberately promiscuous -- `cave` retrieves `Kivi` -- so every ordinary sentenc
 opportunity for a spurious rewrite, and a rewrite the user did not ask for is the
 expensive failure this whole system is built to avoid.
 
-Four corpora. Three are scored for false positives, one is a control:
+Five corpora. Four are scored for false positives, one is a control:
 
   neutral        ordinary sentences assembled from everyday vocabulary
   homophone      each memory's ordinary-English twin in clearly non-memory contexts
+  devanagari     Hindi in native script, including the fruit कीवी, which must stay a fruit
   names          real personal names that are NOT this user's, in natural frames
   names_control  names that ARE the user's person under another spelling -- these are
                  EXPECTED to be rewritten
@@ -125,6 +126,32 @@ HOMOPHONE_FRAMES = {
 }
 
 
+# Devanagari, because transliteration opened a whole second script to matching and an
+# untested script is an untested attack surface. Half of these contain the fruit कीवी,
+# which is a homophone of the product and must stay a fruit; the rest are ordinary Hindi
+# containing names and words memory has never been taught.
+DEVANAGARI_SENTENCES = [
+    "मैं कीवी खा रहा हूँ।",
+    "बाज़ार से कीवी ले आना।",
+    "कीवी एक फल है।",
+    "उसने नाश्ते में कीवी खाया।",
+    "कीवी बहुत महंगा है।",
+    "राहुल को बोल दो कि मैं आ रहा हूँ।",
+    "कल बैठक सुबह दस बजे है।",
+    "मुझे यह रिपोर्ट कल तक चाहिए।",
+    "प्रिया ने दस्तावेज़ भेज दिए हैं।",
+    "टीम ने काम पूरा कर लिया।",
+    "यह किताब बहुत अच्छी है।",
+    "हमें बजट पर चर्चा करनी है।",
+    "विकास ने अनुबंध पढ़ा।",
+    "गुफा के अंदर बहुत अंधेरा था।",
+    "सेवा फिर से बंद हो गई है।",
+    "मीरा कल दफ़्तर नहीं आई।",
+    "अनिल ने प्रस्ताव मंज़ूर किया।",
+    "शाम को बारिश होने वाली है।",
+]
+
+
 def build_corpora() -> dict[str, list[str]]:
     rng = random.Random(SEED)
 
@@ -137,7 +164,11 @@ def build_corpora() -> dict[str, list[str]]:
 
     homophone = [s for group in HOMOPHONE_FRAMES.values() for s in group]
 
-    return {"neutral": sorted(set(neutral)), "homophone": homophone}
+    return {
+        "neutral": sorted(set(neutral)),
+        "homophone": homophone,
+        "devanagari": list(DEVANAGARI_SENTENCES),
+    }
 
 
 def split_names(known: set[str]) -> tuple[list[str], list[str], list[str]]:

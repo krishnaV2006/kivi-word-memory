@@ -47,8 +47,101 @@ _SINGLES: dict[str, str] = {
 }
 
 
+# --- Devanagari -------------------------------------------------------------------
+# Kivi is built for Indian users, so the same person's name arrives in two scripts. A
+# term taught once in Latin should be recognised in Devanagari without being taught
+# again -- the memory is the sound, and the script is just how it was written down.
+#
+# This is transliteration into the skeleton alphabet, not a rendering scheme: it only has
+# to be consistent enough that आदित्य and "Aaditya" land on the same key. Consonants carry
+# an inherent 'a' unless a vowel sign or virama follows, which is the only real subtlety.
+
+_DEVA_CONSONANTS = {
+    "क": "k", "ख": "kh", "ग": "g", "घ": "gh", "ङ": "n",
+    "च": "ch", "छ": "chh", "ज": "j", "झ": "jh", "ञ": "n",
+    "ट": "t", "ठ": "th", "ड": "d", "ढ": "dh", "ण": "n",
+    "त": "t", "थ": "th", "द": "d", "ध": "dh", "न": "n",
+    "प": "p", "फ": "ph", "ब": "b", "भ": "bh", "म": "m",
+    "य": "y", "र": "r", "ल": "l", "व": "v", "ळ": "l",
+    "श": "sh", "ष": "sh", "स": "s", "ह": "h",
+    "क़": "k", "ख़": "kh", "ग़": "g", "ज़": "z", "ड़": "r", "ढ़": "rh", "फ़": "f",
+}
+_DEVA_VOWELS = {
+    "अ": "a", "आ": "aa", "इ": "i", "ई": "ii", "उ": "u", "ऊ": "uu",
+    "ए": "e", "ऐ": "ai", "ओ": "o", "औ": "au", "ऋ": "ri", "ॲ": "a", "ऑ": "o",
+}
+_DEVA_MATRAS = {
+    "ा": "aa", "ि": "i", "ी": "ii", "ु": "u", "ू": "uu",
+    "े": "e", "ै": "ai", "ो": "o", "ौ": "au", "ृ": "ri", "ॉ": "o", "ॅ": "a",
+}
+_DEVA_SIGNS = {"ं": "n", "ँ": "n", "ः": "h"}
+_VIRAMA = "्"
+
+DEVANAGARI_RE = re.compile(r"[ऀ-ॿ]")
+
+
+def transliterate_devanagari(word: str) -> str:
+    """Devanagari -> Latin, aimed at the phonetic skeleton rather than at readability.
+
+    The one rule that matters here is **schwa deletion**: Hindi drops the word-final
+    inherent vowel, so सर्वम is "sarvam" and not "sarvama". It is not unconditional
+    though -- the vowel survives after a conjunct, which is why आदित्य is "aaditya" and
+    not "aadity". Getting this wrong breaks the match against the Latin spelling in
+    exactly the cases the feature exists for.
+    """
+    out: list[str] = []
+    # (index into out, was the consonant part of a conjunct) for inherent-vowel emissions
+    last_inherent: tuple[int, bool] | None = None
+    i, n = 0, len(word)
+    prev_was_virama = False
+
+    while i < n:
+        ch = word[i]
+        nxt = word[i + 1] if i + 1 < n else ""
+        if ch in _DEVA_CONSONANTS:
+            base = _DEVA_CONSONANTS[ch]
+            if nxt == _VIRAMA:            # explicit vowel suppression
+                out.append(base)
+                last_inherent = None
+                prev_was_virama = True
+                i += 2
+                continue
+            if nxt in _DEVA_MATRAS:       # vowel sign replaces the inherent vowel
+                out.append(base + _DEVA_MATRAS[nxt])
+                last_inherent = None
+                prev_was_virama = False
+                i += 2
+                continue
+            out.append(base + "a")        # inherent vowel
+            last_inherent = (len(out) - 1, prev_was_virama)
+            prev_was_virama = False
+            i += 1
+            continue
+        if ch in _DEVA_VOWELS:
+            out.append(_DEVA_VOWELS[ch])
+            last_inherent = None
+        elif ch in _DEVA_SIGNS:
+            out.append(_DEVA_SIGNS[ch])
+            last_inherent = None
+        prev_was_virama = False
+        i += 1
+
+    # Word-final schwa deletion, unless the consonant closed a conjunct.
+    if last_inherent is not None:
+        idx, in_conjunct = last_inherent
+        if idx == len(out) - 1 and not in_conjunct:
+            out[idx] = out[idx][:-1]
+    return "".join(out)
+
+
 def normalize(word: str) -> str:
-    """Lowercase and strip everything that is not a letter."""
+    """Lowercase and strip everything that is not a letter.
+
+    Devanagari is transliterated first, so a term learned in one script is found in the
+    other. Everything downstream -- skeletons, keys, context terms -- is unchanged.
+    """
+    if DEVANAGARI_RE.search(word):
+        word = transliterate_devanagari(word)
     return re.sub(r"[^a-z]", "", word.lower())
 
 

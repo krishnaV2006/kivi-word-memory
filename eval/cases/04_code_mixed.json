@@ -1,0 +1,103 @@
+[
+  {
+    "id": "codemix-hinglish-name",
+    "category": "code_mixed/hinglish",
+    "description": "A learned name inside a Hindi sentence written in Latin script. Kivi is built for Indian users and Saaras emits code-mixed output, so this is ordinary input, not an edge case.",
+    "asr": "kal aditya ke saath meeting hai",
+    "formatted": "Kal Aditya ke saath meeting hai.",
+    "expected": "Kal Aaditya ke saath meeting hai.",
+    "expect_intervention": true,
+    "rationale": "Matching is on phonetic skeletons of Latin tokens, so the surrounding language is irrelevant. Nothing in the design is English-specific."
+  },
+  {
+    "id": "codemix-hinglish-unseen-variant",
+    "category": "code_mixed/hinglish",
+    "description": "An unobserved spelling inside a Hinglish sentence, with a second identity in the same clause.",
+    "asr": "adithya ko bol do ki kiwi build ready hai",
+    "formatted": "Adithya ko bol do ki Kiwi build ready hai.",
+    "expected": "Aaditya ko bol do ki Kivi build ready hai.",
+    "expect_intervention": true,
+    "rationale": "'build' is a Kivi context term and survives being embedded in Hindi, because context terms are matched as skeletons rather than as English words."
+  },
+  {
+    "id": "codemix-hinglish-two-products",
+    "category": "code_mixed/hinglish",
+    "description": "Two product identities in a Hinglish sentence, both misheard.",
+    "asr": "mujhe sarwam ka kiwi service check karna hai",
+    "formatted": "Mujhe Sarwam ka Kiwi service check karna hai.",
+    "expected": "Mujhe Sarvam ka Kivi service check karna hai.",
+    "expect_intervention": true,
+    "rationale": "Sarvam and service both support the product reading of Kiwi even though the carrier language is Hindi."
+  },
+  {
+    "id": "codemix-hinglish-two-people",
+    "category": "code_mixed/hinglish",
+    "description": "Two people, each reached by a different retrieval tier, in one Hindi sentence.",
+    "asr": "aaj chinmoy aur vakaria dono aaye the",
+    "formatted": "Aaj Chinmoy aur Vakaria dono aaye the.",
+    "expected": "Aaj Chinmay aur Vekariya dono aaye the.",
+    "expect_intervention": true,
+    "rationale": "Chinmoy resolves on the loose consonant key and Vakaria on the loose key too; both work unchanged inside Hindi."
+  },
+  {
+    "id": "codemix-hinglish-possessive",
+    "category": "code_mixed/hinglish",
+    "description": "Hindi possessive particle rather than an English clitic.",
+    "asr": "adhitya ka branch merge kar do",
+    "formatted": "Adhitya ka branch merge kar do.",
+    "expected": "Aaditya ka branch merge kar do.",
+    "expect_intervention": true,
+    "rationale": "Possession is a separate word in Hindi, so no suffix handling is needed; the span is a bare token."
+  },
+  {
+    "id": "codemix-hinglish-kiwi-fruit",
+    "category": "code_mixed/hinglish",
+    "description": "THE TRAP, IN HINGLISH. 'I am eating a kiwi.' The homophone guard must hold when the carrier language is not English.",
+    "asr": "main kiwi kha raha hoon",
+    "formatted": "Main kiwi kha raha hoon.",
+    "expected": "Main kiwi kha raha hoon.",
+    "expect_intervention": false,
+    "rationale": "No Kivi context term appears. The guard depends on positive contextual evidence rather than on recognising English food words, so it does not degrade in Hindi."
+  },
+  {
+    "id": "codemix-hinglish-kiwi-market",
+    "category": "code_mixed/hinglish",
+    "description": "Fruit again, different Hindi frame.",
+    "asr": "bazaar se kiwi le aana",
+    "formatted": "Bazaar se kiwi le aana.",
+    "expected": "Bazaar se kiwi le aana.",
+    "expect_intervention": false,
+    "rationale": "'bazaar' and 'aana' belong to no memory. Nothing supports the product reading."
+  },
+  {
+    "id": "codemix-hinglish-unknown-name",
+    "category": "code_mixed/hinglish",
+    "description": "An unknown person in a Hindi sentence.",
+    "asr": "rahul ko bol do ki main aa raha hoon",
+    "formatted": "Rahul ko bol do ki main aa raha hoon.",
+    "expected": "Rahul ko bol do ki main aa raha hoon.",
+    "expect_intervention": false,
+    "rationale": "Memory must stay out of the way regardless of carrier language."
+  },
+  {
+    "id": "codemix-devanagari-name",
+    "category": "code_mixed/devanagari",
+    "description": "Cross-script memory: the same person, written in Devanagari, never taught in that script.",
+    "asr": "आदित्य को बोल दो",
+    "formatted": "आदित्य को बोल दो।",
+    "expected": "Aaditya को बोल दो।",
+    "expect_intervention": true,
+    "rationale": "Authored when Devanagari produced no phonetic keys at all, expecting no intervention. Transliteration into the skeleton alphabet closed that: आदित्य romanises to 'aaditya' and skeletonises to 'aditia', the same key the Latin correction produced. The user taught this word once, in one script, and gets it back in both. The canonical form is written as the user taught it, which is a deliberate choice and an arguable one for a person's name in Hindi prose."
+  },
+  {
+    "id": "codemix-devanagari-should-fire",
+    "category": "code_mixed/devanagari",
+    "description": "KNOWN HARD, EXPECTED TO FAIL. Cross-script CONTEXT, as opposed to cross-script identity.",
+    "asr": "कीवी सर्विस ठीक है",
+    "formatted": "कीवी सर्विस ठीक है।",
+    "expected": "Kivi सर्विस ठीक है।",
+    "expect_intervention": true,
+    "known_hard": true,
+    "rationale": "Identity now crosses scripts, but context does not, and this case pins the difference. 'कीवी' is a homophone of the fruit, so the guard demands supporting context. The supporting word here is 'सर्विस' -- a transliterated English loanword that skeletonises to 'sarvis', while the context term learned from English text skeletonises to 'servike'. They do not meet. The result is conservative rather than wrong: in Devanagari, homophone terms stay guarded, while unambiguous names like आदित्य resolve normally. Fixing it properly means learning context terms per script, or transliteration-aware loanword matching. Reported as a failure."
+  }
+]

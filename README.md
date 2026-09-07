@@ -56,8 +56,8 @@ So the system abstains, with a stated reason, in eight distinct situations:
 | nothing sounds close enough | memory must not invent |
 | a b/v-folded match has no context support | that tier is over-permissive by design and must earn its place |
 
-Measured over 46 cases: **24 useful interventions, 0 false interventions** — and, on a
-separate adversarial suite, **0 false interventions across 1,598 sentences**. The
+Measured over 56 cases: **30 useful interventions, 0 false interventions** — and, on a
+separate adversarial suite, **0 false interventions across 1,616 sentences**. The
 exact-string dictionary baseline manages 12 useful and **11 false**.
 
 ## What the system learns from
@@ -110,6 +110,11 @@ Retrieval is greedy. Three key algorithms cast a wide net over `phonetic_keys`:
 | `indic_loose` | consonants only | `vekariya`, `vakaria` → `vkr` |
 | `indic_fuzzy` | consonants with b/v/w folded, **gated on context** | `vekariya`, `bekariya` → `bkr` |
 | `metaphone` | English phonetics, supplementary | recall net for non-Indic words |
+
+Devanagari is transliterated into the same skeleton alphabet before keying, so a
+term taught once in Latin script is found in Hindi script. The rule that matters
+there is conditional schwa deletion — सर्वम is *sarvam*, but आदित्य is *aaditya*,
+because the final vowel survives after a conjunct.
 
 The loose key deliberately over-generates — `cave` retrieves `Kivi`. That is fine. **A key
 collision is not an intervention.** The decision stage is where the system is
@@ -165,17 +170,17 @@ reverse-engineered from a working system, because there was not one.
 
 ### Results
 
-46 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle. Every branch of the decision policy but one is exercised by at least one case; the exception is
+56 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle, 10 code-mixed. Every branch of the decision policy but one is exercised by at least one case; the exception is
 documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 22 / 46 | 23 / 46 | **46 / 46** |
-| useful interventions | 0 | 12 | **24** |
-| missed | 24 | 11 | **0** |
-| false interventions | 0 | **11** | **0** |
-| precision | 0.0 | 0.50 | **1.00** |
-| recall | 0.0 | 0.50 | **1.00** |
+| cases passed | 25 / 56 | 26 / 56 | **55 / 56** |
+| useful interventions | 0 | 14 | **30** |
+| missed | 31 | 15 | **1** |
+| false interventions | 0 | **13** | **0** |
+| precision | 0.0 | 0.48 | **1.00** |
+| recall | 0.0 | 0.45 | **0.97** |
 
 The middle column is the honest strawman — whole-word replacement of every observed
 spelling, which is what most people mean by "a dictionary". It is genuinely good at what
@@ -192,12 +197,13 @@ A curated dataset only proves the cases its author imagined, and I wrote these 4
 there is a second harness that proves the property most likely to be quietly false: that
 memory stays out of the way of text it was never taught anything about.
 
-**1,598 sentences containing no memory term. 0 interventions.** Full report:
+**1,616 sentences containing no memory term. 0 interventions.** Full report:
 [eval/results/adversarial.md](eval/results/adversarial.md).
 
 | corpus | sentences | interventions | what it attacks |
 |---|---:|---:|---|
 | neutral | 585 | **0** | ordinary workplace sentences from everyday vocabulary |
+| devanagari | 18 | **0** | Hindi in native script, five containing the fruit कीवी |
 | names | 995 | **0** | 199 real personal names that are not this user's |
 | homophone | 18 | **0** | `kiwi` the fruit, `cave`, `Sarah`, `service` in non-product contexts |
 | names_control | 5 | 5 | *control* — names that **are** the user's person; must fire |
@@ -211,11 +217,17 @@ is worthless if the pipeline is inert, so names that genuinely *are* the user's 
 under another spelling are split out automatically — by strict phonetic skeleton, not by
 hand — and must be rewritten. They are, 5 of 5.
 
-### How this reached 46/46, which is a number worth distrusting
+### The one failure, and how the two earlier ones were closed
 
-A perfect score on a dataset its author wrote is exactly what a weak evaluation looks
-like, so here is how each of the two cases that once failed was closed. Neither was
-deleted, and the git history shows both.
+One case fails, and it is in the dataset on purpose. Two others used to fail and were
+closed; neither was deleted, and the git history shows both.
+
+**`codemix-devanagari-should-fire`** — the live failure. Identity crosses scripts but
+context does not: `कीवी सर्विस ठीक है` is not corrected, because `सर्विस` is a
+transliterated loanword reducing to `sarvis` while the context term learned from English
+reduces to `servike`. The two never meet, so a homophone stays guarded in Devanagari even
+when the sentence does support it. Conservative rather than wrong, and reported as a
+failure rather than removed.
 
 **`fire-known-hard-bekariya`** — Indian ASR genuinely confuses `b` and `v`, so `Vekariya`
 comes back as `Bekariya`. For most of this project's life it failed, deliberately: a
@@ -263,9 +275,13 @@ Honest ones, in rough order of how much they would matter in production.
    Kivi they should probably decay, and the active application would be a strong signal
    the model currently has no access to.
 4. **Single-user.** No tenancy, no auth. Every table would need a user scope.
-5. **Latin script only.** Devanagari and other Indic scripts are not handled; the
-   skeleton rules assume romanised input. This matches Kivi's current output but not its
-   ambition.
+5. **Cross-script identity works; cross-script context does not.** Devanagari is
+   transliterated into the skeleton alphabet, so a word taught once in Latin is found in
+   Hindi script — आदित्य resolves to `Aaditya` without ever being taught that spelling.
+   But context terms do not cross: `सर्विस` is a transliterated loanword reducing to
+   `sarvis` while the English-learned term reduces to `servike`, so homophone terms stay
+   guarded in Devanagari even when the sentence does support them. Conservative rather
+   than wrong, and pinned by a failing case. Other Indic scripts are not handled at all.
 6. **`APPLY_THRESHOLD` is nearly redundant.** A branch-coverage table added to the
    evaluation showed it is never reached: `SIM_FLOOR` already rejects almost everything it
    would have caught, and it can only fire in a five-point similarity window on loose-key

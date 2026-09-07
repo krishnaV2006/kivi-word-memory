@@ -23,7 +23,10 @@ PROTECTED_PATTERNS = [
     re.compile(r"\b[\w-]+\.(?:com|ai|org|net|io|dev|co|in)\b\S*", re.IGNORECASE),
 ]
 
-WORD_RE = re.compile(r"[A-Za-z][A-Za-z'’-]*")
+# Devanagari is included so code-mixed text tokenises as words rather than as gaps.
+# The phonetic layer transliterates those tokens, so a term taught in one script is
+# found in the other.
+WORD_RE = re.compile(r"[A-Za-zऀ-ॿ][A-Za-zऀ-ॿ'’-]*")
 POSSESSIVE_RE = re.compile(r"(['’]s|['’])$")
 
 

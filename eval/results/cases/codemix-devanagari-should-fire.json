@@ -1,0 +1,285 @@
+{
+  "id": "codemix-devanagari-should-fire",
+  "category": "code_mixed/devanagari",
+  "description": "KNOWN HARD, EXPECTED TO FAIL. Cross-script CONTEXT, as opposed to cross-script identity.",
+  "rationale": "Identity now crosses scripts, but context does not, and this case pins the difference. 'कीवी' is a homophone of the fruit, so the guard demands supporting context. The supporting word here is 'सर्विस' -- a transliterated English loanword that skeletonises to 'sarvis', while the context term learned from English text skeletonises to 'servike'. They do not meet. The result is conservative rather than wrong: in Devanagari, homophone terms stay guarded, while unambiguous names like आदित्य resolve normally. Fixing it properly means learning context terms per script, or transliteration-aware loanword matching. Reported as a failure.",
+  "known_hard": true,
+  "inputs": {
+    "asr": "कीवी सर्विस ठीक है",
+    "formatted": "कीवी सर्विस ठीक है।",
+    "seeded": true,
+    "case_observations": []
+  },
+  "expected": "Kivi सर्विस ठीक है।",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "कीवी सर्विस ठीक है।",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "exact_dict": {
+      "actual": "कीवी सर्विस ठीक है।",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "phonetic": {
+      "actual": "कीवी सर्विस ठीक है।",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    }
+  },
+  "passed": false,
+  "outcome": "missed_intervention",
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "कीवी",
+      "start": 0,
+      "end": 4,
+      "action": "abstain_common_word",
+      "reason": "'कीवी' is an ordinary English word and nothing in this sentence belongs to 'Kivi'; leaving it alone",
+      "entry_id": 2,
+      "canonical": "Kivi",
+      "score": 0.9583,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 2,
+          "canonical": "Kivi",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8333,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.0,
+          "score": 0.9583
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Aaditya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aaditya",
+        "aditya"
+      ],
+      "context_terms": [
+        "ask",
+        "budget",
+        "fine",
+        "latency",
+        "pull",
+        "request",
+        "review",
+        "said"
+      ]
+    },
+    {
+      "canonical": "Aditi",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Aditi"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Bulbul",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Bulbul",
+        "bulbool"
+      ],
+      "context_terms": [
+        "audio",
+        "nine",
+        "route",
+        "thirty",
+        "through",
+        "voice"
+      ]
+    },
+    {
+      "canonical": "Chinmay",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Chinmay",
+        "chinmai"
+      ],
+      "context_terms": [
+        "chinmai",
+        "build",
+        "design",
+        "green",
+        "ping",
+        "reviewing"
+      ]
+    },
+    {
+      "canonical": "IITM",
+      "status": "active",
+      "confidence": 0.95,
+      "protected": true,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "IITM"
+      ],
+      "context_terms": []
+    },
+    {
+      "canonical": "Kivi",
+      "status": "active",
+      "confidence": 0.8333,
+      "protected": false,
+      "evidence": {
+        "confirmations": 4,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Kivi",
+        "kiwi"
+      ],
+      "context_terms": [
+        "build",
+        "dictation",
+        "service",
+        "ship",
+        "correct",
+        "crashed",
+        "dictionary",
+        "formatting"
+      ]
+    },
+    {
+      "canonical": "Prateik",
+      "status": "candidate",
+      "confidence": 0.6667,
+      "protected": false,
+      "evidence": {
+        "confirmations": 1,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Prateik",
+        "prateek"
+      ],
+      "context_terms": [
+        "joined",
+        "prateek",
+        "standup"
+      ]
+    },
+    {
+      "canonical": "Saaras",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Saaras",
+        "saras"
+      ],
+      "context_terms": [
+        "sara",
+        "checkpoint",
+        "language",
+        "model",
+        "newer",
+        "swap",
+        "three",
+        "transcribe"
+      ]
+    },
+    {
+      "canonical": "Sarvam",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Sarvam",
+        "sarwam"
+      ],
+      "context_terms": [
+        "model",
+        "speech",
+        "bengaluru",
+        "build",
+        "bulbul",
+        "indian",
+        "language",
+        "office"
+      ]
+    },
+    {
+      "canonical": "Vekariya",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Vekariya",
+        "vekaria"
+      ],
+      "context_terms": [
+        "about",
+        "email",
+        "interview",
+        "krishna",
+        "submitted",
+        "task"
+      ]
+    }
+  ]
+}

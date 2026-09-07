@@ -1,11 +1,11 @@
 {
   "seed": 20260907,
-  "total_sentences": 1598,
-  "all_sentences_including_control": 1603,
+  "total_sentences": 1616,
+  "all_sentences_including_control": 1621,
   "total_interventions": 0,
   "false_positive_rate": 0.0,
-  "elapsed_s": 4.06,
-  "per_sentence_ms": 2.5326,
+  "elapsed_s": 7.31,
+  "per_sentence_ms": 4.5121,
   "distinct_names_tested": 200,
   "control_names": [
     "Aditya"
@@ -19,6 +19,12 @@
       "expects_interventions": false
     },
     "homophone": {
+      "sentences": 18,
+      "interventions": 0,
+      "rate": 0.0,
+      "expects_interventions": false
+    },
+    "devanagari": {
       "sentences": 18,
       "interventions": 0,
       "rate": 0.0,

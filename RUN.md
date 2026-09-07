@@ -151,25 +151,29 @@ python -m eval.run_eval
 ```
 
 Takes roughly 1–2 minutes. It runs the 45 labelled cases across three strategies, then
-an adversarial false-positive pass over ~1,600 generated sentences. Both create their own
+an adversarial false-positive pass over ~1,600 generated sentences in English,
+Hinglish and Devanagari. Both create their own
 scratch databases (`eval/.eval.db`, `eval/.adversarial.db`), rebuild them from scratch,
 and delete them when finished. **Your demo database is not touched.**
 
 Expected final output:
 
 ```
-46/46 passed  (precision 1.0, recall 1.0, f1 1.0)
-useful 24  false 0  missed 0  wrong 0
+55/56 passed  (precision 1.0, recall 0.9677, f1 0.9836)
+useful 30  false 0  missed 1  wrong 0
 ```
 
-It also prints the adversarial result (1598 sentences, 0 interventions) and notes that
+The one failure is `codemix-devanagari-should-fire`, marked `known_hard` in the dataset
+and expected to fail; it is explained in README.md and DISCOVERIES.md §12.
+It also prints the adversarial result (1616 sentences, 0 interventions) and notes that
 one decision branch, `abstain_low_score`, is never exercised — that is expected and is
 explained in DISCOVERIES.md §9. If any case fails, the run prints an
 `UNEXPECTED FAILURES` block listing the case, the expectation and the actual output.
 
-A 46/46 score on a dataset written by the submitter is worth distrusting, so README.md
+A high score on a dataset written by the submitter is worth distrusting, so README.md
 explains how each of the two cases that once failed was closed, and the adversarial suite
-in `eval/results/adversarial.md` tests the property the curated cases cannot.
+in `eval/results/adversarial.md` tests the property the curated cases cannot: that memory
+stays out of the way of 1,616 sentences it was never taught anything about.
 
 ## 9. Where evaluation results are written
 

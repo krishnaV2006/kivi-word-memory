@@ -106,6 +106,7 @@ class MemoryView:
     key_index: dict[tuple[str, str], list[int]]
     ctx_index: dict[int, dict[str, float]]
     common: set[str]
+    common_skeletons: set[str]
 
 
 def load_view(conn: sqlite3.Connection) -> MemoryView:
@@ -133,8 +134,14 @@ def load_view(conn: sqlite3.Connection) -> MemoryView:
         ctx_index.setdefault(r["entry_id"], {})[indic_skeleton(r["term"])] = r["weight"]
 
     common = {r["word"] for r in conn.execute("SELECT word FROM common_words")}
+    # The guard asks "is this an ordinary word", which is a question about sound, not
+    # spelling. Comparing raw strings let a Devanagari token slip past it entirely --
+    # कीवी is not in an English word list, so "I am eating a kiwi" written in Hindi was
+    # rewritten to the product name. Comparing skeletons closes that.
+    common_skeletons = {indic_skeleton(w) for w in common}
+    common_skeletons.discard("")
 
-    return MemoryView(entries, surfaces, key_index, ctx_index, common)
+    return MemoryView(entries, surfaces, key_index, ctx_index, common, common_skeletons)
 
 
 # --- retrieval and scoring ----------------------------------------------------------
@@ -215,6 +222,7 @@ def _decide(
     end: int,
     candidates: list[Candidate],
     common: set[str],
+    common_skeletons: set[str],
 ) -> Decision:
     """The whole policy, in one readable place."""
     payload = [asdict(c) for c in candidates[:4]]
@@ -274,7 +282,9 @@ def _decide(
 
     # The homophone guard. A memory whose sound is also an ordinary English word needs
     # positive evidence from the sentence, not merely the absence of evidence against.
-    if stem.lower() in common and top.context_boost <= 0.0:
+    if (
+        stem.lower() in common or indic_skeleton(stem) in common_skeletons
+    ) and top.context_boost <= 0.0:
         return Decision(span=span_text, start=start, end=end, action="abstain_common_word",
                         reason=(f"'{stem}' is an ordinary English word and nothing in this "
                                 f"sentence belongs to '{top.canonical}'; leaving it alone"),
@@ -370,7 +380,8 @@ def resolve(
         if not candidates:
             continue
 
-        decision = _decide(span_text, stem, start, end, candidates, view.common)
+        decision = _decide(span_text, stem, start, end, candidates,
+                           view.common, view.common_skeletons)
         decisions.append(decision)
         consumed.append((start, end))
 

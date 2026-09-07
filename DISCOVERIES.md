@@ -353,3 +353,55 @@ that merely share a *loose* key with a memory deliberately stay in the scored co
 because those near-misses are the entire point of running this at all.
 
 **Pinned by:** `eval/results/adversarial.md`, `eval/adversarial.py::split_names`
+
+---
+
+## 12. Cross-script memory, and the false positive it immediately introduced
+
+**Found:** by asking what a monolingual dataset was failing to test. Kivi is built for
+Indian users and Saaras emits code-mixed output, yet every case in this repository was
+English. Two probes, and two different answers.
+
+**Hinglish worked with no changes at all.** `Kal Aditya ke saath meeting hai.` corrects to
+`Aaditya`, and `Main kiwi kha raha hoon.` — *I am eating a kiwi* — is correctly left
+alone. Nothing in the design was ever English-specific; matching is on phonetic skeletons
+of Latin tokens, so the carrier language is irrelevant. Eight cases now record that,
+because a capability nobody tested is a capability nobody can rely on.
+
+**Devanagari produced nothing.** `normalize()` kept only `[a-z]`, so आदित्य yielded no
+keys and memory was simply inert. For an Indian-language-first product that is the most
+consequential thing the system could not do: a user who teaches Kivi a word in English
+gets nothing back when they write it in Hindi.
+
+Transliteration into the skeleton alphabet closes it, and the interesting part is a rule
+that has to be conditional. Hindi deletes the word-final inherent vowel, so सर्वम is
+*sarvam*, not *sarvama* — but the vowel survives after a conjunct, which is why आदित्य is
+*aaditya* and not *aadity*. Delete unconditionally and the headline name stops matching;
+never delete and सर्वम, चिन्मय and बाज़ार all stop matching. The rule is "delete the final
+schwa unless the consonant closed a conjunct", and with it seven of eight test terms land
+on exactly the key their Latin spelling produces.
+
+**Then it broke the guard.** The first end-to-end run rewrote
+**मैं कीवी खा रहा हूँ** — *I am eating a kiwi* — into the product name. The homophone
+guard compared the raw span against an English word list, and कीवी is not in an English
+word list, so the guard never even ran. A feature added for Indian users had made the
+system worse for Indian users, in exactly the way this project claims to care about most.
+
+The fix follows from what the guard is actually asking. "Is this an ordinary word" is a
+question about **sound**, not spelling, so it now compares skeletons: `kiwi` and कीवी both
+reduce to `kivi`, and the guard fires in either script.
+
+**What the evidence says.** After both changes, no Latin case artifact changed at all, and
+the adversarial suite — extended with a Devanagari corpus, five of whose sentences contain
+the fruit — still reports **0 interventions across 1,616 sentences**.
+
+One thing genuinely does not cross scripts, and `codemix-devanagari-should-fire` is left
+failing to pin it: **identity crosses, context does not**. `कीवी सर्विस ठीक है` is not
+corrected, because the supporting word सर्विस is a transliterated loanword reducing to
+`sarvis` while the context term learned from English reduces to `servike`. The two never
+meet. The behaviour is conservative rather than wrong — unambiguous names resolve in
+Devanagari, homophones stay guarded — but it is a real gap, and closing it means learning
+context terms per script.
+
+**Pinned by:** `eval/cases/04_code_mixed.json` (10 cases),
+`codemix-devanagari-should-fire`, the `devanagari` corpus in `eval/results/adversarial.md`
