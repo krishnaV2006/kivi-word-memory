@@ -152,7 +152,7 @@ database is not touched.**
 Expected final output:
 
 ```
-43/44 passed  (precision 1.0, recall 0.9583, f1 0.9787)
+44/45 passed  (precision 1.0, recall 0.9583, f1 0.9787)
 useful 23  false 0  missed 1  wrong 0
 ```
 

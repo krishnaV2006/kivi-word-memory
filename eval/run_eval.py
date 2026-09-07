@@ -291,7 +291,7 @@ def write_summary(payload: dict) -> None:
       f"fail; they are kept in the set deliberately.\n")
 
     w("\n## What the abstraction bought\n")
-    w("Same 44 cases, three strategies. `exact_dict` is whole-word replacement of every "
+    w(f"Same {len(recs)} cases, three strategies. `exact_dict` is whole-word replacement of every "
       "observed surface -- what most people mean by \"a dictionary\".\n")
     w("| metric | none | exact_dict | phonetic |")
     w("|---|---:|---:|---:|")
@@ -396,8 +396,8 @@ def write_summary(payload: dict) -> None:
       "byte-identical across runs on the same commit. After re-running this harness, "
       "`git diff -- eval/results/cases` should report **no changes at all**; only the "
       "measured latency numbers in `results.json` and in this file will move. Timing is "
-      "reported once, from the dedicated warm-path measurement above, rather than as 44 "
-      "noisy single-shot samples.\n")
+      f"reported once, from the dedicated warm-path measurement above, rather than as "
+      f"{len(recs)} noisy single-shot samples.\n")
 
     w("\n## Where to look next\n")
     w("Every case has a full artifact in `eval/results/cases/<id>.json` containing the "

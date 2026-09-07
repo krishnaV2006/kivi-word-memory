@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 18:52:26",
+  "generated_at": "2026-09-07 18:53:56",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -48,16 +48,16 @@
   "latency": {
     "repeats": 30,
     "warm": true,
-    "p50_ms": 15.822,
-    "p95_ms": 19.061,
-    "max_ms": 34.189,
-    "mean_ms": 16.533,
+    "p50_ms": 17.168,
+    "p95_ms": 19.906,
+    "max_ms": 40.602,
+    "mean_ms": 17.829,
     "stage_means_ms": {
-      "load_memory": 2.732,
-      "span_generation": 0.249,
-      "scoring_and_decision": 8.438,
-      "rewrite_and_prompt": 0.513,
-      "total": 11.932
+      "load_memory": 2.306,
+      "span_generation": 0.222,
+      "scoring_and_decision": 8.579,
+      "rewrite_and_prompt": 0.589,
+      "total": 11.696
     }
   },
   "db_growth": [
@@ -87,8 +87,8 @@
   "cost_inr": 0.0,
   "known_hard_count": 1,
   "branch_coverage": {
-    "noop_already_correct": 3,
     "apply": 23,
+    "noop_already_correct": 3,
     "abstain_common_word": 2,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
