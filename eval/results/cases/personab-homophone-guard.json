@@ -1,0 +1,110 @@
+{
+  "id": "personab-homophone-guard",
+  "category": "second_persona/homophone",
+  "description": "A DIFFERENT homophone from the seeded persona's. This user's design system is called Page.",
+  "rationale": "The guard is not a list of exceptions for 'kiwi'. It is a rule about ordinary words lacking contextual support, and it holds for a homophone that did not exist when the rule was written.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "turn to the next page",
+    "formatted": "Turn to the next page.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "page",
+        "after": "Page",
+        "entry_kind": "product",
+        "context": "the page design system needs tokens"
+      },
+      {
+        "kind": "correction",
+        "before": "page",
+        "after": "Page",
+        "entry_kind": "product",
+        "context": "ship the page component library"
+      },
+      {
+        "kind": "usage",
+        "text": "Page is the design system we maintain, and the Page tokens drive every component."
+      }
+    ]
+  },
+  "expected": "Turn to the next page.",
+  "expect_intervention": false,
+  "strategies": {
+    "none": {
+      "actual": "Turn to the next page.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true
+    },
+    "exact_dict": {
+      "actual": "Turn to the next page.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true
+    },
+    "phonetic": {
+      "actual": "Turn to the next page.",
+      "intervened": false,
+      "outcome": "correct_abstention",
+      "passed": true
+    }
+  },
+  "passed": true,
+  "outcome": "correct_abstention",
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "page",
+      "start": 17,
+      "end": 21,
+      "action": "abstain_common_word",
+      "reason": "'page' is an ordinary English word and nothing in this sentence belongs to 'Page'; leaving it alone",
+      "entry_id": 1,
+      "canonical": "Page",
+      "score": 0.95,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Page",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.0,
+          "score": 0.95
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Page",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 0
+      },
+      "surfaces": [
+        "Page",
+        "page"
+      ],
+      "context_terms": [
+        "component",
+        "design",
+        "system",
+        "token",
+        "drive",
+        "every",
+        "library",
+        "maintain"
+      ]
+    }
+  ]
+}

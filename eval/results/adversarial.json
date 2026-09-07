@@ -4,8 +4,8 @@
   "all_sentences_including_control": 1631,
   "total_interventions": 0,
   "false_positive_rate": 0.0,
-  "elapsed_s": 5.26,
-  "per_sentence_ms": 3.2233,
+  "elapsed_s": 5.3,
+  "per_sentence_ms": 3.2525,
   "distinct_names_tested": 200,
   "control_names": [
     "Aditya"

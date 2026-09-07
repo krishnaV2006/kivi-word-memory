@@ -1,0 +1,110 @@
+{
+  "id": "personab-homophone-with-context",
+  "category": "second_persona/homophone",
+  "description": "The same word, same user, supported by context this time.",
+  "rationale": "'design' and 'system' were mined from this user's own sentences, not from a list anyone wrote. Paired with the case above, this is the whole product in two lines for a persona the system never saw.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "the page design system needs a reset",
+    "formatted": "The page design system needs a reset.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "page",
+        "after": "Page",
+        "entry_kind": "product",
+        "context": "the page design system needs tokens"
+      },
+      {
+        "kind": "correction",
+        "before": "page",
+        "after": "Page",
+        "entry_kind": "product",
+        "context": "ship the page component library"
+      },
+      {
+        "kind": "usage",
+        "text": "Page is the design system we maintain, and the Page tokens drive every component."
+      }
+    ]
+  },
+  "expected": "The Page design system needs a reset.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "The page design system needs a reset.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "exact_dict": {
+      "actual": "The page design system needs a reset.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "phonetic": {
+      "actual": "The Page design system needs a reset.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "page",
+      "start": 4,
+      "end": 8,
+      "action": "apply",
+      "reason": "'page' matches 'Page' via indic (similarity 1.0, confidence 0.8, context 1.0) scoring 1.0",
+      "entry_id": 1,
+      "canonical": "Page",
+      "score": 1.0,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Page",
+          "kind": "product",
+          "status": "active",
+          "confidence": 0.8,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 1.0,
+          "score": 1.0
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Page",
+      "status": "active",
+      "confidence": 0.8,
+      "protected": false,
+      "evidence": {
+        "confirmations": 3,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Page",
+        "page"
+      ],
+      "context_terms": [
+        "component",
+        "design",
+        "system",
+        "token",
+        "drive",
+        "every",
+        "library",
+        "maintain"
+      ]
+    }
+  ]
+}

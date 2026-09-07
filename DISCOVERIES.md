@@ -553,3 +553,86 @@ rather than reported as a gap.
 
 **Pinned by:** `noop-cave-loose-key-collision`, the branch-coverage table in
 `eval/results/summary.md`
+
+---
+
+## 16. The adversarial harness was silently testing the wrong database
+
+**Found:** by adding a second persona. Everything in this repository had been evaluated
+against one user, which invites the obvious question — is the mechanism general, or was
+it tuned to Krishna's names? So a case group builds a completely different user: a
+designer whose colleague is `Miira` and whose design system is called `Page`, a homophone
+that did not exist when the guard was written.
+
+The mechanism generalised exactly as claimed. But the adversarial suite, which had
+reported **0 false positives** on every run for a dozen commits, suddenly reported **6**.
+
+The cause was mine, and it was in the test harness rather than the product.
+`eval/adversarial.py` claimed its scratch database with:
+
+```python
+os.environ.setdefault("KIVI_DB_PATH", str(ADV_DB))
+```
+
+`setdefault` does nothing if the key is already set. Run standalone that is fine. But
+`run_eval` sets `KIVI_DB_PATH` to the *evaluation's* database before importing it, so
+when the adversarial harness ran as part of the main evaluation it resolved all 1,626
+sentences against whatever state the final evaluation case happened to leave behind —
+and then seeded the real persona on top of that.
+
+For a dozen commits this was harmless, because the leftover state was close enough to the
+seed that the numbers came out identical. Adding a persona named `Miira` broke the
+coincidence: `Meera` is in the names corpus, so five sentences correctly matched a memory
+that should never have existed in that run, and the suite reported them as false
+positives.
+
+**Consequence:** `run()` now claims `KIVI_DB_PATH` explicitly for the duration and
+restores the caller's value afterwards. Standalone and embedded runs now agree: 0 across
+1,626.
+
+Two things worth taking from it. First, `setdefault` is the wrong primitive for claiming a
+resource — it silently defers to whoever got there first, which is precisely the case you
+need to override. Second, and more uncomfortable: **the false-positive number had been
+wrong, in the safe direction, and nothing caught it.** It took a new test whose data
+happened to collide with existing test data. Test isolation is not something to assert
+once and stop checking, and a harness measuring a property this load-bearing deserved a
+run that verified it produced the same answer both ways — which is now how it is checked.
+
+**Pinned by:** `eval/adversarial.py::run`, `eval/cases/05_second_persona.json`
+
+---
+
+## 17. A latency number that moved with what the harness did first
+
+**Found:** by the documentation checker, which carries a sanity bound rather than a string
+match for latency — *cold p50 must be single-digit milliseconds, or the README and the
+results disagree*. It started failing at **25 ms** against a documented 4.8 ms.
+
+The obvious reading was a performance regression. It was not. Measured standalone, the
+same code on the same machine reported **6.0 ms**. The number only inflated when the
+measurement ran as part of the full evaluation.
+
+The first guess was the adversarial pass — thousands of resolutions immediately before,
+leaving the machine busy. Moving the measurement ahead of it changed almost nothing:
+18.9 ms. The actual cause was the case sweep. Sixty-two cases across three strategies
+create and drop a SQLite database **186 times**, and a latency measurement taken after
+that inherits the disk churn.
+
+| when latency is measured | cold p50 |
+|---|---:|
+| after the case sweep and adversarial pass | 25 ms |
+| after the case sweep only | 18.9 ms |
+| **first, before anything touches the disk** | **7.2 ms** |
+| standalone, in a clean process | 6.0 ms |
+
+**Consequence:** the measurement now runs at the very start of `main()`, and the report
+says so. The remaining ~1 ms gap against a clean process is honest residue and is not
+worth chasing.
+
+The lesson is not about SQLite. **A benchmark inherits the state of whatever ran before
+it**, so where a measurement sits in a script is part of its methodology — and this
+repository had already been caught twice asserting a latency cause instead of measuring
+it (§10, §13). What is different here is that nobody noticed by reading: a machine check
+with a crude bound caught it, on a number a human eye would have skimmed past.
+
+**Pinned by:** the latency section of `eval/results/summary.md`, `eval/check_docs.py`

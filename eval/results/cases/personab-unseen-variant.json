@@ -1,0 +1,103 @@
+{
+  "id": "personab-unseen-variant",
+  "category": "second_persona/generalisation",
+  "description": "A completely different user. Different names, different domain, no seed. Does the mechanism generalise, or was it tuned to one persona?",
+  "rationale": "Neither correction contained 'mira'. The claim was never about Aaditya specifically; it is about phonetic identity, and this shows the same generalisation for a name the system was built without.",
+  "known_hard": false,
+  "inputs": {
+    "asr": "mira joined the call",
+    "formatted": "Mira joined the call.",
+    "seeded": false,
+    "case_observations": [
+      {
+        "kind": "correction",
+        "before": "meera",
+        "after": "Miira",
+        "entry_kind": "person",
+        "context": "meera reviewed the typography"
+      },
+      {
+        "kind": "correction",
+        "before": "meera",
+        "after": "Miira",
+        "entry_kind": "person",
+        "context": "ask meera about the spacing"
+      }
+    ]
+  },
+  "expected": "Miira joined the call.",
+  "expect_intervention": true,
+  "strategies": {
+    "none": {
+      "actual": "Mira joined the call.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "exact_dict": {
+      "actual": "Mira joined the call.",
+      "intervened": false,
+      "outcome": "missed_intervention",
+      "passed": false
+    },
+    "phonetic": {
+      "actual": "Miira joined the call.",
+      "intervened": true,
+      "outcome": "useful_intervention",
+      "passed": true
+    }
+  },
+  "passed": true,
+  "outcome": "useful_intervention",
+  "status_check": null,
+  "decision_trace": [
+    {
+      "span": "Mira",
+      "start": 0,
+      "end": 4,
+      "action": "apply",
+      "reason": "'Mira' matches 'Miira' via indic (similarity 1.0, confidence 0.75, context 0.0) scoring 0.9375",
+      "entry_id": 1,
+      "canonical": "Miira",
+      "score": 0.9375,
+      "runner_up": null,
+      "candidates": [
+        {
+          "entry_id": 1,
+          "canonical": "Miira",
+          "kind": "person",
+          "status": "active",
+          "confidence": 0.75,
+          "similarity": 1.0,
+          "route": "indic",
+          "context_boost": 0.0,
+          "score": 0.9375
+        }
+      ]
+    }
+  ],
+  "memory_state": [
+    {
+      "canonical": "Miira",
+      "status": "active",
+      "confidence": 0.75,
+      "protected": false,
+      "evidence": {
+        "confirmations": 2,
+        "contradictions": 0,
+        "applications": 2
+      },
+      "surfaces": [
+        "Miira",
+        "meera"
+      ],
+      "context_terms": [
+        "about",
+        "ask",
+        "reviewed",
+        "spacing",
+        "typography"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 20:17:01",
+  "generated_at": "2026-09-07 20:30:54",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -7,83 +7,83 @@
   "aggregate": {
     "none": {
       "useful_intervention": 0,
-      "missed_intervention": 32,
+      "missed_intervention": 35,
       "wrong_intervention": 0,
-      "correct_abstention": 25,
+      "correct_abstention": 27,
       "false_intervention": 0,
-      "passed": 25,
-      "total": 57,
-      "pass_rate": 0.4386,
+      "passed": 27,
+      "total": 62,
+      "pass_rate": 0.4355,
       "precision": 0.0,
       "recall": 0.0,
       "f1": 0.0
     },
     "exact_dict": {
       "useful_intervention": 14,
-      "missed_intervention": 16,
+      "missed_intervention": 19,
       "wrong_intervention": 2,
-      "correct_abstention": 12,
+      "correct_abstention": 14,
       "false_intervention": 13,
-      "passed": 26,
-      "total": 57,
-      "pass_rate": 0.4561,
+      "passed": 28,
+      "total": 62,
+      "pass_rate": 0.4516,
       "precision": 0.4828,
-      "recall": 0.4375,
-      "f1": 0.459
+      "recall": 0.4,
+      "f1": 0.4375
     },
     "phonetic": {
-      "useful_intervention": 31,
+      "useful_intervention": 34,
       "missed_intervention": 1,
       "wrong_intervention": 0,
-      "correct_abstention": 25,
+      "correct_abstention": 27,
       "false_intervention": 0,
-      "passed": 56,
-      "total": 57,
-      "pass_rate": 0.9825,
+      "passed": 61,
+      "total": 62,
+      "pass_rate": 0.9839,
       "precision": 1.0,
-      "recall": 0.9688,
-      "f1": 0.9841
+      "recall": 0.9714,
+      "f1": 0.9855
     }
   },
   "latency": {
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 15.474,
-      "p95_ms": 19.666,
-      "max_ms": 22.148,
-      "mean_ms": 15.826,
+      "p50_ms": 7.179,
+      "p95_ms": 8.266,
+      "max_ms": 10.532,
+      "mean_ms": 7.229,
       "stage_means_ms": {
-        "load_memory": 11.0,
-        "span_generation": 0.31,
-        "scoring_and_decision": 3.741,
-        "rewrite_and_prompt": 0.254,
-        "total": 15.306
+        "load_memory": 5.108,
+        "span_generation": 0.14,
+        "scoring_and_decision": 1.676,
+        "rewrite_and_prompt": 0.112,
+        "total": 7.035
       }
     },
     "warm": {
-      "p50_ms": 4.58,
-      "p95_ms": 6.062,
-      "max_ms": 7.287,
-      "mean_ms": 4.744,
+      "p50_ms": 2.064,
+      "p95_ms": 2.598,
+      "max_ms": 2.716,
+      "mean_ms": 2.112,
       "stage_means_ms": {
-        "load_memory": 0.001,
-        "span_generation": 0.261,
-        "scoring_and_decision": 3.809,
-        "rewrite_and_prompt": 0.251,
-        "total": 4.322
+        "load_memory": 0.0,
+        "span_generation": 0.128,
+        "scoring_and_decision": 1.715,
+        "rewrite_and_prompt": 0.116,
+        "total": 1.959
       }
     },
-    "p50_ms": 15.474,
-    "p95_ms": 19.666,
-    "max_ms": 22.148,
-    "mean_ms": 15.826,
+    "p50_ms": 7.179,
+    "p95_ms": 8.266,
+    "max_ms": 10.532,
+    "mean_ms": 7.229,
     "stage_means_ms": {
-      "load_memory": 11.0,
-      "span_generation": 0.31,
-      "scoring_and_decision": 3.741,
-      "rewrite_and_prompt": 0.254,
-      "total": 15.306
+      "load_memory": 5.108,
+      "span_generation": 0.14,
+      "scoring_and_decision": 1.676,
+      "rewrite_and_prompt": 0.112,
+      "total": 7.035
     }
   },
   "db_growth": [
@@ -120,7 +120,7 @@
       "utterances": 1000,
       "decision_rows": 1191,
       "total_rows": 1780,
-      "kb": 324.0
+      "kb": 320.0
     },
     {
       "utterances": 5000,
@@ -177,9 +177,9 @@
     }
   },
   "branch_coverage": {
+    "apply": 34,
     "noop_already_correct": 3,
-    "apply": 31,
-    "abstain_common_word": 6,
+    "abstain_common_word": 7,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
     "abstain_suppressed": 2,
@@ -15810,6 +15810,510 @@
             "krishna",
             "submitted",
             "task"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personab-unseen-variant",
+      "category": "second_persona/generalisation",
+      "description": "A completely different user. Different names, different domain, no seed. Does the mechanism generalise, or was it tuned to one persona?",
+      "rationale": "Neither correction contained 'mira'. The claim was never about Aaditya specifically; it is about phonetic identity, and this shows the same generalisation for a name the system was built without.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "mira joined the call",
+        "formatted": "Mira joined the call.",
+        "seeded": false,
+        "case_observations": [
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "meera reviewed the typography"
+          },
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "ask meera about the spacing"
+          }
+        ]
+      },
+      "expected": "Miira joined the call.",
+      "expect_intervention": true,
+      "strategies": {
+        "none": {
+          "actual": "Mira joined the call.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "exact_dict": {
+          "actual": "Mira joined the call.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "phonetic": {
+          "actual": "Miira joined the call.",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "useful_intervention",
+      "status_check": null,
+      "decision_trace": [
+        {
+          "span": "Mira",
+          "start": 0,
+          "end": 4,
+          "action": "apply",
+          "reason": "'Mira' matches 'Miira' via indic (similarity 1.0, confidence 0.75, context 0.0) scoring 0.9375",
+          "entry_id": 1,
+          "canonical": "Miira",
+          "score": 0.9375,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 1,
+              "canonical": "Miira",
+              "kind": "person",
+              "status": "active",
+              "confidence": 0.75,
+              "similarity": 1.0,
+              "route": "indic",
+              "context_boost": 0.0,
+              "score": 0.9375
+            }
+          ]
+        }
+      ],
+      "memory_state": [
+        {
+          "canonical": "Miira",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 2
+          },
+          "surfaces": [
+            "Miira",
+            "meera"
+          ],
+          "context_terms": [
+            "about",
+            "ask",
+            "reviewed",
+            "spacing",
+            "typography"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personab-second-unseen-variant",
+      "category": "second_persona/generalisation",
+      "description": "A third spelling of the same new name.",
+      "rationale": "ee, i and ei all reduce to the same vowel, so one correction covers a family of spellings for this user exactly as it did for the other.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "meira reviewed it",
+        "formatted": "Meira reviewed it.",
+        "seeded": false,
+        "case_observations": [
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "meera reviewed the typography"
+          },
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "ask meera about the spacing"
+          }
+        ]
+      },
+      "expected": "Miira reviewed it.",
+      "expect_intervention": true,
+      "strategies": {
+        "none": {
+          "actual": "Meira reviewed it.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "exact_dict": {
+          "actual": "Meira reviewed it.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "phonetic": {
+          "actual": "Miira reviewed it.",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "useful_intervention",
+      "status_check": null,
+      "decision_trace": [
+        {
+          "span": "Meira",
+          "start": 0,
+          "end": 5,
+          "action": "apply",
+          "reason": "'Meira' matches 'Miira' via metaphone (similarity 0.9283, confidence 0.75, context 0.3333) scoring 0.9036",
+          "entry_id": 1,
+          "canonical": "Miira",
+          "score": 0.9036,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 1,
+              "canonical": "Miira",
+              "kind": "person",
+              "status": "active",
+              "confidence": 0.75,
+              "similarity": 0.9283,
+              "route": "metaphone",
+              "context_boost": 0.3333,
+              "score": 0.9036
+            }
+          ]
+        }
+      ],
+      "memory_state": [
+        {
+          "canonical": "Miira",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 2
+          },
+          "surfaces": [
+            "Miira",
+            "meera"
+          ],
+          "context_terms": [
+            "about",
+            "ask",
+            "reviewed",
+            "spacing",
+            "typography"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personab-homophone-guard",
+      "category": "second_persona/homophone",
+      "description": "A DIFFERENT homophone from the seeded persona's. This user's design system is called Page.",
+      "rationale": "The guard is not a list of exceptions for 'kiwi'. It is a rule about ordinary words lacking contextual support, and it holds for a homophone that did not exist when the rule was written.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "turn to the next page",
+        "formatted": "Turn to the next page.",
+        "seeded": false,
+        "case_observations": [
+          {
+            "kind": "correction",
+            "before": "page",
+            "after": "Page",
+            "entry_kind": "product",
+            "context": "the page design system needs tokens"
+          },
+          {
+            "kind": "correction",
+            "before": "page",
+            "after": "Page",
+            "entry_kind": "product",
+            "context": "ship the page component library"
+          },
+          {
+            "kind": "usage",
+            "text": "Page is the design system we maintain, and the Page tokens drive every component."
+          }
+        ]
+      },
+      "expected": "Turn to the next page.",
+      "expect_intervention": false,
+      "strategies": {
+        "none": {
+          "actual": "Turn to the next page.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "exact_dict": {
+          "actual": "Turn to the next page.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "phonetic": {
+          "actual": "Turn to the next page.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "correct_abstention",
+      "status_check": null,
+      "decision_trace": [
+        {
+          "span": "page",
+          "start": 17,
+          "end": 21,
+          "action": "abstain_common_word",
+          "reason": "'page' is an ordinary English word and nothing in this sentence belongs to 'Page'; leaving it alone",
+          "entry_id": 1,
+          "canonical": "Page",
+          "score": 0.95,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 1,
+              "canonical": "Page",
+              "kind": "product",
+              "status": "active",
+              "confidence": 0.8,
+              "similarity": 1.0,
+              "route": "indic",
+              "context_boost": 0.0,
+              "score": 0.95
+            }
+          ]
+        }
+      ],
+      "memory_state": [
+        {
+          "canonical": "Page",
+          "status": "active",
+          "confidence": 0.8,
+          "protected": false,
+          "evidence": {
+            "confirmations": 3,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Page",
+            "page"
+          ],
+          "context_terms": [
+            "component",
+            "design",
+            "system",
+            "token",
+            "drive",
+            "every",
+            "library",
+            "maintain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personab-homophone-with-context",
+      "category": "second_persona/homophone",
+      "description": "The same word, same user, supported by context this time.",
+      "rationale": "'design' and 'system' were mined from this user's own sentences, not from a list anyone wrote. Paired with the case above, this is the whole product in two lines for a persona the system never saw.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "the page design system needs a reset",
+        "formatted": "The page design system needs a reset.",
+        "seeded": false,
+        "case_observations": [
+          {
+            "kind": "correction",
+            "before": "page",
+            "after": "Page",
+            "entry_kind": "product",
+            "context": "the page design system needs tokens"
+          },
+          {
+            "kind": "correction",
+            "before": "page",
+            "after": "Page",
+            "entry_kind": "product",
+            "context": "ship the page component library"
+          },
+          {
+            "kind": "usage",
+            "text": "Page is the design system we maintain, and the Page tokens drive every component."
+          }
+        ]
+      },
+      "expected": "The Page design system needs a reset.",
+      "expect_intervention": true,
+      "strategies": {
+        "none": {
+          "actual": "The page design system needs a reset.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "exact_dict": {
+          "actual": "The page design system needs a reset.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "phonetic": {
+          "actual": "The Page design system needs a reset.",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "useful_intervention",
+      "status_check": null,
+      "decision_trace": [
+        {
+          "span": "page",
+          "start": 4,
+          "end": 8,
+          "action": "apply",
+          "reason": "'page' matches 'Page' via indic (similarity 1.0, confidence 0.8, context 1.0) scoring 1.0",
+          "entry_id": 1,
+          "canonical": "Page",
+          "score": 1.0,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 1,
+              "canonical": "Page",
+              "kind": "product",
+              "status": "active",
+              "confidence": 0.8,
+              "similarity": 1.0,
+              "route": "indic",
+              "context_boost": 1.0,
+              "score": 1.0
+            }
+          ]
+        }
+      ],
+      "memory_state": [
+        {
+          "canonical": "Page",
+          "status": "active",
+          "confidence": 0.8,
+          "protected": false,
+          "evidence": {
+            "confirmations": 3,
+            "contradictions": 0,
+            "applications": 2
+          },
+          "surfaces": [
+            "Page",
+            "page"
+          ],
+          "context_terms": [
+            "component",
+            "design",
+            "system",
+            "token",
+            "drive",
+            "every",
+            "library",
+            "maintain"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personab-other-persona-terms-absent",
+      "category": "second_persona/generalisation",
+      "description": "Nothing is hardcoded. The seeded persona's memories must not exist for a different user.",
+      "rationale": "The brief's own example, run against a user who never taught those words. Everything the system does for the seeded persona comes from that persona's observations; none of it is in the code. If any of this repository's behaviour were special-cased to Aaditya or Kivi, this case would catch it.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "ask aditya to review the sarvam kiwi service",
+        "formatted": "Ask Aditya to review the Sarvam Kiwi service.",
+        "seeded": false,
+        "case_observations": [
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "meera reviewed the typography"
+          },
+          {
+            "kind": "correction",
+            "before": "meera",
+            "after": "Miira",
+            "entry_kind": "person",
+            "context": "ask meera about the spacing"
+          }
+        ]
+      },
+      "expected": "Ask Aditya to review the Sarvam Kiwi service.",
+      "expect_intervention": false,
+      "strategies": {
+        "none": {
+          "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "exact_dict": {
+          "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "phonetic": {
+          "actual": "Ask Aditya to review the Sarvam Kiwi service.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "correct_abstention",
+      "status_check": null,
+      "decision_trace": [],
+      "memory_state": [
+        {
+          "canonical": "Miira",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Miira",
+            "meera"
+          ],
+          "context_terms": [
+            "about",
+            "ask",
+            "reviewed",
+            "spacing",
+            "typography"
           ]
         }
       ]

@@ -227,11 +227,33 @@ def memory_terms(conn) -> set[str]:
     return out
 
 
-def run() -> dict:
+def _drop_adv_db() -> None:
     for suffix in ("", "-wal", "-shm"):
         p = ADV_DB.with_name(ADV_DB.name + suffix)
         if p.exists():
             p.unlink()
+
+
+def run() -> dict:
+    # Claim the scratch database for the duration of this run, and put the caller's back
+    # afterwards. The module-level setdefault is not enough: when run_eval imports this,
+    # KIVI_DB_PATH is already pointing at the evaluation's database, so setdefault does
+    # nothing and every sentence here would be resolved against whatever state the last
+    # evaluation case happened to leave behind. That contaminated the harness silently
+    # until a case introduced a persona whose name collides with the names corpus.
+    previous = os.environ.get("KIVI_DB_PATH")
+    os.environ["KIVI_DB_PATH"] = str(ADV_DB)
+    try:
+        return _run()
+    finally:
+        if previous is None:
+            os.environ.pop("KIVI_DB_PATH", None)
+        else:
+            os.environ["KIVI_DB_PATH"] = previous
+
+
+def _run() -> dict:
+    _drop_adv_db()
     db_mod.migrate(verbose=False)
     conn = db_mod.connect()
     run_seed(conn, verbose=False)
@@ -275,10 +297,7 @@ def run() -> dict:
 
     elapsed = time.perf_counter() - t0
     conn.close()
-    for suffix in ("", "-wal", "-shm"):
-        p = ADV_DB.with_name(ADV_DB.name + suffix)
-        if p.exists():
-            p.unlink()
+    _drop_adv_db()
 
     scored = sum(r["sentences"] for name, r in results.items() if name != "names_control")
     return {

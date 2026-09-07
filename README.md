@@ -56,7 +56,7 @@ So the system abstains, with a stated reason, in eight distinct situations:
 | nothing sounds close enough | memory must not invent |
 | a b/v-folded match has no context support | that tier is over-permissive by design and must earn its place |
 
-Measured over 57 cases: **31 useful interventions, 0 false interventions** — and, on a
+Measured over 62 cases: **34 useful interventions, 0 false interventions** — and, on a
 separate adversarial suite, **0 false interventions across 1,626 sentences**. The
 exact-string dictionary baseline manages 14 useful and **13 false**.
 
@@ -171,7 +171,7 @@ a trusted entry still has to actually sound like the span.
 
 The brief does not ask for one, and every model call is a way for a reviewer's run to
 fail. The deterministic path produces the memory-aware output on its own, which makes the
-cost and latency numbers exact rather than estimated: **0 model calls, ₹0, ~4.8 ms.**
+cost and latency numbers exact rather than estimated: **0 model calls, ₹0, ~7 ms cold / ~2 ms warm** on the machine in `summary.md`.
 
 What memory owes a language model is still here and is a first-class output. Every
 `/api/resolve` response includes `memory_prompt_block` — the memory context that would be
@@ -219,17 +219,17 @@ reverse-engineered from a working system, because there was not one.
 
 ### Results
 
-57 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle, 11 code-mixed. Every branch of the decision policy but one is exercised by at least one case; the exception is
+62 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle, 11 code-mixed, 5 second-persona. Every branch of the decision policy but one is exercised by at least one case; the exception is
 documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 25 / 57 | 26 / 57 | **56 / 57** |
-| useful interventions | 0 | 14 | **31** |
-| missed | 32 | 16 | **1** |
+| cases passed | 27 / 62 | 28 / 62 | **61 / 62** |
+| useful interventions | 0 | 14 | **34** |
+| missed | 35 | 19 | **1** |
 | false interventions | 0 | **13** | **0** |
 | precision | 0.0 | 0.48 | **1.00** |
-| recall | 0.0 | 0.44 | **0.97** |
+| recall | 0.0 | 0.40 | **0.97** |
 
 The middle column is the honest strawman — whole-word replacement of every observed
 spelling, which is what most people mean by "a dictionary". It is genuinely good at what
@@ -318,9 +318,9 @@ Honest ones, in rough order of how much they would matter in production.
    scale.** The HTTP layer reads memory fresh on every call, deliberately: observations
    mutate it between requests and a stale-cache bug that silently applied a suppressed
    entry would cost far more than the milliseconds. Resolution itself is flat in the size
-   of memory (2.4 ms at 10 entries, 3.7 ms at 10,000), but loading is linear — cold p50
-   reaches 233 ms at 10,000 entries. So the trade-off is free at seed scale and costs
-   about 229 ms at 10,000 entries; the fix is a cache invalidated on write. See
+   of memory (about 2 ms at 10 entries and at 10,000), but loading is linear — cold p50
+   reaches roughly 160 ms at 10,000 entries. So the trade-off is free at seed scale and costs
+   about 160 ms at 10,000 entries; the fix is a cache invalidated on write. See
    [eval/results/scale.md](eval/results/scale.md). Two earlier versions of this
    limitation were wrong about the cause, both times because they asserted instead of
    measuring — DISCOVERIES.md §10 and §13.

@@ -178,8 +178,8 @@ and delete them when finished. **Your demo database is not touched.**
 Expected final output:
 
 ```
-56/57 passed  (precision 1.0, recall 0.9688, f1 0.9841)
-useful 31  false 0  missed 1  wrong 0
+61/62 passed  (precision 1.0, recall 0.9714, f1 0.9855)
+useful 34  false 0  missed 1  wrong 0
 ```
 
 The one failure is `codemix-devanagari-should-fire`, marked `known_hard` in the dataset

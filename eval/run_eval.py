@@ -423,7 +423,10 @@ def write_summary(payload: dict) -> None:
       f"and makes no network request, so these are exact rather than estimated.\n")
     w(f"\nLatency over {lat['repeats']} repetitions after a discarded warm-up, on "
       f"{payload['machine']['platform']} / Python {payload['machine']['python']}, "
-      f"SQLite journal mode `{lat['journal_mode']}`.\n")
+      f"SQLite journal mode `{lat['journal_mode']}`. Measured at the very start of the "
+      f"run, before the case sweep: taken afterwards it reads three to four times higher, "
+      f"because the sweep creates and drops a database for every case and every strategy "
+      f"and the measurement inherits that disk churn.\n")
     w("**cold** reads memory fresh from SQLite on every call — this is what the HTTP layer "
       "actually does, and is the number that describes the shipped product. **warm** reuses "
       "one `MemoryView` across calls, which is what a cache would buy, measured rather than "
@@ -511,6 +514,14 @@ def main() -> int:
     for stale in CASE_RESULTS_DIR.glob("*.json"):
         stale.unlink()
 
+    # Latency is measured first, before anything else touches the disk. Taken later in
+    # the run it read three to four times higher -- not because resolution got slower,
+    # but because the case sweep creates and drops a database for every case and every
+    # strategy, and the measurement inherits that I/O churn. A number that moves with
+    # what the harness did beforehand is a number about the harness.
+    print("measuring latency ...")
+    latency = latency_profile()
+
     cases = load_cases()
     print(f"running {len(cases)} cases x {len(baselines.STRATEGIES)} strategies ...")
     records = []
@@ -538,11 +549,8 @@ def main() -> int:
         json.dumps(adv_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     adv.write_report(adv_payload)
-    # The harness points KIVI_DB_PATH at its own scratch file; put it back.
+    # Belt and braces: the harness restores KIVI_DB_PATH itself, but this run owns it.
     os.environ["KIVI_DB_PATH"] = str(EVAL_DB)
-
-    print("measuring latency ...")
-    latency = latency_profile()
     print("measuring database growth ...")
     growth = db_growth_curve()
     trace_growth = trace_growth_curve()

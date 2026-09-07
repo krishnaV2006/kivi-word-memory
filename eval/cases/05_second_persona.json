@@ -1,0 +1,89 @@
+[
+  {
+    "id": "personab-unseen-variant",
+    "category": "second_persona/generalisation",
+    "description": "A completely different user. Different names, different domain, no seed. Does the mechanism generalise, or was it tuned to one persona?",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "meera reviewed the typography"},
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "ask meera about the spacing"}
+    ],
+    "asr": "mira joined the call",
+    "formatted": "Mira joined the call.",
+    "expected": "Miira joined the call.",
+    "expect_intervention": true,
+    "rationale": "Neither correction contained 'mira'. The claim was never about Aaditya specifically; it is about phonetic identity, and this shows the same generalisation for a name the system was built without."
+  },
+  {
+    "id": "personab-second-unseen-variant",
+    "category": "second_persona/generalisation",
+    "description": "A third spelling of the same new name.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "meera reviewed the typography"},
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "ask meera about the spacing"}
+    ],
+    "asr": "meira reviewed it",
+    "formatted": "Meira reviewed it.",
+    "expected": "Miira reviewed it.",
+    "expect_intervention": true,
+    "rationale": "ee, i and ei all reduce to the same vowel, so one correction covers a family of spellings for this user exactly as it did for the other."
+  },
+  {
+    "id": "personab-homophone-guard",
+    "category": "second_persona/homophone",
+    "description": "A DIFFERENT homophone from the seeded persona's. This user's design system is called Page.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "page", "after": "Page", "entry_kind": "product",
+       "context": "the page design system needs tokens"},
+      {"kind": "correction", "before": "page", "after": "Page", "entry_kind": "product",
+       "context": "ship the page component library"},
+      {"kind": "usage", "text": "Page is the design system we maintain, and the Page tokens drive every component."}
+    ],
+    "asr": "turn to the next page",
+    "formatted": "Turn to the next page.",
+    "expected": "Turn to the next page.",
+    "expect_intervention": false,
+    "rationale": "The guard is not a list of exceptions for 'kiwi'. It is a rule about ordinary words lacking contextual support, and it holds for a homophone that did not exist when the rule was written."
+  },
+  {
+    "id": "personab-homophone-with-context",
+    "category": "second_persona/homophone",
+    "description": "The same word, same user, supported by context this time.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "page", "after": "Page", "entry_kind": "product",
+       "context": "the page design system needs tokens"},
+      {"kind": "correction", "before": "page", "after": "Page", "entry_kind": "product",
+       "context": "ship the page component library"},
+      {"kind": "usage", "text": "Page is the design system we maintain, and the Page tokens drive every component."}
+    ],
+    "asr": "the page design system needs a reset",
+    "formatted": "The page design system needs a reset.",
+    "expected": "The Page design system needs a reset.",
+    "expect_intervention": true,
+    "rationale": "'design' and 'system' were mined from this user's own sentences, not from a list anyone wrote. Paired with the case above, this is the whole product in two lines for a persona the system never saw."
+  },
+  {
+    "id": "personab-other-persona-terms-absent",
+    "category": "second_persona/generalisation",
+    "description": "Nothing is hardcoded. The seeded persona's memories must not exist for a different user.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "meera reviewed the typography"},
+      {"kind": "correction", "before": "meera", "after": "Miira", "entry_kind": "person",
+       "context": "ask meera about the spacing"}
+    ],
+    "asr": "ask aditya to review the sarvam kiwi service",
+    "formatted": "Ask Aditya to review the Sarvam Kiwi service.",
+    "expected": "Ask Aditya to review the Sarvam Kiwi service.",
+    "expect_intervention": false,
+    "rationale": "The brief's own example, run against a user who never taught those words. Everything the system does for the seeded persona comes from that persona's observations; none of it is in the code. If any of this repository's behaviour were special-cased to Aaditya or Kivi, this case would catch it."
+  }
+]
