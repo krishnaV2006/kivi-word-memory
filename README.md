@@ -358,6 +358,7 @@ Everything here has been run and verified from a clean clone of the submitted co
 | `eval/run_eval.py` | The harness (also runs the adversarial pass) |
 | `eval/adversarial.py` | False-positive stress test over ~1,600 generated sentences |
 | `eval/scale.py` | Latency, retrieval breadth and correctness at 10 → 10,000 entries |
+| `eval/check_docs.py` | Asserts every number in this file and RUN.md matches generated results |
 | `eval/results/` | Committed generated results |
 | `tests/test_phonetics.py` | `python -m tests.test_phonetics`, no pytest needed |
 | `DISCOVERIES.md` | The failure modes found while building, linked to their cases |

@@ -2,15 +2,21 @@
 
 Retrieval and decision are deliberately separate stages.
 
-Retrieval is allowed to be greedy. Three key algorithms cast a wide net, and the loose
+Retrieval is allowed to be greedy. Four key algorithms cast a wide net, and the loose
 consonant key in particular over-generates on purpose -- "cave" retrieves "Kivi". That
 is fine. A key collision is not an intervention.
 
-The decision stage is where the system is conservative. It has to clear four bars: the
-entry must be active, the span must not already be correct, the score must clear the
-apply threshold, and it must beat its runner-up by a margin. A homophone that is also
-an ordinary English word has to clear a fifth: something in the sentence must actually
-belong to that memory's world.
+The decision stage is where the system is conservative. A candidate must be active, must
+not already be correct, must clear the apply threshold, and must beat its runner-up by a
+margin. Two candidates carry an extra burden: a homophone that is also an ordinary word
+needs something in the sentence to actually belong to that memory, and a match found only
+through the b/v-folded tier needs the same.
+
+SIM_FLOOR is deliberately low. It is a cheap filter that skips candidates not worth
+scoring, not a decision-maker -- an earlier version set it high enough to do the rejecting
+itself, which made the trace claim no candidate existed when one plainly did. Rejection
+belongs to the score, which accounts for evidence and context as a raw similarity floor
+cannot. See DISCOVERIES.md sections 9 and 15.
 
 Every span the system looks at produces a Decision, including the ones where it does
 nothing, because "why did Kivi leave this alone" is as much a product question as

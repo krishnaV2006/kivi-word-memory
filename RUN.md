@@ -190,6 +190,17 @@ explains how each of the two cases that once failed was closed, and the adversar
 in `eval/results/adversarial.md` tests the property the curated cases cannot: that memory
 stays out of the way of 1,616 sentences it was never taught anything about.
 
+### Optional: check the documentation against the results
+
+```bash
+python -m eval.check_docs
+```
+
+Verifies that every number claimed in README.md and RUN.md matches
+`eval/results/*.json`, and exits non-zero if any is stale. This repository makes a lot of
+numeric claims and they were all true when written; this is how you can tell they still
+are without re-deriving them by hand.
+
 ### Optional: the scale measurement
 
 Not part of the main run, because it takes 3–5 minutes:
