@@ -12,6 +12,7 @@ expensive failure this whole system is built to avoid.
 Five corpora. Four are scored for false positives, one is a control:
 
   neutral        ordinary sentences assembled from everyday vocabulary
+  shapes         paragraphs, markdown, all-caps, quotes, numbers, degenerate input
   homophone      each memory's ordinary-English twin in clearly non-memory contexts
   devanagari     Hindi in native script, including the fruit कीवी, which must stay a fruit
   names          real personal names that are NOT this user's, in natural frames
@@ -152,6 +153,28 @@ DEVANAGARI_SENTENCES = [
 ]
 
 
+# Shapes of text the other corpora do not produce. Everything above is short and
+# well-formed; real dictation is not. None of these contains a memory term, so none may
+# be touched -- the point is that structure, casing and punctuation do not create matches.
+SHAPE_SENTENCES = [
+    # a paragraph rather than a sentence
+    "The team finished the migration yesterday. Everyone agreed the schedule was tight, "
+    "but the client approved the budget and the deployment went out on time. We should "
+    "review the invoice before the deadline.",
+    # markdown structure, a code span and a link
+    "## Notes\n- reviewed the **budget**\n- `npm run build` failed\n"
+    "- see [docs](https://example.com/guide)",
+    "THE SERVICE IS DOWN AGAIN AND NOBODY KNOWS WHY",
+    "theteamfinishedthemigrationyesterday",
+    "We shipped 3 builds, 42 tests passed, 99.9% uptime, v2.1.0 released.",
+    'She said "the service is down" and left.',
+    "a well-known service-level agreement was re-reviewed",
+    "The teams' reports were filed.",
+    "   ",
+    "a",
+]
+
+
 def build_corpora() -> dict[str, list[str]]:
     rng = random.Random(SEED)
 
@@ -168,6 +191,7 @@ def build_corpora() -> dict[str, list[str]]:
         "neutral": sorted(set(neutral)),
         "homophone": homophone,
         "devanagari": list(DEVANAGARI_SENTENCES),
+        "shapes": list(SHAPE_SENTENCES),
     }
 
 

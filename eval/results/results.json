@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 20:07:06",
+  "generated_at": "2026-09-07 20:17:01",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -7,83 +7,83 @@
   "aggregate": {
     "none": {
       "useful_intervention": 0,
-      "missed_intervention": 31,
+      "missed_intervention": 32,
       "wrong_intervention": 0,
       "correct_abstention": 25,
       "false_intervention": 0,
       "passed": 25,
-      "total": 56,
-      "pass_rate": 0.4464,
+      "total": 57,
+      "pass_rate": 0.4386,
       "precision": 0.0,
       "recall": 0.0,
       "f1": 0.0
     },
     "exact_dict": {
       "useful_intervention": 14,
-      "missed_intervention": 15,
+      "missed_intervention": 16,
       "wrong_intervention": 2,
       "correct_abstention": 12,
       "false_intervention": 13,
       "passed": 26,
-      "total": 56,
-      "pass_rate": 0.4643,
+      "total": 57,
+      "pass_rate": 0.4561,
       "precision": 0.4828,
-      "recall": 0.4516,
-      "f1": 0.4667
+      "recall": 0.4375,
+      "f1": 0.459
     },
     "phonetic": {
-      "useful_intervention": 30,
+      "useful_intervention": 31,
       "missed_intervention": 1,
       "wrong_intervention": 0,
       "correct_abstention": 25,
       "false_intervention": 0,
-      "passed": 55,
-      "total": 56,
-      "pass_rate": 0.9821,
+      "passed": 56,
+      "total": 57,
+      "pass_rate": 0.9825,
       "precision": 1.0,
-      "recall": 0.9677,
-      "f1": 0.9836
+      "recall": 0.9688,
+      "f1": 0.9841
     }
   },
   "latency": {
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 15.417,
-      "p95_ms": 22.29,
-      "max_ms": 22.628,
-      "mean_ms": 15.943,
+      "p50_ms": 15.474,
+      "p95_ms": 19.666,
+      "max_ms": 22.148,
+      "mean_ms": 15.826,
       "stage_means_ms": {
-        "load_memory": 10.975,
-        "span_generation": 0.289,
-        "scoring_and_decision": 3.939,
-        "rewrite_and_prompt": 0.245,
-        "total": 15.448
+        "load_memory": 11.0,
+        "span_generation": 0.31,
+        "scoring_and_decision": 3.741,
+        "rewrite_and_prompt": 0.254,
+        "total": 15.306
       }
     },
     "warm": {
-      "p50_ms": 4.624,
-      "p95_ms": 6.459,
-      "max_ms": 8.963,
-      "mean_ms": 4.697,
+      "p50_ms": 4.58,
+      "p95_ms": 6.062,
+      "max_ms": 7.287,
+      "mean_ms": 4.744,
       "stage_means_ms": {
         "load_memory": 0.001,
-        "span_generation": 0.249,
-        "scoring_and_decision": 3.704,
-        "rewrite_and_prompt": 0.265,
-        "total": 4.219
+        "span_generation": 0.261,
+        "scoring_and_decision": 3.809,
+        "rewrite_and_prompt": 0.251,
+        "total": 4.322
       }
     },
-    "p50_ms": 15.417,
-    "p95_ms": 22.29,
-    "max_ms": 22.628,
-    "mean_ms": 15.943,
+    "p50_ms": 15.474,
+    "p95_ms": 19.666,
+    "max_ms": 22.148,
+    "mean_ms": 15.826,
     "stage_means_ms": {
-      "load_memory": 10.975,
-      "span_generation": 0.289,
-      "scoring_and_decision": 3.939,
-      "rewrite_and_prompt": 0.245,
-      "total": 15.448
+      "load_memory": 11.0,
+      "span_generation": 0.31,
+      "scoring_and_decision": 3.741,
+      "rewrite_and_prompt": 0.254,
+      "total": 15.306
     }
   },
   "db_growth": [
@@ -133,7 +133,7 @@
   "cost_inr": 0.0,
   "known_hard_count": 1,
   "adversarial": {
-    "total_sentences": 1616,
+    "total_sentences": 1626,
     "total_interventions": 0,
     "false_positive_rate": 0.0,
     "control_recall": 1.0,
@@ -156,6 +156,12 @@
         "rate": 0.0,
         "expects_interventions": false
       },
+      "shapes": {
+        "sentences": 10,
+        "interventions": 0,
+        "rate": 0.0,
+        "expects_interventions": false
+      },
       "names": {
         "sentences": 995,
         "interventions": 0,
@@ -172,8 +178,8 @@
   },
   "branch_coverage": {
     "noop_already_correct": 3,
-    "apply": 30,
-    "abstain_common_word": 5,
+    "apply": 31,
+    "abstain_common_word": 6,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
     "abstain_suppressed": 2,
@@ -15276,6 +15282,326 @@
             "confirmations": 2,
             "contradictions": 0,
             "applications": 0
+          },
+          "surfaces": [
+            "Aaditya",
+            "aditya"
+          ],
+          "context_terms": [
+            "ask",
+            "budget",
+            "fine",
+            "latency",
+            "pull",
+            "request",
+            "review",
+            "said"
+          ]
+        },
+        {
+          "canonical": "Aditi",
+          "status": "active",
+          "confidence": 0.95,
+          "protected": true,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Aditi"
+          ],
+          "context_terms": []
+        },
+        {
+          "canonical": "Bulbul",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Bulbul",
+            "bulbool"
+          ],
+          "context_terms": [
+            "audio",
+            "nine",
+            "route",
+            "thirty",
+            "through",
+            "voice"
+          ]
+        },
+        {
+          "canonical": "Chinmay",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Chinmay",
+            "chinmai"
+          ],
+          "context_terms": [
+            "chinmai",
+            "build",
+            "design",
+            "green",
+            "ping",
+            "reviewing"
+          ]
+        },
+        {
+          "canonical": "IITM",
+          "status": "active",
+          "confidence": 0.95,
+          "protected": true,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "IITM"
+          ],
+          "context_terms": []
+        },
+        {
+          "canonical": "Kivi",
+          "status": "active",
+          "confidence": 0.8333,
+          "protected": false,
+          "evidence": {
+            "confirmations": 4,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Kivi",
+            "kiwi"
+          ],
+          "context_terms": [
+            "build",
+            "dictation",
+            "service",
+            "ship",
+            "correct",
+            "crashed",
+            "dictionary",
+            "formatting"
+          ]
+        },
+        {
+          "canonical": "Prateik",
+          "status": "candidate",
+          "confidence": 0.6667,
+          "protected": false,
+          "evidence": {
+            "confirmations": 1,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Prateik",
+            "prateek"
+          ],
+          "context_terms": [
+            "joined",
+            "prateek",
+            "standup"
+          ]
+        },
+        {
+          "canonical": "Saaras",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Saaras",
+            "saras"
+          ],
+          "context_terms": [
+            "sara",
+            "checkpoint",
+            "language",
+            "model",
+            "newer",
+            "swap",
+            "three",
+            "transcribe"
+          ]
+        },
+        {
+          "canonical": "Sarvam",
+          "status": "active",
+          "confidence": 0.8,
+          "protected": false,
+          "evidence": {
+            "confirmations": 3,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Sarvam",
+            "sarwam"
+          ],
+          "context_terms": [
+            "model",
+            "speech",
+            "bengaluru",
+            "build",
+            "bulbul",
+            "indian",
+            "language",
+            "office"
+          ]
+        },
+        {
+          "canonical": "Vekariya",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Vekariya",
+            "vekaria"
+          ],
+          "context_terms": [
+            "about",
+            "email",
+            "interview",
+            "krishna",
+            "submitted",
+            "task"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "codemix-mixed-script-one-sentence",
+      "category": "code_mixed/devanagari",
+      "description": "Both behaviours in a single sentence: a Devanagari person resolves, a Devanagari homophone does not.",
+      "rationale": "The sharpest single test of cross-script behaviour, because the two spans need opposite answers. आदित्य is an unambiguous person and resolves on the strict key. कीवी is a homophone of the fruit, and with 'sour' rather than any Kivi context term present the guard holds -- in a script the guard was originally blind to. Getting one right and the other wrong would be worse than getting both wrong.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "the कीवी was sour but the meeting with आदित्य went well",
+        "formatted": "The कीवी was sour but the meeting with आदित्य went well.",
+        "seeded": true,
+        "case_observations": []
+      },
+      "expected": "The कीवी was sour but the meeting with Aaditya went well.",
+      "expect_intervention": true,
+      "strategies": {
+        "none": {
+          "actual": "The कीवी was sour but the meeting with आदित्य went well.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "exact_dict": {
+          "actual": "The कीवी was sour but the meeting with आदित्य went well.",
+          "intervened": false,
+          "outcome": "missed_intervention",
+          "passed": false
+        },
+        "phonetic": {
+          "actual": "The कीवी was sour but the meeting with Aaditya went well.",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "useful_intervention",
+      "status_check": null,
+      "decision_trace": [
+        {
+          "span": "कीवी",
+          "start": 4,
+          "end": 8,
+          "action": "abstain_common_word",
+          "reason": "'कीवी' is an ordinary English word and nothing in this sentence belongs to 'Kivi'; leaving it alone",
+          "entry_id": 2,
+          "canonical": "Kivi",
+          "score": 0.9583,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 2,
+              "canonical": "Kivi",
+              "kind": "product",
+              "status": "active",
+              "confidence": 0.8333,
+              "similarity": 1.0,
+              "route": "indic",
+              "context_boost": 0.0,
+              "score": 0.9583
+            }
+          ]
+        },
+        {
+          "span": "आदित्य",
+          "start": 39,
+          "end": 45,
+          "action": "apply",
+          "reason": "'आदित्य' matches 'Aaditya' via indic (similarity 1.0, confidence 0.75, context 0.0) scoring 0.9375",
+          "entry_id": 1,
+          "canonical": "Aaditya",
+          "score": 0.9375,
+          "runner_up": 0.7789,
+          "candidates": [
+            {
+              "entry_id": 1,
+              "canonical": "Aaditya",
+              "kind": "person",
+              "status": "active",
+              "confidence": 0.75,
+              "similarity": 1.0,
+              "route": "indic",
+              "context_boost": 0.0,
+              "score": 0.9375
+            },
+            {
+              "entry_id": 9,
+              "canonical": "Aditi",
+              "kind": "person",
+              "status": "active",
+              "confidence": 0.95,
+              "similarity": 0.7887,
+              "route": "indic_loose",
+              "context_boost": 0.0,
+              "score": 0.7789
+            }
+          ]
+        }
+      ],
+      "memory_state": [
+        {
+          "canonical": "Aaditya",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 2
           },
           "surfaces": [
             "Aaditya",

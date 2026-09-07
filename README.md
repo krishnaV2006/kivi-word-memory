@@ -56,9 +56,9 @@ So the system abstains, with a stated reason, in eight distinct situations:
 | nothing sounds close enough | memory must not invent |
 | a b/v-folded match has no context support | that tier is over-permissive by design and must earn its place |
 
-Measured over 56 cases: **30 useful interventions, 0 false interventions** — and, on a
-separate adversarial suite, **0 false interventions across 1,616 sentences**. The
-exact-string dictionary baseline manages 12 useful and **11 false**.
+Measured over 57 cases: **31 useful interventions, 0 false interventions** — and, on a
+separate adversarial suite, **0 false interventions across 1,626 sentences**. The
+exact-string dictionary baseline manages 14 useful and **13 false**.
 
 ## What the system learns from
 
@@ -206,17 +206,17 @@ reverse-engineered from a working system, because there was not one.
 
 ### Results
 
-56 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle, 10 code-mixed. Every branch of the decision policy but one is exercised by at least one case; the exception is
+57 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle, 11 code-mixed. Every branch of the decision policy but one is exercised by at least one case; the exception is
 documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 25 / 56 | 26 / 56 | **55 / 56** |
-| useful interventions | 0 | 14 | **30** |
-| missed | 31 | 15 | **1** |
+| cases passed | 25 / 57 | 26 / 57 | **56 / 57** |
+| useful interventions | 0 | 14 | **31** |
+| missed | 32 | 16 | **1** |
 | false interventions | 0 | **13** | **0** |
 | precision | 0.0 | 0.48 | **1.00** |
-| recall | 0.0 | 0.45 | **0.97** |
+| recall | 0.0 | 0.44 | **0.97** |
 
 The middle column is the honest strawman — whole-word replacement of every observed
 spelling, which is what most people mean by "a dictionary". It is genuinely good at what
@@ -233,12 +233,13 @@ A curated dataset only proves the cases its author imagined, and I wrote these 4
 there is a second harness that proves the property most likely to be quietly false: that
 memory stays out of the way of text it was never taught anything about.
 
-**1,616 sentences containing no memory term. 0 interventions.** Full report:
+**1,626 sentences containing no memory term. 0 interventions.** Full report:
 [eval/results/adversarial.md](eval/results/adversarial.md).
 
 | corpus | sentences | interventions | what it attacks |
 |---|---:|---:|---|
 | neutral | 585 | **0** | ordinary workplace sentences from everyday vocabulary |
+| shapes | 10 | **0** | paragraphs, markdown, ALL CAPS, quotes, numbers, degenerate input |
 | devanagari | 18 | **0** | Hindi in native script, five containing the fruit कीवी |
 | names | 995 | **0** | 199 real personal names that are not this user's |
 | homophone | 18 | **0** | `kiwi` the fruit, `cave`, `Sarah`, `service` in non-product contexts |

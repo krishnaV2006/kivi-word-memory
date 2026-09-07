@@ -178,13 +178,13 @@ and delete them when finished. **Your demo database is not touched.**
 Expected final output:
 
 ```
-55/56 passed  (precision 1.0, recall 0.9677, f1 0.9836)
-useful 30  false 0  missed 1  wrong 0
+56/57 passed  (precision 1.0, recall 0.9688, f1 0.9841)
+useful 31  false 0  missed 1  wrong 0
 ```
 
 The one failure is `codemix-devanagari-should-fire`, marked `known_hard` in the dataset
 and expected to fail; it is explained in README.md and DISCOVERIES.md §12.
-It also prints the adversarial result (1616 sentences, 0 interventions) and notes that
+It also prints the adversarial result (1626 sentences, 0 interventions) and notes that
 one decision branch, `abstain_low_score`, is never exercised — that is expected and is
 explained in DISCOVERIES.md §9. If any case fails, the run prints an
 `UNEXPECTED FAILURES` block listing the case, the expectation and the actual output.
@@ -192,7 +192,7 @@ explained in DISCOVERIES.md §9. If any case fails, the run prints an
 A high score on a dataset written by the submitter is worth distrusting, so README.md
 explains how each of the two cases that once failed was closed, and the adversarial suite
 in `eval/results/adversarial.md` tests the property the curated cases cannot: that memory
-stays out of the way of 1,616 sentences it was never taught anything about.
+stays out of the way of 1,626 sentences it was never taught anything about.
 
 ### Optional: the unit tests
 

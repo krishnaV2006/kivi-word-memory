@@ -99,5 +99,15 @@
     "expect_intervention": true,
     "known_hard": true,
     "rationale": "Identity now crosses scripts, but context does not, and this case pins the difference. 'कीवी' is a homophone of the fruit, so the guard demands supporting context. The supporting word here is 'सर्विस' -- a transliterated English loanword that skeletonises to 'sarvis', while the context term learned from English text skeletonises to 'servike'. They do not meet. The result is conservative rather than wrong: in Devanagari, homophone terms stay guarded, while unambiguous names like आदित्य resolve normally. Fixing it properly means learning context terms per script, or transliteration-aware loanword matching. Reported as a failure."
+  },
+  {
+    "id": "codemix-mixed-script-one-sentence",
+    "category": "code_mixed/devanagari",
+    "description": "Both behaviours in a single sentence: a Devanagari person resolves, a Devanagari homophone does not.",
+    "asr": "the कीवी was sour but the meeting with आदित्य went well",
+    "formatted": "The कीवी was sour but the meeting with आदित्य went well.",
+    "expected": "The कीवी was sour but the meeting with Aaditya went well.",
+    "expect_intervention": true,
+    "rationale": "The sharpest single test of cross-script behaviour, because the two spans need opposite answers. आदित्य is an unambiguous person and resolves on the strict key. कीवी is a homophone of the fruit, and with 'sour' rather than any Kivi context term present the guard holds -- in a script the guard was originally blind to. Getting one right and the other wrong would be worse than getting both wrong."
   }
 ]
