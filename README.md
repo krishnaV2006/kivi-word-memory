@@ -118,7 +118,8 @@ because the final vowel survives after a conjunct.
 
 The loose key deliberately over-generates — `cave` retrieves `Kivi`. That is fine. **A key
 collision is not an intervention.** The decision stage is where the system is
-conservative, and it rejects `cave` on similarity (0.63) long before anything is written.
+conservative: `cave` is scored at 0.599 against a 0.72 threshold and rejected, and the
+trace says exactly that rather than silently dropping it.
 
 Scoring is deliberately boring and inspectable:
 
@@ -285,11 +286,13 @@ Honest ones, in rough order of how much they would matter in production.
    `sarvis` while the English-learned term reduces to `servike`, so homophone terms stay
    guarded in Devanagari even when the sentence does support them. Conservative rather
    than wrong, and pinned by a failing case. Other Indic scripts are not handled at all.
-6. **`APPLY_THRESHOLD` is nearly redundant.** A branch-coverage table added to the
-   evaluation showed it is never reached: `SIM_FLOOR` already rejects almost everything it
-   would have caught, and it can only fire in a five-point similarity window on loose-key
-   matches. Two knobs doing one job. Reported rather than papered over — see
-   DISCOVERIES.md §9.
+6. ~~`APPLY_THRESHOLD` is nearly redundant.~~ **Fixed.** A branch-coverage table showed
+   it was never reached, because `SIM_FLOOR` rejected almost everything first. The floor
+   dropped from 0.85 to 0.60, demoting it to a cheap pre-filter and letting the score —
+   which accounts for evidence and context, as a raw floor cannot — do the deciding. Same
+   results, same adversarial numbers, full branch coverage, and a more truthful trace.
+   Kept here rather than deleted so the arc is visible: DISCOVERIES.md §9 diagnosed it,
+   §15 acted on it.
 7. **The `usage` observation confirms every entry it mentions.** A user quoting someone
    else's text would strengthen memories they did not intend to.
 8. **The decision trace keeps only the most recent 200 requests.** It is an inspection

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 19:56:28",
+  "generated_at": "2026-09-07 20:00:30",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -49,41 +49,41 @@
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 11.093,
-      "p95_ms": 14.919,
-      "max_ms": 15.457,
-      "mean_ms": 11.375,
+      "p50_ms": 11.354,
+      "p95_ms": 17.133,
+      "max_ms": 18.027,
+      "mean_ms": 11.554,
       "stage_means_ms": {
-        "load_memory": 7.853,
-        "span_generation": 0.218,
-        "scoring_and_decision": 2.74,
-        "rewrite_and_prompt": 0.199,
-        "total": 11.01
+        "load_memory": 8.049,
+        "span_generation": 0.214,
+        "scoring_and_decision": 2.707,
+        "rewrite_and_prompt": 0.197,
+        "total": 11.167
       }
     },
     "warm": {
-      "p50_ms": 2.952,
-      "p95_ms": 4.711,
-      "max_ms": 4.946,
-      "mean_ms": 3.185,
+      "p50_ms": 2.733,
+      "p95_ms": 3.901,
+      "max_ms": 8.464,
+      "mean_ms": 3.107,
       "stage_means_ms": {
         "load_memory": 0.001,
-        "span_generation": 0.197,
-        "scoring_and_decision": 2.527,
-        "rewrite_and_prompt": 0.162,
-        "total": 2.887
+        "span_generation": 0.173,
+        "scoring_and_decision": 2.534,
+        "rewrite_and_prompt": 0.184,
+        "total": 2.891
       }
     },
-    "p50_ms": 11.093,
-    "p95_ms": 14.919,
-    "max_ms": 15.457,
-    "mean_ms": 11.375,
+    "p50_ms": 11.354,
+    "p95_ms": 17.133,
+    "max_ms": 18.027,
+    "mean_ms": 11.554,
     "stage_means_ms": {
-      "load_memory": 7.853,
-      "span_generation": 0.218,
-      "scoring_and_decision": 2.74,
-      "rewrite_and_prompt": 0.199,
-      "total": 11.01
+      "load_memory": 8.049,
+      "span_generation": 0.214,
+      "scoring_and_decision": 2.707,
+      "rewrite_and_prompt": 0.197,
+      "total": 11.167
     }
   },
   "db_growth": [
@@ -177,11 +177,10 @@
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
     "abstain_suppressed": 2,
+    "abstain_low_score": 1,
     "abstain_ambiguous": 1
   },
-  "uncovered_branches": [
-    "abstain_low_score"
-  ],
+  "uncovered_branches": [],
   "cases": [
     {
       "id": "fire-brief-example",
@@ -10037,7 +10036,7 @@
       "id": "noop-cave-loose-key-collision",
       "category": "should_not_fire/homophone",
       "description": "The loose consonant key deliberately over-generates. Scoring must reject what it retrieves.",
-      "rationale": "cave and Kivi share the loose key kv. Retrieval is not a decision -- similarity is only 0.63 and cave is a common word.",
+      "rationale": "cave and Kivi share the loose key kv, so retrieval surfaces the entry on every sentence containing 'cave'. Retrieval is not a decision: the candidate is scored at 0.599 against a 0.72 threshold and rejected. This case used to be rejected earlier and more bluntly, by a raw similarity floor, which meant the trace said only that no candidate existed. Now the score -- which accounts for evidence and context, as a raw floor cannot -- does the rejecting, and says so.",
       "known_hard": false,
       "inputs": {
         "asr": "we explored a cave near the office",
@@ -10070,7 +10069,32 @@
       "passed": true,
       "outcome": "correct_abstention",
       "status_check": null,
-      "decision_trace": [],
+      "decision_trace": [
+        {
+          "span": "cave",
+          "start": 14,
+          "end": 18,
+          "action": "abstain_low_score",
+          "reason": "closest memory 'Kivi' scored 0.599, below the 0.72 apply threshold",
+          "entry_id": 2,
+          "canonical": "Kivi",
+          "score": 0.599,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 2,
+              "canonical": "Kivi",
+              "kind": "product",
+              "status": "active",
+              "confidence": 0.8333,
+              "similarity": 0.625,
+              "route": "metaphone",
+              "context_boost": 0.0,
+              "score": 0.599
+            }
+          ]
+        }
+      ],
       "memory_state": [
         {
           "canonical": "Aaditya",

@@ -169,7 +169,7 @@
     "formatted": "We explored a cave near the office.",
     "expected": "We explored a cave near the office.",
     "expect_intervention": false,
-    "rationale": "cave and Kivi share the loose key kv. Retrieval is not a decision -- similarity is only 0.63 and cave is a common word."
+    "rationale": "cave and Kivi share the loose key kv, so retrieval surfaces the entry on every sentence containing 'cave'. Retrieval is not a decision: the candidate is scored at 0.599 against a 0.72 threshold and rejected. This case used to be rejected earlier and more bluntly, by a raw similarity floor, which meant the trace said only that no candidate existed. Now the score -- which accounts for evidence and context, as a raw floor cannot -- does the rejecting, and says so."
   },
   {
     "id": "noop-empty-state",

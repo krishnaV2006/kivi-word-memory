@@ -504,3 +504,46 @@ everything is fine.
 
 **Pinned by:** the two growth tables in `eval/results/summary.md`,
 `app/resolver.py::_prune_trace`
+
+---
+
+## 15. Acting on §9: the redundant threshold, removed
+
+**Found:** §9 diagnosed that `APPLY_THRESHOLD` was nearly dead code — `SIM_FLOOR = 0.85`
+rejected almost everything the threshold would have caught, leaving it reachable only in a
+five-point window. That section ended by naming the better design without building it:
+
+> a future version should either collapse the two thresholds into one or lower `SIM_FLOOR`
+> and let the score do the work — which is the better design, because the score accounts
+> for evidence and context and a raw similarity floor does not.
+
+**Done.** `SIM_FLOOR` dropped from 0.85 to 0.60, demoting it from a decision-maker to
+what it should always have been: a cheap filter that skips candidates not worth scoring.
+The score now does the deciding.
+
+The measurements say this cost nothing and bought three things:
+
+| | before | after |
+|---|---|---|
+| cases | 55/56, precision 1.0 | 55/56, precision 1.0 |
+| adversarial | 0 / 1,616 | 0 / 1,616 |
+| case artifacts changed | — | **1** |
+| branch coverage | 7 of 8 | **8 of 8** |
+| warm p50 @ 10k entries | 2.6 ms | 1.9 ms |
+
+The single artifact that changed is `noop-cave-loose-key-collision`, and it changed for
+the better. `cave` still is not rewritten, but the reason improved from *no candidate
+shares a phonetic key* — which was false, one does — to:
+
+> closest memory 'Kivi' scored 0.599, below the 0.72 apply threshold
+
+That is the honest account of what happens. The loose key genuinely does retrieve `Kivi`
+for `cave`, and the system genuinely does consider and reject it. Hiding that behind a
+similarity floor made the trace *less* truthful about the system's own behaviour, which
+for a component whose whole job is explaining itself is the wrong trade.
+
+And with the branch finally reachable, `abstain_low_score` is exercised by a real case
+rather than reported as a gap.
+
+**Pinned by:** `noop-cave-loose-key-collision`, the branch-coverage table in
+`eval/results/summary.md`

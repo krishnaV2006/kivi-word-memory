@@ -31,7 +31,7 @@ from app.phonetics import indic_skeleton, keys_for, similarity
 # --- policy constants -------------------------------------------------------------
 # Small, few, and stated out loud. Tuning these is a product decision, not a detail.
 
-SIM_FLOOR = 0.85        # below this a retrieved candidate is not considered at all
+SIM_FLOOR = 0.60        # a candidate below this is not worth scoring at all
 APPLY_THRESHOLD = 0.72  # score a candidate must reach to be applied
 MARGIN = 0.06           # how far ahead of the runner-up the winner must be
 LOOSE_PENALTY = 0.85    # loose-key-only matches are a weaker route to the same entry
