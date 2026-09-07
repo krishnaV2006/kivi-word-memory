@@ -201,3 +201,38 @@ thing that a well-meant vowel-rule tweak could break.
 A prediction that turns out wrong in the safe direction is still worth writing down.
 
 **Pinned by:** `noop-sarah-real-name`
+
+---
+
+## 9. Two of our own thresholds overlap, and the coverage report found it
+
+**Found:** by adding a decision-branch coverage table to the evaluation — every outcome
+the policy can produce, and how many cases reach it. One branch came back at zero:
+`abstain_low_score`.
+
+The first instinct was that the dataset had a hole. It does not. The branch is very nearly
+dead code, and the arithmetic says why. A candidate is discarded outright below
+`SIM_FLOOR = 0.85`, and an active entry has at least two confirmations, so its confidence
+is at least 0.75 and its score multiplier at least 0.9375:
+
+| retrieval route | lowest score it can produce | can it fall below `APPLY_THRESHOLD = 0.72`? |
+|---|---:|---|
+| `indic` (exact skeleton) | 0.9375 | never — similarity is pinned at 1.0 |
+| `metaphone` | 0.7969 | never — would need raw similarity < 0.768, already filtered |
+| `indic_loose` | 0.6773 | only for raw similarity in **[0.85, 0.9035)** |
+
+So `SIM_FLOOR` is doing almost all of the rejecting, and `APPLY_THRESHOLD` only ever fires
+in a five-point window on loose-key matches.
+
+**Consequence:** we left both in and reported the gap rather than inventing a case to
+close it. Contriving an input that lands in a five-point window would have produced a
+green coverage table and taught nobody anything. The honest reading is that the policy has
+one redundant knob, and that a future version should either collapse the two thresholds
+into one or lower `SIM_FLOOR` and let the score do the work — which is the better design,
+because the score accounts for evidence and context and a raw similarity floor does not.
+
+Worth noting what surfaced this: not a failing test, but asking the evaluation to report
+which of its own rules it never exercised. A dataset can pass every case and still leave
+branches of the policy completely untested.
+
+**Pinned by:** the `Decision-branch coverage` table in `eval/results/summary.md`

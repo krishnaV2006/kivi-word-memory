@@ -49,13 +49,13 @@ So the system abstains, with a stated reason, in seven distinct situations:
 |---|---|
 | the word is ordinary English and nothing else in the sentence belongs to that memory | `kiwi` is usually a fruit |
 | the span is inside an email, URL, @handle or backticked code | a rewritten address is a broken address |
-| two memories are within a scoring margin of each other | Aaditya and Aditi are different people; guessing is worse than declining |
+| two memories are within a scoring margin of each other | `Aaditya` and `Adithya` can be two colleagues whose names sound identical; guessing renames one of them |
 | the text is already correct | a no-op is not an intervention and must not be counted as one |
 | the entry has only been seen once | one edit is a hypothesis, not a memory |
 | the user has reverted it twice | they have told us to stop |
 | nothing sounds close enough | memory must not invent |
 
-Measured over 44 cases: **23 useful interventions, 0 false interventions.** The
+Measured over 45 cases: **23 useful interventions, 0 false interventions.** The
 exact-string dictionary baseline manages 12 useful and **10 false**.
 
 ## What the system learns from
@@ -162,11 +162,12 @@ reverse-engineered from a working system, because there was not one.
 
 ### Results
 
-44 cases: 19 should-fire, 18 should-not-fire, 7 lifecycle.
+45 cases: 19 should-fire, 19 should-not-fire, 7 lifecycle. Every branch of the decision policy but one is exercised by at least one case; the exception is
+documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 20 / 44 | 22 / 44 | **43 / 44** |
+| cases passed | 20 / 45 | 22 / 45 | **44 / 45** |
 | useful interventions | 0 | 12 | **23** |
 | missed | 24 | 11 | **1** |
 | false interventions | 0 | **10** | **0** |
@@ -216,10 +217,11 @@ Honest ones, in rough order of how much they would matter in production.
 5. **Latin script only.** Devanagari and other Indic scripts are not handled; the
    skeleton rules assume romanised input. This matches Kivi's current output but not its
    ambition.
-6. **The margin rule is under-exercised.** The ambiguity case it was written for
-   (`Aaditya` vs `Aditi`) resolves earlier, via the already-correct check, so the margin
-   branch is reached less often than the design intends. The mechanism works but the
-   dataset does not stress it hard.
+6. **`APPLY_THRESHOLD` is nearly redundant.** A branch-coverage table added to the
+   evaluation showed it is never reached: `SIM_FLOOR` already rejects almost everything it
+   would have caught, and it can only fire in a five-point similarity window on loose-key
+   matches. Two knobs doing one job. Reported rather than papered over — see
+   DISCOVERIES.md §9.
 7. **The `usage` observation confirms every entry it mentions.** A user quoting someone
    else's text would strengthen memories they did not intend to.
 

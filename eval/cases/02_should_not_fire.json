@@ -191,5 +191,22 @@
     "expected": "",
     "expect_intervention": false,
     "rationale": "Degenerate input handling, checked because the reviewing agent will try it."
+  },
+  {
+    "id": "noop-two-people-same-sound",
+    "category": "should_not_fire/ambiguous",
+    "description": "Two different colleagues whose names are spelled differently and sound identical. Added after the first full run to exercise the margin rule, which no other case reached.",
+    "observations": [
+      {
+        "kind": "dictionary_add",
+        "canonical": "Adithya",
+        "entry_kind": "person"
+      }
+    ],
+    "asr": "aditya will merge it tonight",
+    "formatted": "Aditya will merge it tonight.",
+    "expected": "Aditya will merge it tonight.",
+    "expect_intervention": false,
+    "rationale": "Aaditya and Adithya are two real people whose names collapse to the identical phonetic key 'aditia'. Both match the span perfectly, so similarity cannot separate them and only confidence differs (0.9875 vs 0.9375). Picking the higher-scoring one would rename a colleague on a 0.05 margin. Refusing is the only defensible answer, and the user can disambiguate by correcting it once."
   }
 ]

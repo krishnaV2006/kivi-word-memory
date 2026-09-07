@@ -88,6 +88,28 @@ def classify(case: dict, actual: str) -> str:
 
 GOOD = {"useful_intervention", "correct_abstention"}
 
+# Every outcome app/resolver.py can produce. Kept here deliberately so that adding a
+# rule without adding a case for it shows up as an uncovered branch in the report.
+POLICY_BRANCHES = {
+    "apply",
+    "noop_already_correct",
+    "abstain_suppressed",
+    "abstain_low_evidence",
+    "abstain_low_score",
+    "abstain_ambiguous",
+    "abstain_common_word",
+    "abstain_protected_span",
+}
+
+
+def branch_coverage(records: list[dict]) -> dict[str, int]:
+    """How many cases reach each decision branch, counted once per case."""
+    counts: dict[str, int] = {}
+    for r in records:
+        for action in {d["action"] for d in r["decision_trace"]}:
+            counts[action] = counts.get(action, 0) + 1
+    return counts
+
 
 # --------------------------------------------------------------------------- measuring
 
@@ -354,6 +376,21 @@ def write_summary(payload: dict) -> None:
     for p in payload["db_growth"]:
         w(f"| {p['observations']} | {p['entries']} | {p['total_rows']} | {p['kb']} KB |")
 
+    w("\n## Decision-branch coverage\n")
+    w("Every outcome the policy in `app/resolver.py` can produce, and how many cases "
+      "reach it. A branch with no cases is a rule the evaluation does not actually "
+      "test:\n")
+    w("| decision | cases reaching it |")
+    w("|---|---:|")
+    for action, n in sorted(payload["branch_coverage"].items(), key=lambda kv: -kv[1]):
+        w(f"| `{action}` | {n} |")
+    uncovered = payload["uncovered_branches"]
+    if uncovered:
+        w(f"\n**Not exercised: {', '.join('`' + b + '`' for b in uncovered)}.** "
+          f"These rules are implemented but untested by this dataset.\n")
+    else:
+        w("\nEvery branch is exercised by at least one case.\n")
+
     w("\n## Reproducibility\n")
     w("Per-case artifacts under `eval/results/cases/` contain no timing data and are "
       "byte-identical across runs on the same commit. After re-running this harness, "
@@ -388,6 +425,11 @@ def main() -> int:
         mark = "ok  " if rec["passed"] else ("hard" if rec["known_hard"] else "FAIL")
         print(f"  [{i:>2}/{len(cases)}] {mark}  {rec['id']}")
 
+    coverage = branch_coverage(records)
+    missing = sorted(POLICY_BRANCHES - set(coverage))
+    if missing:
+        print(f"note: {len(missing)} policy branch(es) not exercised: {', '.join(missing)}")
+
     print("measuring latency ...")
     latency = latency_profile()
     print("measuring database growth ...")
@@ -405,6 +447,8 @@ def main() -> int:
         "model_calls": 0,
         "cost_inr": 0.0,
         "known_hard_count": sum(1 for r in records if r["known_hard"]),
+        "branch_coverage": coverage,
+        "uncovered_branches": sorted(POLICY_BRANCHES - set(coverage)),
         "cases": records,
     }
     (RESULTS_DIR / "results.json").write_text(
