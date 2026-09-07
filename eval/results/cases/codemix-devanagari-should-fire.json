@@ -1,9 +1,9 @@
 {
   "id": "codemix-devanagari-should-fire",
   "category": "code_mixed/devanagari",
-  "description": "KNOWN HARD, EXPECTED TO FAIL. Cross-script CONTEXT, as opposed to cross-script identity.",
-  "rationale": "Identity now crosses scripts, but context does not, and this case pins the difference. 'कीवी' is a homophone of the fruit, so the guard demands supporting context. The supporting word here is 'सर्विस' -- a transliterated English loanword that skeletonises to 'sarvis', while the context term learned from English text skeletonises to 'servike'. They do not meet. The result is conservative rather than wrong: in Devanagari, homophone terms stay guarded, while unambiguous names like आदित्य resolve normally. Fixing it properly means learning context terms per script, or transliteration-aware loanword matching. Reported as a failure.",
-  "known_hard": true,
+  "description": "Cross-script CONTEXT, as opposed to cross-script identity.",
+  "rationale": "Authored as a known-hard failure, and it failed for two commits. 'कीवी' is a homophone of the fruit so the guard demands supporting context, and the support here is 'सर्विस' -- the English word 'service' borrowed into Hindi. Two bugs kept them apart. English 'service' skeletonised to 'servike', because every bare c was mapped to k rather than only the hard ones; and context was matched on strict skeletons only, so 'servise' and 'sarvis' still never met. Fixing the soft c and indexing context under the loose consonant key as well closed both, with no measured cost: 0 false positives across 1,626 adversarial sentences either side of the change.",
+  "known_hard": false,
   "inputs": {
     "asr": "कीवी सर्विस ठीक है",
     "formatted": "कीवी सर्विस ठीक है।",

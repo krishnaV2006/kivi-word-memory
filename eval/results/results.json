@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 20:39:52",
+  "generated_at": "2026-09-07 20:47:02",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -49,41 +49,41 @@
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 6.802,
-      "p95_ms": 7.425,
-      "max_ms": 9.863,
-      "mean_ms": 6.904,
+      "p50_ms": 6.632,
+      "p95_ms": 9.178,
+      "max_ms": 9.205,
+      "mean_ms": 6.754,
       "stage_means_ms": {
-        "load_memory": 4.955,
-        "span_generation": 0.19,
-        "scoring_and_decision": 1.485,
-        "rewrite_and_prompt": 0.095,
-        "total": 6.725
+        "load_memory": 4.9,
+        "span_generation": 0.185,
+        "scoring_and_decision": 1.371,
+        "rewrite_and_prompt": 0.118,
+        "total": 6.574
       }
     },
     "warm": {
-      "p50_ms": 1.784,
-      "p95_ms": 2.23,
-      "max_ms": 2.265,
-      "mean_ms": 1.834,
+      "p50_ms": 1.671,
+      "p95_ms": 1.938,
+      "max_ms": 2.411,
+      "mean_ms": 1.707,
       "stage_means_ms": {
         "load_memory": 0.0,
-        "span_generation": 0.182,
-        "scoring_and_decision": 1.408,
-        "rewrite_and_prompt": 0.1,
-        "total": 1.691
+        "span_generation": 0.18,
+        "scoring_and_decision": 1.328,
+        "rewrite_and_prompt": 0.087,
+        "total": 1.596
       }
     },
-    "p50_ms": 6.802,
-    "p95_ms": 7.425,
-    "max_ms": 9.863,
-    "mean_ms": 6.904,
+    "p50_ms": 6.632,
+    "p95_ms": 9.178,
+    "max_ms": 9.205,
+    "mean_ms": 6.754,
     "stage_means_ms": {
-      "load_memory": 4.955,
-      "span_generation": 0.19,
-      "scoring_and_decision": 1.485,
-      "rewrite_and_prompt": 0.095,
-      "total": 6.725
+      "load_memory": 4.9,
+      "span_generation": 0.185,
+      "scoring_and_decision": 1.371,
+      "rewrite_and_prompt": 0.118,
+      "total": 6.574
     }
   },
   "db_growth": [
@@ -120,7 +120,7 @@
       "utterances": 1000,
       "decision_rows": 1191,
       "total_rows": 1780,
-      "kb": 324.0
+      "kb": 320.0
     },
     {
       "utterances": 5000,
@@ -131,7 +131,7 @@
   ],
   "model_calls": 0,
   "cost_inr": 0.0,
-  "known_hard_count": 1,
+  "known_hard_count": 0,
   "adversarial": {
     "total_sentences": 1626,
     "total_interventions": 0,
@@ -177,8 +177,8 @@
     }
   },
   "branch_coverage": {
-    "noop_already_correct": 3,
     "apply": 35,
+    "noop_already_correct": 3,
     "abstain_common_word": 6,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
@@ -15212,9 +15212,9 @@
     {
       "id": "codemix-devanagari-should-fire",
       "category": "code_mixed/devanagari",
-      "description": "KNOWN HARD, EXPECTED TO FAIL. Cross-script CONTEXT, as opposed to cross-script identity.",
-      "rationale": "Identity now crosses scripts, but context does not, and this case pins the difference. 'कीवी' is a homophone of the fruit, so the guard demands supporting context. The supporting word here is 'सर्विस' -- a transliterated English loanword that skeletonises to 'sarvis', while the context term learned from English text skeletonises to 'servike'. They do not meet. The result is conservative rather than wrong: in Devanagari, homophone terms stay guarded, while unambiguous names like आदित्य resolve normally. Fixing it properly means learning context terms per script, or transliteration-aware loanword matching. Reported as a failure.",
-      "known_hard": true,
+      "description": "Cross-script CONTEXT, as opposed to cross-script identity.",
+      "rationale": "Authored as a known-hard failure, and it failed for two commits. 'कीवी' is a homophone of the fruit so the guard demands supporting context, and the support here is 'सर्विस' -- the English word 'service' borrowed into Hindi. Two bugs kept them apart. English 'service' skeletonised to 'servike', because every bare c was mapped to k rather than only the hard ones; and context was matched on strict skeletons only, so 'servise' and 'sarvis' still never met. Fixing the soft c and indexing context under the loose consonant key as well closed both, with no measured cost: 0 false positives across 1,626 adversarial sentences either side of the change.",
+      "known_hard": false,
       "inputs": {
         "asr": "कीवी सर्विस ठीक है",
         "formatted": "कीवी सर्विस ठीक है।",
