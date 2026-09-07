@@ -119,10 +119,20 @@
     </section>
   </div>
 
-  <section>
-    <h2>3 &middot; Memory state <span id="mcount" class="stat"></span></h2>
-    <div id="memory"><div class="empty">loading&hellip;</div></div>
-  </section>
+  <div>
+    <section>
+      <h2>3 &middot; Memory state <span id="mcount" class="stat"></span></h2>
+      <div id="memory"><div class="empty">loading&hellip;</div></div>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2>4 &middot; Recent decisions <span class="stat">last 40 utterances</span></h2>
+      <div id="history"><div class="empty">nothing resolved yet</div></div>
+      <div class="note">Every span the system considered, across this session &mdash; not
+        only the last one. Kept to the most recent 200 requests, because an inspection aid
+        that grows forever outgrows the memory it explains.</div>
+    </section>
+  </div>
 </main>
 
 <script>
@@ -232,7 +242,19 @@ async function resolveNow() {
       <details style="margin-top:10px"><summary class="stat" style="cursor:pointer">memory block that would be injected into a formatting prompt</summary>
         <div class="out mono" style="font-size:12px">${esc(j.memory_prompt_block)}</div></details>
     </div>`;
-  loadMemory();
+  loadMemory(); loadHistory();
+}
+
+async function loadHistory() {
+  const j = await (await fetch("/api/decisions?limit=40")).json();
+  const el = $("#history");
+  if (!j.requests.length) { el.innerHTML = `<div class="empty">nothing resolved yet</div>`; return; }
+  el.innerHTML = j.requests.map(r => `
+    <div class="d ${CLS(r.decisions[0].action)}">
+      <div class="head">${esc(r.decisions.map(d => d.span).join(" · "))}</div>
+      ${r.decisions.map(d => `<div class="why"><span class="mono">${esc(d.action)}</span> &mdash; ${esc(d.reason)}</div>`).join("")}
+      <div class="stat" style="margin-top:3px">${esc(r.at)} &middot; ${esc(r.request_id)}</div>
+    </div>`).join("");
 }
 
 async function loadMemory() {
@@ -275,7 +297,7 @@ $("#go").onclick = resolveNow;
 $("#reset").onclick = async () => {
   if (!confirm("Delete the database and reload the seed?")) return;
   await fetch("/api/reset", {method:"POST"});
-  $("#result").innerHTML = ""; loadMemory();
+  $("#result").innerHTML = ""; loadMemory(); loadHistory();
 };
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   tab = b.dataset.k;
@@ -283,7 +305,7 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   renderForm();
 });
 
-renderExamples(); renderForm(); loadMemory();
+renderExamples(); renderForm(); loadMemory(); loadHistory();
 </script>
 </body>
 </html>

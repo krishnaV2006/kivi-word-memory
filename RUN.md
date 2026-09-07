@@ -100,8 +100,8 @@ Leave it running. There is no worker, queue, or second service.
 
 **http://127.0.0.1:8000**
 
-No credentials. The page has three panels: **Transcribe** (top left), **Teach** (bottom
-left), **Memory state** (right).
+No credentials. The page has four panels: **Transcribe** (top left), **Teach** (bottom
+left), **Memory state** (top right) and **Recent decisions** (bottom right).
 
 ## 7. Primary interactions to try
 
@@ -138,7 +138,11 @@ The entry turns **suppressed** in the memory panel. Resolve
 `Bulbool has thirty nine voices.` — unchanged, and the trace explains that the entry was
 reverted by the user and will not act.
 
-**f. Reset.** Click **Reset to seed** in the top right. Memory returns to the seeded
+**f. Inspect the history.** The **Recent decisions** panel, bottom right, shows every
+span the system considered across the whole session — not only the last utterance —
+each with the reason it acted or declined. It is bounded to the most recent 200 requests.
+
+**g. Reset.** Click **Reset to seed** in the top right. Memory returns to the seeded
 state. (Command-line equivalent in section 10.)
 
 **Also worth trying**, since Kivi is built for Indian users and these are the least

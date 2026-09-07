@@ -122,6 +122,45 @@ def delete_memory(entry_id: int) -> dict:
         conn.close()
 
 
+@app.get("/api/decisions")
+def get_decisions(limit: int = 40) -> dict:
+    """Recent decisions, newest first, grouped by request.
+
+    The trace is stored per span, but a person thinks in utterances, so it is grouped
+    back into requests here. Bounded to the most recent TRACE_RETENTION_REQUESTS
+    requests by app.resolver; see DISCOVERIES.md section 14 for why it is a ring buffer
+    rather than a log.
+    """
+    limit = max(1, min(limit, 200))
+    conn = _conn()
+    try:
+        rows = conn.execute(
+            """
+            SELECT request_id, span, action, reason, score, created_at
+            FROM decisions
+            WHERE request_id IN (
+                SELECT request_id FROM decisions
+                GROUP BY request_id ORDER BY MAX(id) DESC LIMIT ?
+            )
+            ORDER BY id DESC
+            """,
+            (limit,),
+        ).fetchall()
+        requests: dict[str, dict] = {}
+        for r in rows:
+            entry = requests.setdefault(
+                r["request_id"], {"request_id": r["request_id"], "at": r["created_at"],
+                                  "decisions": []}
+            )
+            entry["decisions"].append({
+                "span": r["span"], "action": r["action"],
+                "reason": r["reason"], "score": r["score"],
+            })
+        return {"requests": list(requests.values())}
+    finally:
+        conn.close()
+
+
 @app.post("/api/resolve")
 def post_resolve(body: ResolveIn) -> JSONResponse:
     conn = _conn()
