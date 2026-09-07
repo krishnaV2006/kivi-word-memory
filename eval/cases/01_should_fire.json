@@ -1,0 +1,196 @@
+[
+  {
+    "id": "fire-brief-example",
+    "category": "should_fire/brief_example",
+    "description": "The one example the brief provides, end to end.",
+    "asr": "ask aditya to review the sarvam kiwi service",
+    "formatted": "Ask Aditya to review the Sarvam Kiwi service.",
+    "expected": "Ask Aaditya to review the Sarvam Kivi service.",
+    "expect_intervention": true,
+    "rationale": "Two learned identities in one sentence. 'Kiwi' here sits beside 'Sarvam' and 'service', which is the context that makes it the product rather than the fruit."
+  },
+  {
+    "id": "fire-unseen-variant-adithya",
+    "category": "should_fire/unseen_variant",
+    "description": "HEADLINE CLAIM. 'adithya' was never observed by the system; only 'aditya' was ever corrected. A dictionary cannot do this.",
+    "asr": "adithya is joining the call",
+    "formatted": "Adithya is joining the call.",
+    "expected": "Aaditya is joining the call.",
+    "expect_intervention": true,
+    "rationale": "The correction taught a phonetic identity, not a string. 'th' is an aspirated t in Indian romanisation, so adithya collapses to the same key as aditya."
+  },
+  {
+    "id": "fire-unseen-variant-adhitya",
+    "category": "should_fire/unseen_variant",
+    "description": "A second never-observed spelling, aspirate on the d instead of the t.",
+    "asr": "adhitya reviewed the design doc",
+    "formatted": "Adhitya reviewed the design doc.",
+    "expected": "Aaditya reviewed the design doc.",
+    "expect_intervention": true,
+    "rationale": "dh and d collapse identically to d."
+  },
+  {
+    "id": "fire-unseen-variant-aadithya",
+    "category": "should_fire/unseen_variant",
+    "description": "Both aspirate and doubled vowel, never observed.",
+    "asr": "send aadithya the latency numbers",
+    "formatted": "Send Aadithya the latency numbers.",
+    "expected": "Send Aaditya the latency numbers.",
+    "expect_intervention": true,
+    "rationale": "aa collapses to a and th collapses to t; two independent rules composing."
+  },
+  {
+    "id": "fire-multiword-sarvam-kivi",
+    "category": "should_fire/multiword",
+    "description": "Two adjacent identities, both wrong, in a single noun phrase.",
+    "asr": "the sarwam kiwi service is slow today",
+    "formatted": "The Sarwam Kiwi service is slow today.",
+    "expected": "The Sarvam Kivi service is slow today.",
+    "expect_intervention": true,
+    "rationale": "w and v collapse. Kivi is supported by the adjacent Sarvam and service context terms."
+  },
+  {
+    "id": "fire-possessive-person",
+    "category": "should_fire/morphology",
+    "description": "Possessive must survive the rewrite.",
+    "asr": "this is aditya's branch",
+    "formatted": "This is Aditya's branch.",
+    "expected": "This is Aaditya's branch.",
+    "expect_intervention": true,
+    "rationale": "The match is on the stem; the possessive suffix is reattached rather than swallowed."
+  },
+  {
+    "id": "fire-possessive-product",
+    "category": "should_fire/morphology",
+    "description": "Possessive on a product identity.",
+    "asr": "kiwi's dictionary needs a reset",
+    "formatted": "Kiwi's dictionary needs a reset.",
+    "expected": "Kivi's dictionary needs a reset.",
+    "expect_intervention": true,
+    "rationale": "'dictionary' is a Kivi context term, supporting the product reading."
+  },
+  {
+    "id": "fire-acronym-casing",
+    "category": "should_fire/casing",
+    "description": "Formatter title-cased an acronym; memory knows the real shape.",
+    "asr": "i studied at iitm",
+    "formatted": "I studied at Iitm.",
+    "expected": "I studied at IITM.",
+    "expect_intervention": true,
+    "rationale": "Canonical casing is part of the memory entry, not a formatting rule."
+  },
+  {
+    "id": "fire-romanisation-vakaria",
+    "category": "should_fire/romanisation",
+    "description": "Interior vowel drift defeats the strict key; the loose consonant key must catch it.",
+    "asr": "krishna vakaria submitted the form",
+    "formatted": "Krishna Vakaria submitted the form.",
+    "expected": "Krishna Vekariya submitted the form.",
+    "expect_intervention": true,
+    "rationale": "vekariya and vakaria share the consonant skeleton vkr but not the strict skeleton."
+  },
+  {
+    "id": "fire-romanisation-vekaria-observed",
+    "category": "should_fire/romanisation",
+    "description": "The variant that was actually observed during learning.",
+    "asr": "email vekaria about the interview",
+    "formatted": "Email Vekaria about the interview.",
+    "expected": "Email Vekariya about the interview.",
+    "expect_intervention": true,
+    "rationale": "Directly observed surface; the easy end of the same mechanism."
+  },
+  {
+    "id": "fire-saaras-unseen-sarras",
+    "category": "should_fire/unseen_variant",
+    "description": "Doubled consonant instead of doubled vowel, never observed.",
+    "asr": "the sarras model handles code mixing",
+    "formatted": "The Sarras model handles code mixing.",
+    "expected": "The Saaras model handles code mixing.",
+    "expect_intervention": true,
+    "rationale": "Repeat collapse makes saaras and sarras identical."
+  },
+  {
+    "id": "fire-bulbul-unseen-bulbhul",
+    "category": "should_fire/unseen_variant",
+    "description": "Aspirated b, never observed.",
+    "asr": "bulbhul has thirty nine voices",
+    "formatted": "Bulbhul has thirty nine voices.",
+    "expected": "Bulbul has thirty nine voices.",
+    "expect_intervention": true,
+    "rationale": "bh collapses to b."
+  },
+  {
+    "id": "fire-chinmay-unseen-chinmoy",
+    "category": "should_fire/unseen_variant",
+    "description": "Final vowel drift on a learned name.",
+    "asr": "chinmoy is reviewing the design",
+    "formatted": "Chinmoy is reviewing the design.",
+    "expected": "Chinmay is reviewing the design.",
+    "expect_intervention": true,
+    "rationale": "Terminal ay/oy drift is common in romanised names; the consonant skeleton holds."
+  },
+  {
+    "id": "fire-multiple-entities",
+    "category": "should_fire/multiword",
+    "description": "Three identities in one sentence, all wrong.",
+    "asr": "ask aditya whether sarwam shipped the kiwi build",
+    "formatted": "Ask Aditya whether Sarwam shipped the Kiwi build.",
+    "expected": "Ask Aaditya whether Sarvam shipped the Kivi build.",
+    "expect_intervention": true,
+    "rationale": "Independent spans must each be decided on their own evidence."
+  },
+  {
+    "id": "fire-sentence-initial",
+    "category": "should_fire/casing",
+    "description": "Identity at sentence start.",
+    "asr": "aditya will merge it tonight",
+    "formatted": "Aditya will merge it tonight.",
+    "expected": "Aaditya will merge it tonight.",
+    "expect_intervention": true,
+    "rationale": "Position must not change the decision."
+  },
+  {
+    "id": "fire-punctuation-adjacent",
+    "category": "should_fire/morphology",
+    "description": "Trailing comma must not break the match.",
+    "asr": "aditya can you review this",
+    "formatted": "Aditya, can you review this?",
+    "expected": "Aaditya, can you review this?",
+    "expect_intervention": true,
+    "rationale": "Punctuation is stripped for matching and restored for output."
+  },
+  {
+    "id": "fire-uppercase-preserved",
+    "category": "should_fire/casing",
+    "description": "Source span casing pattern is preserved on rewrite.",
+    "asr": "ADITYA approved it",
+    "formatted": "ADITYA approved it.",
+    "expected": "AADITYA approved it.",
+    "expect_intervention": true,
+    "rationale": "An all-caps span stays all-caps. We replace the word, not the user's emphasis."
+  },
+  {
+    "id": "fire-dictionary-add-immediate",
+    "category": "should_fire/evidence",
+    "description": "An explicit dictionary add is trusted immediately and does not wait for a second confirmation.",
+    "observations": [
+      {"kind": "dictionary_add", "canonical": "Nandini", "entry_kind": "person"}
+    ],
+    "asr": "nandhini owns the release",
+    "formatted": "Nandhini owns the release.",
+    "expected": "Nandini owns the release.",
+    "expect_intervention": true,
+    "rationale": "The user stating a word outright is stronger evidence than inferring it from an edit."
+  },
+  {
+    "id": "fire-known-hard-bekariya",
+    "category": "should_fire/romanisation",
+    "description": "KNOWN HARD, EXPECTED TO FAIL. b/v confusion is real in Indian ASR (Bekariya for Vekariya) but we deliberately do not map b to v globally.",
+    "asr": "krishna bekariya submitted the form",
+    "formatted": "Krishna Bekariya submitted the form.",
+    "expected": "Krishna Vekariya submitted the form.",
+    "expect_intervention": true,
+    "known_hard": true,
+    "rationale": "A global b<->v rule would collapse bat/vat, bet/vet and ban/van. We judged the false-positive cost higher than this miss, and report the miss rather than hiding it."
+  }
+]

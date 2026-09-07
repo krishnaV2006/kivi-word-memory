@@ -1,0 +1,116 @@
+[
+  {
+    "id": "life-first-correction-stays-candidate",
+    "category": "lifecycle/promotion",
+    "description": "One correction creates a hypothesis. It must not act yet.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "gauri", "after": "Gowri", "entry_kind": "person",
+       "context": "gauri owns the eval harness"}
+    ],
+    "asr": "gauri owns the eval harness",
+    "formatted": "Gauri owns the eval harness.",
+    "expected": "Gauri owns the eval harness.",
+    "expect_intervention": false,
+    "expect_status": {"Gowri": "candidate"},
+    "rationale": "A single edit could be a typo, a one-off, or the user changing their mind. Learning must be cheap to start and slow to act."
+  },
+  {
+    "id": "life-second-confirmation-promotes",
+    "category": "lifecycle/promotion",
+    "description": "The same correction a second time promotes candidate to active, and now it fires.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "gauri", "after": "Gowri", "entry_kind": "person",
+       "context": "gauri owns the eval harness"},
+      {"kind": "correction", "before": "gauri", "after": "Gowri", "entry_kind": "person",
+       "context": "ask gauri about the numbers"}
+    ],
+    "asr": "gauri owns the eval harness",
+    "formatted": "Gauri owns the eval harness.",
+    "expected": "Gowri owns the eval harness.",
+    "expect_intervention": true,
+    "expect_status": {"Gowri": "active"},
+    "rationale": "Two independent confirmations is the threshold. This is the single most consequential number in the product and it is stated, not hidden."
+  },
+  {
+    "id": "life-promotion-generalises-immediately",
+    "category": "lifecycle/promotion",
+    "description": "Once promoted, the entry covers variants that were never part of either correction.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "gauri", "after": "Gowri", "entry_kind": "person",
+       "context": "gauri owns the eval harness"},
+      {"kind": "correction", "before": "gauri", "after": "Gowri", "entry_kind": "person",
+       "context": "ask gauri about the numbers"}
+    ],
+    "asr": "gowree owns the eval harness",
+    "formatted": "Gowree owns the eval harness.",
+    "expected": "Gowri owns the eval harness.",
+    "expect_intervention": true,
+    "rationale": "Neither correction contained 'gowree'. The generalisation is the whole point of storing a phonetic identity."
+  },
+  {
+    "id": "life-one-revert-still-active",
+    "category": "lifecycle/contradiction",
+    "description": "A single rejection is evidence, not a verdict.",
+    "observations": [
+      {"kind": "revert", "applied": "Chinmay", "reverted_to": "Chinmai"}
+    ],
+    "asr": "chinmai is reviewing the design",
+    "formatted": "Chinmai is reviewing the design.",
+    "expected": "Chinmay is reviewing the design.",
+    "expect_intervention": true,
+    "expect_status": {"Chinmay": "active"},
+    "rationale": "One revert lowers confidence but does not retire a memory with two prior confirmations. Users undo things by accident."
+  },
+  {
+    "id": "life-two-reverts-suppress",
+    "category": "lifecycle/contradiction",
+    "description": "Twice rejected means stop.",
+    "observations": [
+      {"kind": "revert", "applied": "Chinmay", "reverted_to": "Chinmai"},
+      {"kind": "revert", "applied": "Chinmay", "reverted_to": "Chinmai"}
+    ],
+    "asr": "chinmai is reviewing the design",
+    "formatted": "Chinmai is reviewing the design.",
+    "expected": "Chinmai is reviewing the design.",
+    "expect_intervention": false,
+    "expect_status": {"Chinmay": "suppressed"},
+    "rationale": "Suppression is reversible and inspectable rather than a deletion. The user can see why Kivi stopped and turn it back on."
+  },
+  {
+    "id": "life-pinned-survives-reverts",
+    "category": "lifecycle/contradiction",
+    "description": "An explicitly pinned entry outranks inferred contradiction.",
+    "observations": [
+      {"kind": "dictionary_add", "canonical": "Chinmay", "entry_kind": "person"},
+      {"kind": "revert", "applied": "Chinmay", "reverted_to": "Chinmai"},
+      {"kind": "revert", "applied": "Chinmay", "reverted_to": "Chinmai"}
+    ],
+    "asr": "chinmai is reviewing the design",
+    "formatted": "Chinmai is reviewing the design.",
+    "expected": "Chinmay is reviewing the design.",
+    "expect_intervention": true,
+    "expect_status": {"Chinmay": "active"},
+    "rationale": "The user said this word outright. Inferred signals must not silently overturn a direct instruction -- that is how a personal system loses trust."
+  },
+  {
+    "id": "life-usage-mines-context",
+    "category": "lifecycle/context",
+    "description": "Usage observations teach the world a word lives in, which is what later separates the product from the fruit.",
+    "skip_seed": true,
+    "observations": [
+      {"kind": "correction", "before": "kiwi", "after": "Kivi", "entry_kind": "product",
+       "context": "the kiwi build is broken"},
+      {"kind": "correction", "before": "kiwi", "after": "Kivi", "entry_kind": "product",
+       "context": "ship the kiwi release"},
+      {"kind": "usage", "text": "Kivi is the dictation service we ship at Sarvam."}
+    ],
+    "asr": "the kiwi service crashed",
+    "formatted": "The Kiwi service crashed.",
+    "expected": "The Kivi service crashed.",
+    "expect_intervention": true,
+    "rationale": "'service' was mined from the usage sentence and now supports the product reading. Without it this sentence would look like the fruit case."
+  }
+]

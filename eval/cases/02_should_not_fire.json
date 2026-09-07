@@ -1,0 +1,188 @@
+[
+  {
+    "id": "noop-kiwi-fruit",
+    "category": "should_not_fire/homophone",
+    "description": "THE TRAP. The brief's own example uses a product whose name is an ordinary fruit. Rewriting this makes Kivi worse than useless.",
+    "asr": "i ate a kiwi for breakfast",
+    "formatted": "I ate a kiwi for breakfast.",
+    "expected": "I ate a kiwi for breakfast.",
+    "expect_intervention": false,
+    "rationale": "kiwi and Kivi are phonetically identical, so phonetics cannot settle this. No Kivi context term appears; 'ate' and 'breakfast' point the other way. The system must abstain."
+  },
+  {
+    "id": "noop-kiwi-fruit-plural",
+    "category": "should_not_fire/homophone",
+    "description": "Plural fruit.",
+    "asr": "kiwis are cheap in summer",
+    "formatted": "Kiwis are cheap in summer.",
+    "expected": "Kiwis are cheap in summer.",
+    "expect_intervention": false,
+    "rationale": "A product name pluralised is already suspicious; combined with zero context support it must not fire."
+  },
+  {
+    "id": "noop-kiwi-fruit-food-context",
+    "category": "should_not_fire/homophone",
+    "description": "Fruit surrounded by other food words.",
+    "asr": "we had toast coffee and a kiwi",
+    "formatted": "We had toast, coffee and a kiwi.",
+    "expected": "We had toast, coffee and a kiwi.",
+    "expect_intervention": false,
+    "rationale": "Competing context. Nothing in the sentence belongs to the product's world."
+  },
+  {
+    "id": "noop-already-correct",
+    "category": "should_not_fire/already_correct",
+    "description": "Text is already canonical. Doing nothing here is correct, and must NOT be scored as an intervention.",
+    "asr": "ask aaditya to review the sarvam kivi service",
+    "formatted": "Ask Aaditya to review the Sarvam Kivi service.",
+    "expected": "Ask Aaditya to review the Sarvam Kivi service.",
+    "expect_intervention": false,
+    "rationale": "Matching the canonical form is a no-op, not a rewrite. Counting it as a success would inflate the intervention numbers."
+  },
+  {
+    "id": "noop-email-protected",
+    "category": "should_not_fire/protected_span",
+    "description": "An email address is an identifier, not prose.",
+    "asr": "email aditya at sarvam dot ai before noon",
+    "formatted": "Email aditya@sarvam.ai before noon.",
+    "expected": "Email aditya@sarvam.ai before noon.",
+    "expect_intervention": false,
+    "rationale": "Rewriting inside an address breaks it. Protected spans are masked before matching."
+  },
+  {
+    "id": "noop-url-protected",
+    "category": "should_not_fire/protected_span",
+    "description": "A URL containing a memory-adjacent token.",
+    "asr": "docs are at kiwi example dot com slash guide",
+    "formatted": "Docs are at https://kiwi.example.com/guide.",
+    "expected": "Docs are at https://kiwi.example.com/guide.",
+    "expect_intervention": false,
+    "rationale": "A rewritten hostname is a broken link."
+  },
+  {
+    "id": "noop-code-protected",
+    "category": "should_not_fire/protected_span",
+    "description": "Inline code is verbatim by definition.",
+    "asr": "run kiwi help to see options",
+    "formatted": "Run `kiwi --help` to see options.",
+    "expected": "Run `kiwi --help` to see options.",
+    "expect_intervention": false,
+    "rationale": "A command name is not prose. Backticked spans are masked."
+  },
+  {
+    "id": "noop-handle-protected",
+    "category": "should_not_fire/protected_span",
+    "description": "An @handle is an identifier.",
+    "asr": "at aditya please take a look",
+    "formatted": "@aditya please take a look.",
+    "expected": "@aditya please take a look.",
+    "expect_intervention": false,
+    "rationale": "The handle may genuinely be spelled that way on the platform."
+  },
+  {
+    "id": "noop-ambiguous-aditi",
+    "category": "should_not_fire/ambiguous",
+    "description": "Two real people whose names nearly collide. Aaditya and Aditi are both active entries.",
+    "asr": "ask aditi to join the sync",
+    "formatted": "Ask Aditi to join the sync.",
+    "expected": "Ask Aditi to join the sync.",
+    "expect_intervention": false,
+    "rationale": "similarity(aaditya, aditi) is 0.93 -- phonetics alone cannot separate them. Aditi is itself a known entry and matches exactly, so the margin rule must keep it."
+  },
+  {
+    "id": "noop-low-evidence-candidate",
+    "category": "should_not_fire/low_evidence",
+    "description": "One correction is a hypothesis, not a memory.",
+    "asr": "prateek joined the standup",
+    "formatted": "Prateek joined the standup.",
+    "expected": "Prateek joined the standup.",
+    "expect_intervention": false,
+    "rationale": "Prateik was corrected exactly once in the seed and is still a candidate. Acting on a single unconfirmed edit is how a memory system becomes annoying."
+  },
+  {
+    "id": "noop-suppressed-after-two-reverts",
+    "category": "should_not_fire/suppressed",
+    "description": "The user rejected this rewrite twice. The system must stop doing it.",
+    "observations": [
+      {"kind": "revert", "applied": "Bulbul", "reverted_to": "Bulbool"},
+      {"kind": "revert", "applied": "Bulbul", "reverted_to": "Bulbool"}
+    ],
+    "asr": "bulbool has thirty nine voices",
+    "formatted": "Bulbool has thirty nine voices.",
+    "expected": "Bulbool has thirty nine voices.",
+    "expect_intervention": false,
+    "rationale": "Two contradictions suppress the entry. It stays inspectable and still explains why it declined to fire."
+  },
+  {
+    "id": "noop-unknown-name",
+    "category": "should_not_fire/unknown",
+    "description": "A name the system has never encountered.",
+    "asr": "ask rahul to review the pull request",
+    "formatted": "Ask Rahul to review the pull request.",
+    "expected": "Ask Rahul to review the pull request.",
+    "expect_intervention": false,
+    "rationale": "No candidate, no intervention. Memory must not invent."
+  },
+  {
+    "id": "noop-ordinary-word-service",
+    "category": "should_not_fire/homophone",
+    "description": "An ordinary word that appears in the seed's context sentences.",
+    "asr": "the service is down again",
+    "formatted": "The service is down again.",
+    "expected": "The service is down again.",
+    "expect_intervention": false,
+    "rationale": "Being adjacent to a memory during learning does not make a word part of it."
+  },
+  {
+    "id": "noop-sarah-real-name",
+    "category": "should_not_fire/ambiguous",
+    "description": "KNOWN HARD. Sarah is a real person's name that sounds close to the Saaras model.",
+    "asr": "sarah from marketing sent the deck",
+    "formatted": "Sarah from marketing sent the deck.",
+    "expected": "Sarah from marketing sent the deck.",
+    "expect_intervention": false,
+    "known_hard": true,
+    "rationale": "The person context ('from marketing') is the only signal separating a colleague from a model name, and we do not model that. If this fires it is a genuine false intervention and is reported as one."
+  },
+  {
+    "id": "noop-partial-token-kiwifruit",
+    "category": "should_not_fire/homophone",
+    "description": "The memory sound appears inside a longer word.",
+    "asr": "kiwifruit is a good snack",
+    "formatted": "Kiwifruit is a good snack.",
+    "expected": "Kiwifruit is a good snack.",
+    "expect_intervention": false,
+    "rationale": "Matching is token-level. Rewriting substrings would produce Kivifruit."
+  },
+  {
+    "id": "noop-cave-loose-key-collision",
+    "category": "should_not_fire/homophone",
+    "description": "The loose consonant key deliberately over-generates. Scoring must reject what it retrieves.",
+    "asr": "we explored a cave near the office",
+    "formatted": "We explored a cave near the office.",
+    "expected": "We explored a cave near the office.",
+    "expect_intervention": false,
+    "rationale": "cave and Kivi share the loose key kv. Retrieval is not a decision -- similarity is only 0.63 and cave is a common word."
+  },
+  {
+    "id": "noop-empty-state",
+    "category": "should_not_fire/unknown",
+    "description": "A system that has learned nothing must change nothing.",
+    "skip_seed": true,
+    "asr": "ask aditya to review the sarvam kiwi service",
+    "formatted": "Ask Aditya to review the Sarvam Kiwi service.",
+    "expected": "Ask Aditya to review the Sarvam Kiwi service.",
+    "expect_intervention": false,
+    "rationale": "The same input as the brief example, with no memory. This isolates memory as the cause of the rewrite rather than any formatting cleverness."
+  },
+  {
+    "id": "noop-empty-input",
+    "category": "should_not_fire/degenerate",
+    "description": "Empty input must not crash or hallucinate.",
+    "asr": "",
+    "formatted": "",
+    "expected": "",
+    "expect_intervention": false,
+    "rationale": "Degenerate input handling, checked because the reviewing agent will try it."
+  }
+]
