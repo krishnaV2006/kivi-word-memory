@@ -295,26 +295,45 @@ Honest ones, in rough order of how much they would matter in production.
 
 ## AI use
 
-This repository was built with Claude (Claude Code) over a single working session, used as
-an implementation partner rather than an autocomplete. The architecture, product
-decisions, thresholds and evaluation design were specified and argued through in
-conversation before code was written; Claude wrote most of the code and prose against
-those decisions, and I directed, corrected and verified them.
+This repository was built with Claude (Claude Code), used as an implementation partner
+rather than an autocomplete. The architecture, product decisions, thresholds and
+evaluation design were specified and argued through in conversation before code was
+written; Claude wrote most of the code and prose against those decisions, and I directed,
+corrected and verified them. Every number in this repository was produced by running the
+code, not by an assistant recalling what it expected.
 
-Specific points where that mattered:
+The working method was to make claims checkable rather than to argue them, and most of
+what is good here came from a measurement contradicting something we had written down.
+`DISCOVERIES.md` is that record — thirteen findings, of which roughly half are corrections
+to our own earlier mistakes:
 
-- The eval-before-implementation commit ordering was a deliberate choice to make the
-  evaluation's independence verifiable, not just assertable.
-- Measuring `metaphone("Aaditya") = TTY` against `metaphone("adithya") = AT0Y` early
-  killed the plan to lean on an off-the-shelf phonetic algorithm and motivated the
-  purpose-built Indic skeleton.
-- Running the dataset surfaced a real bug rather than confirming a story: the
+- The **eval-before-implementation commit ordering** was deliberate, so the evaluation's
+  independence is verifiable rather than merely asserted.
+- Measuring `metaphone("Aaditya") = TTY` against `metaphone("adithya") = AT0Y` killed the
+  plan to lean on an off-the-shelf phonetic algorithm before a line of matching code was
+  written (§1).
+- Running the dataset **found a real bug rather than confirming a story**: the
   already-correct check compared case-insensitively, so `Iitm` looked like it was already
-  `IITM`. See DISCOVERIES.md.
-- The decision to keep no live LLM call was made to protect the reviewer's run path, and
-  is argued above rather than hidden.
+  `IITM`. For an acronym the casing *is* the memory (§4).
+- A **branch-coverage table** showed one policy rule was never exercised, and the honest
+  answer was that the rule is nearly redundant — reported, not papered over with a
+  contrived case (§9).
+- The README twice asserted the wrong cause for its own latency. The first time the real
+  cost was the decision-trace commit, not memory loading (§10). The second time a
+  **scale test found an O(n) bug** — 594 ms at 10k entries — that no single-size
+  measurement could have shown (§13).
+- Adding cross-script support **immediately introduced a false positive** —
+  *"मैं कीवी खा रहा हूँ"* was rewritten — because the homophone guard compared raw strings
+  against an English word list (§12).
+- The **adversarial harness** is what made the b/v tier safe to build. The fix had been
+  described in §7 for several commits and left unimplemented precisely because there was
+  no way to know what widening retrieval would cost. Once there was, the evidence was a
+  diff: one case artifact changed, false positives stayed at zero (§7).
 
-Everything here has been run and verified from a clean clone.
+Two decisions were made against the grain and are argued rather than hidden: **no live
+LLM call** in the resolution path, and **keeping failing cases in the dataset**.
+
+Everything here has been run and verified from a clean clone of the submitted commit.
 
 ## Repository map
 
