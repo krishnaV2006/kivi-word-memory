@@ -292,6 +292,10 @@ Honest ones, in rough order of how much they would matter in production.
    DISCOVERIES.md §9.
 7. **The `usage` observation confirms every entry it mentions.** A user quoting someone
    else's text would strengthen memories they did not intend to.
+8. **The decision trace keeps only the most recent 200 requests.** It is an inspection
+   aid, not an audit log, and unbounded it outgrew the memory it explains — 2.5 MB after
+   5,000 utterances against 324 KB now. A product that needed durable history would want
+   a real retention policy rather than a ring buffer. See DISCOVERIES.md §14.
 
 ## AI use
 

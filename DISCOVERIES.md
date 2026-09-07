@@ -462,3 +462,45 @@ which part of a system is expensive. This bug was invisible at every size the re
 evaluation ever exercised.
 
 **Pinned by:** `eval/results/scale.md`, `eval/scale.py`
+
+---
+
+## 14. The inspection log was going to outgrow the memory it explains
+
+**Found:** by asking which table grows with *use* rather than with *learning*. The
+evaluation had been reporting database growth against number of observations, and that
+curve is reassuringly flat — repeated corrections reinforce existing entries instead of
+creating new ones, so 200 observations produce 10 entries.
+
+But learning is the rare event. A user corrects a handful of words ever. **Resolution
+happens every time they speak**, and each one wrote three rows to the decision trace,
+forever:
+
+| utterances | decision rows | database |
+|---:|---:|---:|
+| 100 | 300 | 104 KB |
+| 1,000 | 3,000 | 532 KB |
+| 5,000 | 15,000 | **2.5 MB** |
+
+Still climbing linearly, and already an order of magnitude larger than everything the
+system actually remembers. For a dictation product used all day this is days, not years.
+
+**Consequence:** the fix follows from what the trace is *for*. It exists so a person can
+ask "why did Kivi just do that" — a question about recent history. Nobody inspects why a
+word was changed six months ago. So the trace became a ring buffer over the most recent
+200 requests rather than a log, pruned by whole request so an inspectable trace is never
+half-deleted, and behind a count check so the delete runs about once every 200
+resolutions rather than on every one.
+
+| utterances | decision rows | database |
+|---:|---:|---:|
+| 100 | 300 | 104 KB |
+| 1,000 | 1,191 | 324 KB |
+| 5,000 | 1,131 | **324 KB** |
+
+Flat. And the evaluation now reports both curves, because measuring growth against the
+rare event while the common event grows unbounded is how you get a graph that says
+everything is fine.
+
+**Pinned by:** the two growth tables in `eval/results/summary.md`,
+`app/resolver.py::_prune_trace`

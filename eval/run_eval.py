@@ -179,6 +179,40 @@ def latency_profile(repeats: int = 40) -> dict:
     }
 
 
+def trace_growth_curve(points=(100, 1000, 5000)) -> list[dict]:
+    """How storage grows with *use* rather than with learning.
+
+    Two different growth questions, and the second is the one that bites. Learning is
+    rare -- a user corrects a handful of words. Resolution happens every time they speak,
+    and each one writes a decision trace. Left unbounded that dominates the database
+    within days, so the trace is a ring buffer over requests; this measures that it holds.
+    """
+    from app.resolver import resolve as _resolve
+
+    _drop_eval_db()
+    db_mod.migrate(verbose=False)
+    conn = db_mod.connect()
+    run_seed(conn, verbose=False)
+    asr = "ask aditya to review the sarvam kiwi service"
+    fmt = "Ask Aditya to review the Sarvam Kiwi service."
+
+    curve, n = [], 0
+    for target in points:
+        while n < target:
+            _resolve(conn, asr, fmt)
+            n += 1
+        stats = db_mod.db_stats(conn)
+        curve.append({
+            "utterances": n,
+            "decision_rows": stats["rows"].get("decisions", 0),
+            "total_rows": stats["total_rows"],
+            "kb": round(stats["bytes"] / 1024, 1),
+        })
+    conn.close()
+    _drop_eval_db()
+    return curve
+
+
 def db_growth_curve(points=(10, 50, 200)) -> list[dict]:
     """How storage grows with ordinary use. Observations are recycled from the seed."""
     seed_obs = json.loads((REPO_ROOT / "seed" / "seed.json").read_text(encoding="utf-8"))["observations"]
@@ -415,6 +449,14 @@ def write_summary(payload: dict) -> None:
     w("|---:|---:|---:|---:|")
     for p in payload["db_growth"]:
         w(f"| {p['observations']} | {p['entries']} | {p['total_rows']} | {p['kb']} KB |")
+    w("\nGrowth with **use** rather than with learning, which is the one that bites: "
+      "learning is rare, but a decision trace is written every time the user speaks. "
+      "Unbounded that reached 2.5 MB after 5,000 utterances and kept climbing, so the "
+      "trace is a ring buffer over the most recent requests:\n")
+    w("| utterances | decision rows | total rows | size |")
+    w("|---:|---:|---:|---:|")
+    for p in payload["trace_growth"]:
+        w(f"| {p['utterances']} | {p['decision_rows']} | {p['total_rows']} | {p['kb']} KB |")
 
     adv = payload["adversarial"]
     w("\n## Adversarial false positives\n")
@@ -503,6 +545,7 @@ def main() -> int:
     latency = latency_profile()
     print("measuring database growth ...")
     growth = db_growth_curve()
+    trace_growth = trace_growth_curve()
 
     payload = {
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -513,6 +556,7 @@ def main() -> int:
         "aggregate": aggregate(records),
         "latency": latency,
         "db_growth": growth,
+        "trace_growth": trace_growth,
         "model_calls": 0,
         "cost_inr": 0.0,
         "known_hard_count": sum(1 for r in records if r["known_hard"]),

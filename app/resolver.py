@@ -40,6 +40,14 @@ CONTEXT_SATURATION = 3.0  # matched context weight at which the boost maxes out
 CONTEXT_WEIGHT = 0.10   # how much context can move a score
 MAX_NGRAM = 3           # longest multiword identity we will consider
 
+# The decision trace exists so a person can ask "why did Kivi just do that". That is a
+# question about recent history: nobody inspects why a word was changed six months ago,
+# and Kivi resolves an utterance every time its user speaks. Left unbounded the trace
+# grows about 3 rows per utterance forever -- measured at 2.5 MB after 5,000 utterances,
+# which is larger than everything the system actually remembers. So it is a ring buffer
+# over requests, not a log.
+TRACE_RETENTION_REQUESTS = 200
+
 
 @dataclass
 class Candidate:
@@ -332,6 +340,27 @@ def build_memory_prompt_block(view: MemoryView, sentence: str) -> str:
     return "# Known personal terms\n" + "\n".join(lines)
 
 
+def _prune_trace(conn: sqlite3.Connection) -> None:
+    """Keep the trace to the most recent TRACE_RETENTION_REQUESTS requests.
+
+    Pruning whole requests rather than rows, so an inspectable trace is never half
+    deleted. The count check keeps this cheap: the O(n) delete runs roughly once every
+    TRACE_RETENTION_REQUESTS resolutions rather than on every one.
+    """
+    n = conn.execute("SELECT COUNT(DISTINCT request_id) AS c FROM decisions").fetchone()["c"]
+    if n <= TRACE_RETENTION_REQUESTS * 2:
+        return
+    conn.execute(
+        """
+        DELETE FROM decisions WHERE request_id NOT IN (
+            SELECT request_id FROM decisions
+            GROUP BY request_id ORDER BY MAX(id) DESC LIMIT ?
+        )
+        """,
+        (TRACE_RETENTION_REQUESTS,),
+    )
+
+
 def resolve(
     conn: sqlite3.Connection,
     asr: str,
@@ -415,6 +444,7 @@ def resolve(
                    VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
                 (request_id, d.span, d.entry_id, d.action, d.reason, d.score, d.runner_up),
             )
+        _prune_trace(conn)
         conn.commit()
 
     ms = lambda a, b: round((b - a) * 1000, 4)  # noqa: E731
