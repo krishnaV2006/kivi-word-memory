@@ -187,6 +187,19 @@ relevant to it:
 That is the seam where this system meets the rest of Kivi. Wiring it to a live model is a
 provider call, not an architecture change.
 
+### On form factors
+
+There is one interface here, because the brief asks for one. But the core is not coupled
+to it, and that claim is load-bearing rather than aspirational: **the evaluation harness
+is a second consumer of the same core**, and it never goes through HTTP. `eval/run_eval.py`,
+`eval/adversarial.py` and `eval/scale.py` all call `app.resolver.resolve()` and
+`app.memory.observe()` directly, against their own databases, with the web layer absent
+entirely. `app/main.py` is a few lines per route over those functions.
+
+So a CLI, a desktop client or a macOS host would consume the same three entry points. It
+is not built, because a second interface is surface without new evidence — and the brief's
+closing instruction argues against exactly that.
+
 ## Evaluation
 
 Full results: **[eval/results/summary.md](eval/results/summary.md)**. Run it yourself with

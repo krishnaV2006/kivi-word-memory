@@ -4,6 +4,12 @@ The brief asks to see the cases we discovered and what became possible because o
 abstraction. These are the findings that changed the design, each linked to the case that
 now pins it. Most of them are things we got wrong first.
 
+**The numbers in each section are what was measured at the time of that finding**, and
+are deliberately not updated afterwards — a finding that says "false positives stayed at
+0 across 1,598 sentences" is a record of the evidence that justified a decision when it
+was made. Current numbers are in `eval/results/summary.md`, and
+`python -m eval.check_docs` verifies that README.md and RUN.md agree with them.
+
 ---
 
 ## 1. Metaphone splits the brief's own example
