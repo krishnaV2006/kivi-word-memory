@@ -32,5 +32,5 @@ None. No sentence in any corpus was modified.
 
 ## Cost
 
-1616 resolutions in 7.31 s (4.5121 ms each), reusing one `MemoryView`. 0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it does not distort the database-growth figures reported in `summary.md`.
+1621 resolutions, reusing one `MemoryView`. Timing is recorded in `adversarial.json` rather than here, so that this report stays byte-identical across runs and can be diffed against the committed copy. 0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it does not distort the database-growth figures reported in `summary.md`.
 

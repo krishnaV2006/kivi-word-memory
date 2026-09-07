@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 19:38:22",
+  "generated_at": "2026-09-07 19:41:24",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -49,41 +49,41 @@
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 18.967,
-      "p95_ms": 22.592,
-      "max_ms": 22.649,
-      "mean_ms": 19.163,
+      "p50_ms": 15.478,
+      "p95_ms": 18.801,
+      "max_ms": 19.124,
+      "mean_ms": 15.533,
       "stage_means_ms": {
-        "load_memory": 12.991,
-        "span_generation": 0.353,
-        "scoring_and_decision": 4.546,
-        "rewrite_and_prompt": 0.703,
-        "total": 18.592
+        "load_memory": 10.538,
+        "span_generation": 0.279,
+        "scoring_and_decision": 3.613,
+        "rewrite_and_prompt": 0.633,
+        "total": 15.062
       }
     },
     "warm": {
-      "p50_ms": 5.516,
-      "p95_ms": 6.072,
-      "max_ms": 7.598,
-      "mean_ms": 5.521,
+      "p50_ms": 5.253,
+      "p95_ms": 7.859,
+      "max_ms": 10.713,
+      "mean_ms": 5.453,
       "stage_means_ms": {
         "load_memory": 0.001,
-        "span_generation": 0.307,
-        "scoring_and_decision": 4.056,
-        "rewrite_and_prompt": 0.685,
-        "total": 5.049
+        "span_generation": 0.346,
+        "scoring_and_decision": 3.933,
+        "rewrite_and_prompt": 0.71,
+        "total": 4.99
       }
     },
-    "p50_ms": 18.967,
-    "p95_ms": 22.592,
-    "max_ms": 22.649,
-    "mean_ms": 19.163,
+    "p50_ms": 15.478,
+    "p95_ms": 18.801,
+    "max_ms": 19.124,
+    "mean_ms": 15.533,
     "stage_means_ms": {
-      "load_memory": 12.991,
-      "span_generation": 0.353,
-      "scoring_and_decision": 4.546,
-      "rewrite_and_prompt": 0.703,
-      "total": 18.592
+      "load_memory": 10.538,
+      "span_generation": 0.279,
+      "scoring_and_decision": 3.613,
+      "rewrite_and_prompt": 0.633,
+      "total": 15.062
     }
   },
   "db_growth": [

@@ -328,8 +328,14 @@ def write_report(payload: dict) -> None:
           "user's own term reappearing. Reasons are in `adversarial.json`.\n")
 
     w(f"\n## Cost\n")
-    w(f"{payload['total_sentences']} resolutions in {payload['elapsed_s']} s "
-      f"({payload['per_sentence_ms']} ms each), reusing one `MemoryView`. "
+    # Deliberately no wall-clock number here: this report is meant to be byte-identical
+    # across runs so a reviewer can diff it against the committed copy. Timing lives in
+    # adversarial.json and in the latency section of summary.md, which are the places
+    # that are supposed to move.
+    w(f"{payload['all_sentences_including_control']} resolutions, reusing one "
+      f"`MemoryView`. Timing is recorded in `adversarial.json` rather than here, so that "
+      f"this report stays byte-identical across runs and can be diffed against the "
+      f"committed copy. "
       f"0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it "
       f"does not distort the database-growth figures reported in `summary.md`.\n")
 

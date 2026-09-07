@@ -450,7 +450,7 @@ def write_summary(payload: dict) -> None:
     w("\n## Reproducibility\n")
     w("Per-case artifacts under `eval/results/cases/` contain no timing data and are "
       "byte-identical across runs on the same commit. After re-running this harness, "
-      "`git diff -- eval/results/cases` should report **no changes at all**; only the "
+      "`git diff -- eval/results/cases eval/results/adversarial.md` should report **no changes at all**; only the "
       "measured latency numbers in `results.json` and in this file will move. Timing is "
       f"reported once, from the dedicated warm-path measurement above, rather than as "
       f"{len(recs)} noisy single-shot samples.\n")
