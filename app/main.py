@@ -5,6 +5,7 @@ same core is reachable from the eval harness without going through HTTP.
 """
 from __future__ import annotations
 
+import sqlite3
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -72,6 +73,10 @@ def post_observe(obs: ObservationIn) -> dict:
         return {"ok": True, "result": mem.observe(conn, payload)}
     except (ValueError, KeyError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except sqlite3.IntegrityError as exc:
+        # Backstop. Validation above should catch bad input first; if a constraint still
+        # fires, that is a rejected request, not a broken server.
+        raise HTTPException(status_code=400, detail=f"rejected by schema: {exc}") from exc
     finally:
         conn.close()
 

@@ -361,4 +361,5 @@ Everything here has been run and verified from a clean clone of the submitted co
 | `eval/check_docs.py` | Asserts every number in this file and RUN.md matches generated results |
 | `eval/results/` | Committed generated results |
 | `tests/test_phonetics.py` | `python -m tests.test_phonetics`, no pytest needed |
+| `tests/test_validation.py` | Input-validation regressions found by a hostile-input sweep |
 | `DISCOVERIES.md` | The failure modes found while building, linked to their cases |

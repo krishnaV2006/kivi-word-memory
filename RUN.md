@@ -190,6 +190,16 @@ explains how each of the two cases that once failed was closed, and the adversar
 in `eval/results/adversarial.md` tests the property the curated cases cannot: that memory
 stays out of the way of 1,616 sentences it was never taught anything about.
 
+### Optional: the unit tests
+
+```bash
+python -m tests.test_phonetics
+python -m tests.test_validation
+```
+
+Plain asserts, no pytest — one fewer dependency to install. The first covers the phonetic
+layer, the second covers input validation.
+
 ### Optional: check the documentation against the results
 
 ```bash

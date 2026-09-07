@@ -34,6 +34,12 @@ PROMOTION_THRESHOLD = 2
 SUPPRESSION_THRESHOLD = 2
 MAX_CONTEXT_TERMS = 25
 
+# Mirrors the CHECK constraint in migration 001. Validated here rather than left to
+# SQLite, because a constraint violation surfaces as an IntegrityError and reaches an
+# HTTP caller as a 500 -- which reads as "this application is broken" rather than
+# "you sent a bad value".
+ENTRY_KINDS = ("person", "product", "term", "acronym")
+
 # Grammatical function words only. Distinct from seed/common_words.txt, which is the
 # homophone guard: "service" is an ordinary word we must never rewrite, AND a strong
 # context signal for Kivi. Those are different jobs and need different lists.
@@ -192,6 +198,21 @@ def _log(conn: sqlite3.Connection, kind: str, payload: dict, entry_id: int | Non
 
 # ------------------------------------------------------------------- observation kinds
 
+def _require_word(obs: dict, field: str) -> str:
+    """A memory entry with a blank canonical form is not a memory, it is corruption."""
+    value = (obs.get(field) or "").strip()
+    if not value:
+        raise ValueError(f"{field!r} must be a non-empty word")
+    return value
+
+
+def _require_kind(obs: dict) -> str:
+    kind = obs.get("entry_kind") or "term"
+    if kind not in ENTRY_KINDS:
+        raise ValueError(f"entry_kind must be one of {', '.join(ENTRY_KINDS)}; got {kind!r}")
+    return kind
+
+
 def observe(conn: sqlite3.Connection, obs: dict[str, Any]) -> dict[str, Any]:
     """Apply one observation. Returns a short description of what changed."""
     kind = obs.get("kind")
@@ -209,8 +230,8 @@ def observe(conn: sqlite3.Connection, obs: dict[str, Any]) -> dict[str, Any]:
 
 
 def _observe_correction(conn: sqlite3.Connection, obs: dict) -> dict:
-    before, after = obs["before"].strip(), obs["after"].strip()
-    kind = obs.get("entry_kind", "term")
+    before, after = _require_word(obs, "before"), _require_word(obs, "after")
+    kind = _require_kind(obs)
     entry_id = get_or_create(conn, after, kind)
 
     add_surface(conn, entry_id, after, "canonical")
@@ -231,8 +252,8 @@ def _observe_correction(conn: sqlite3.Connection, obs: dict) -> dict:
 
 
 def _observe_dictionary_add(conn: sqlite3.Connection, obs: dict) -> dict:
-    canonical = obs["canonical"].strip()
-    kind = obs.get("entry_kind", "term")
+    canonical = _require_word(obs, "canonical")
+    kind = _require_kind(obs)
     entry_id = get_or_create(conn, canonical, kind)
     add_surface(conn, entry_id, canonical, "canonical")
 
@@ -252,7 +273,7 @@ def _observe_dictionary_add(conn: sqlite3.Connection, obs: dict) -> dict:
 def _observe_usage(conn: sqlite3.Connection, obs: dict) -> dict:
     """The user wrote this text themselves, so every word in it is spelled how they
     want. Weak confirmation for any memory it mentions, plus context for all of them."""
-    text = obs["text"]
+    text = _require_word(obs, "text")
     touched: list[str] = []
     tokens = {t for t in _content_tokens(text)}
     skeletons = {indic_skeleton(t) for t in tokens}
@@ -270,7 +291,7 @@ def _observe_usage(conn: sqlite3.Connection, obs: dict) -> dict:
 
 def _observe_revert(conn: sqlite3.Connection, obs: dict) -> dict:
     """The user undid something we did. The strongest negative signal available."""
-    applied = obs["applied"].strip()
+    applied = _require_word(obs, "applied")
     entry = find_entry(conn, applied)
     if entry is None:
         _log(conn, "revert", obs, None)
