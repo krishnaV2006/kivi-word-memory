@@ -38,6 +38,10 @@ One optional variable exists:
 |---|---|---|
 | `KIVI_DB_PATH` | `./kivi.db` | Move the SQLite file elsewhere. The evaluation sets this itself to avoid touching your demo data. |
 
+`python -m app.db` also accepts `reindex`, which recomputes phonetic keys from stored
+surfaces. You do not need it for a fresh setup — only when upgrading a database created
+before migration 003 added the fuzzy key tier.
+
 There is no `.env.example` because there is no `.env`. No credential of any kind is read
 by this codebase.
 
@@ -69,6 +73,7 @@ Expected output:
 ```
 applied 001_init.sql
 applied 002_context_terms.sql
+applied 003_fuzzy_keys.sql
 seeded 20 observations -> 9 active, 1 candidate
 loaded 414 common words for the homophone guard
 ```
@@ -153,14 +158,18 @@ and delete them when finished. **Your demo database is not touched.**
 Expected final output:
 
 ```
-44/45 passed  (precision 1.0, recall 0.9583, f1 0.9787)
-useful 23  false 0  missed 1  wrong 0
+46/46 passed  (precision 1.0, recall 1.0, f1 1.0)
+useful 24  false 0  missed 0  wrong 0
 ```
 
-The one failure is `fire-known-hard-bekariya`, which is marked `known_hard` in the
-dataset and is expected to fail. It is documented in README.md and DISCOVERIES.md. If
-any *unexpected* failure occurs, the run prints an `UNEXPECTED FAILURES` block listing
-the case, the expectation and the actual output.
+It also prints the adversarial result (1598 sentences, 0 interventions) and notes that
+one decision branch, `abstain_low_score`, is never exercised — that is expected and is
+explained in DISCOVERIES.md §9. If any case fails, the run prints an
+`UNEXPECTED FAILURES` block listing the case, the expectation and the actual output.
+
+A 46/46 score on a dataset written by the submitter is worth distrusting, so README.md
+explains how each of the two cases that once failed was closed, and the adversarial suite
+in `eval/results/adversarial.md` tests the property the curated cases cannot.
 
 ## 9. Where evaluation results are written
 

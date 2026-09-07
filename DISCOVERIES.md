@@ -170,17 +170,46 @@ instead of the gap silently shaping what we later decided to claim.
 A `b ↔ v` rule would catch it. It would also collapse `bat`/`vat`, `bet`/`vet`,
 `ban`/`van`, `boat`/`vote`.
 
-**Consequence:** we do not implement it, and `fire-known-hard-bekariya` sits in the
-dataset as a permanent, documented **failure**. Given that this system's entire argument
-is that a false intervention costs more than a miss, catching this one by widening the net
-would contradict the thesis.
+**First consequence — refused.** For several commits we did not implement it, and
+`fire-known-hard-bekariya` sat in the dataset as a documented **failure**. Given that this
+system's entire argument is that a false intervention costs more than a miss, catching
+this one by widening the net would have contradicted the thesis. The section then said:
 
-The right fix is not a rewrite rule. It is a second, much more permissive retrieval tier
-that is only allowed to fire with strong context support — the same shape as the
-common-word guard. That is a real design, and it did not fit in the time available, so
-the case is reported as failing rather than papered over.
+> The right fix is not a rewrite rule. It is a second, much more permissive retrieval tier
+> that is only allowed to fire with strong context support — the same shape as the
+> common-word guard.
 
-**Pinned by:** `fire-known-hard-bekariya`
+**Second consequence — built.** That tier now exists. `fuzzy_skeleton()` folds b/v/w and
+is indexed as a fourth key algorithm, `indic_fuzzy`, behind migration 003. Retrieval by
+that key is free; *surviving* it is not. A fuzzy candidate carries a heavier penalty
+(0.80 against the loose tier's 0.85) and is dropped outright unless the sentence supplies
+independent context support:
+
+```python
+if route == "indic_fuzzy" and boost <= 0.0:
+    continue
+```
+
+The result is the distinction that makes the tier safe rather than reckless:
+
+| input | result | why |
+|---|---|---|
+| `Krishna Bekariya submitted the form.` | → `Vekariya` | `krishna`, `submitted` are Vekariya context terms |
+| `Bekariya is here.` | unchanged | same span, same memory, no supporting context |
+
+**What made this safe to ship was the adversarial harness, not the argument.** The reason
+this fix was not attempted earlier is that there was no way to know what widening
+retrieval cost. There is now: after enabling the tier, the false-positive suite still
+reports **0 interventions across 1,598 sentences**, including 199 real personal names, and
+exactly **one** case artifact in the whole evaluation changed — the one this targeted.
+The evidence is a diff, not a claim.
+
+The dataset gained `noop-fuzzy-tier-needs-context` at the same time, because a permissive
+tier tested only in the direction that flatters it is not tested at all.
+
+**Pinned by:** `fire-known-hard-bekariya`, `noop-fuzzy-tier-needs-context`,
+`tests/test_phonetics.py::test_fuzzy_tier_folds_b_and_v_but_only_there`,
+`eval/results/adversarial.md`
 
 ---
 

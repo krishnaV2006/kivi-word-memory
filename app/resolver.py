@@ -35,6 +35,7 @@ SIM_FLOOR = 0.85        # below this a retrieved candidate is not considered at 
 APPLY_THRESHOLD = 0.72  # score a candidate must reach to be applied
 MARGIN = 0.06           # how far ahead of the runner-up the winner must be
 LOOSE_PENALTY = 0.85    # loose-key-only matches are a weaker route to the same entry
+FUZZY_PENALTY = 0.80    # b/v-folded matches are weaker still, and gated on context
 CONTEXT_SATURATION = 3.0  # matched context weight at which the boost maxes out
 CONTEXT_WEIGHT = 0.10   # how much context can move a score
 MAX_NGRAM = 3           # longest multiword identity we will consider
@@ -141,7 +142,7 @@ def load_view(conn: sqlite3.Connection) -> MemoryView:
 def _retrieve(view: MemoryView, span: str) -> dict[int, str]:
     """entry_id -> best retrieval route for this span. 'indic' beats 'metaphone'
     beats 'indic_loose'."""
-    rank = {"indic": 0, "metaphone": 1, "indic_loose": 2}
+    rank = {"indic": 0, "metaphone": 1, "indic_loose": 2, "indic_fuzzy": 3}
     hits: dict[int, str] = {}
     for key, algo in keys_for(span):
         for eid in view.key_index.get((key, algo), ()):
@@ -170,7 +171,8 @@ def _score_candidates(
                 (similarity(span, s) for s in view.surfaces.get(entry_id, [entry["canonical"]])),
                 default=0.0,
             )
-            sim = best * LOOSE_PENALTY if route == "indic_loose" else best
+            penalty = {"indic_loose": LOOSE_PENALTY, "indic_fuzzy": FUZZY_PENALTY}.get(route, 1.0)
+            sim = best * penalty
             if best < SIM_FLOOR:
                 continue
 
@@ -179,6 +181,13 @@ def _score_candidates(
             if skel in sentence_skeletons
         )
         boost = min(1.0, matched_weight / CONTEXT_SATURATION)
+
+        # The fuzzy tier folds b/v/w, which is a real ASR confusion but also a real way
+        # to collide unrelated words. It is allowed to retrieve freely and then required
+        # to earn its place: without independent context support from the sentence, the
+        # candidate is dropped before it can compete. See DISCOVERIES.md section 7.
+        if route == "indic_fuzzy" and boost <= 0.0:
+            continue
 
         # Evidence modulates similarity rather than adding to it. A well-trusted entry
         # must still sound like the span; confidence is a tiebreaker, not a driver.

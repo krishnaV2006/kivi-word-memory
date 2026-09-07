@@ -108,6 +108,29 @@ def consonant_skeleton(word: str) -> str:
     return head + "".join(c for c in tail if c not in VOWELS)
 
 
+# Consonants that Indian ASR genuinely confuses, beyond what the skeleton already folds.
+# Deliberately tiny. Every pair added here widens the net for every entry at once, and
+# the cost of a wrong rewrite is higher than the cost of a miss.
+_CONFUSABLE = {"v": "b", "w": "b", "b": "b"}
+
+
+def fuzzy_skeleton(word: str) -> str:
+    """Deliberately over-permissive key, folding b/v/w together.
+
+    A Gujarati or Bengali speaker may say either, and ASR returns 'Bekariya' for
+    'Vekariya'. We refuse to fold b and v in the ordinary skeleton, because that would
+    also collapse bat/vat, bet/vet and ban/van -- ordinary English words that must never
+    be confused. So the fold lives in its own retrieval tier that the resolver only
+    trusts when the sentence supplies independent context. See DISCOVERIES.md section 7.
+
+    vekariya / vakaria / bekariya -> bkr
+    """
+    skel = consonant_skeleton(word)
+    if not skel:
+        return ""
+    return "".join(_CONFUSABLE.get(c, c) for c in skel)
+
+
 def metaphone_key(word: str) -> str:
     w = normalize(word)
     return jellyfish.metaphone(w) if w else ""
@@ -121,12 +144,15 @@ def keys_for(surface: str) -> list[tuple[str, str]]:
         return []
     strict = "".join(indic_skeleton(t) for t in tokens)
     loose = "".join(consonant_skeleton(t) for t in tokens)
+    fuzzy = "".join(fuzzy_skeleton(t) for t in tokens)
     meta = "".join(metaphone_key(t) for t in tokens)
     pairs = []
     if strict:
         pairs.append((strict, "indic"))
     if loose:
         pairs.append((loose, "indic_loose"))
+    if fuzzy:
+        pairs.append((fuzzy, "indic_fuzzy"))
     if meta:
         pairs.append((meta, "metaphone"))
     return pairs

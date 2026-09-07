@@ -345,6 +345,21 @@ def delete_entry(conn: sqlite3.Connection, entry_id: int) -> None:
     conn.commit()
 
 
+def reindex(conn: sqlite3.Connection) -> int:
+    """Recompute every phonetic key from the surfaces already stored.
+
+    Needed when a new key algorithm is added: migration 003 widens the schema, but the
+    keys themselves are computed in Python, so a database created before that migration
+    has entries with no fuzzy keys. A fresh migrate + seed does not need this.
+    """
+    n = 0
+    for row in conn.execute("SELECT entry_id, surface FROM surfaces").fetchall():
+        _index_keys(conn, row["entry_id"], row["surface"])
+        n += 1
+    conn.commit()
+    return n
+
+
 def note_application(conn: sqlite3.Connection, entry_id: int) -> None:
     conn.execute(
         "UPDATE evidence SET applications = applications + 1 WHERE entry_id = ?", (entry_id,)

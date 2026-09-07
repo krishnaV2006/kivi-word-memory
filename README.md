@@ -43,7 +43,7 @@ system that rewrites *"I ate a kiwi for breakfast"* into *"a Kivi"* is worse tha
 memory at all, because it corrupts text the user never asked it to touch and it does so
 invisibly.
 
-So the system abstains, with a stated reason, in seven distinct situations:
+So the system abstains, with a stated reason, in eight distinct situations:
 
 | It does nothing when | Because |
 |---|---|
@@ -54,9 +54,11 @@ So the system abstains, with a stated reason, in seven distinct situations:
 | the entry has only been seen once | one edit is a hypothesis, not a memory |
 | the user has reverted it twice | they have told us to stop |
 | nothing sounds close enough | memory must not invent |
+| a b/v-folded match has no context support | that tier is over-permissive by design and must earn its place |
 
-Measured over 45 cases: **23 useful interventions, 0 false interventions.** The
-exact-string dictionary baseline manages 12 useful and **10 false**.
+Measured over 46 cases: **24 useful interventions, 0 false interventions** — and, on a
+separate adversarial suite, **0 false interventions across 1,598 sentences**. The
+exact-string dictionary baseline manages 12 useful and **11 false**.
 
 ## What the system learns from
 
@@ -106,6 +108,7 @@ Retrieval is greedy. Three key algorithms cast a wide net over `phonetic_keys`:
 |---|---|---|
 | `indic` | strict skeleton, vowels kept | `aditya`, `adithya`, `adhitya` → `aditia` |
 | `indic_loose` | consonants only | `vekariya`, `vakaria` → `vkr` |
+| `indic_fuzzy` | consonants with b/v/w folded, **gated on context** | `vekariya`, `bekariya` → `bkr` |
 | `metaphone` | English phonetics, supplementary | recall net for non-Indic words |
 
 The loose key deliberately over-generates — `cave` retrieves `Kivi`. That is fine. **A key
@@ -162,17 +165,17 @@ reverse-engineered from a working system, because there was not one.
 
 ### Results
 
-45 cases: 19 should-fire, 19 should-not-fire, 7 lifecycle. Every branch of the decision policy but one is exercised by at least one case; the exception is
+46 cases: 19 should-fire, 20 should-not-fire, 7 lifecycle. Every branch of the decision policy but one is exercised by at least one case; the exception is
 documented above under limitations.
 
 | metric | no memory | exact dictionary | phonetic memory |
 |---|---:|---:|---:|
-| cases passed | 20 / 45 | 22 / 45 | **44 / 45** |
-| useful interventions | 0 | 12 | **23** |
-| missed | 24 | 11 | **1** |
-| false interventions | 0 | **10** | **0** |
-| precision | 0.0 | 0.52 | **1.00** |
-| recall | 0.0 | 0.50 | **0.96** |
+| cases passed | 22 / 46 | 23 / 46 | **46 / 46** |
+| useful interventions | 0 | 12 | **24** |
+| missed | 24 | 11 | **0** |
+| false interventions | 0 | **11** | **0** |
+| precision | 0.0 | 0.50 | **1.00** |
+| recall | 0.0 | 0.50 | **1.00** |
 
 The middle column is the honest strawman — whole-word replacement of every observed
 spelling, which is what most people mean by "a dictionary". It is genuinely good at what
@@ -208,19 +211,37 @@ is worthless if the pipeline is inert, so names that genuinely *are* the user's 
 under another spelling are split out automatically — by strict phonetic skeleton, not by
 hand — and must be rewritten. They are, 5 of 5.
 
-### The failure
+### How this reached 46/46, which is a number worth distrusting
 
-One case fails, and it is in the dataset on purpose.
+A perfect score on a dataset its author wrote is exactly what a weak evaluation looks
+like, so here is how each of the two cases that once failed was closed. Neither was
+deleted, and the git history shows both.
 
-`fire-known-hard-bekariya` — Indian ASR genuinely confuses `b` and `v`, so `Vekariya` can
-come back as `Bekariya`. We do not map `b ↔ v`, because that rule would also collapse
-`bat`/`vat`, `bet`/`vet` and `ban`/`van`. Given that this system's whole argument is that
-false interventions cost more than misses, taking the miss is the consistent choice. It is
-reported as a failure rather than quietly deleted.
+**`fire-known-hard-bekariya`** — Indian ASR genuinely confuses `b` and `v`, so `Vekariya`
+comes back as `Bekariya`. For most of this project's life it failed, deliberately: a
+global `b ↔ v` rule would also collapse `bat`/`vat`, `bet`/`vet` and `ban`/`van`, and
+buying one miss with that many potential false positives contradicts the entire thesis.
 
-`noop-sarah-real-name` was written expecting a *false* intervention and passes — `Sarah`
-and `Saaras` share no phonetic key at all. The `known_hard` flag was removed once that was
-measured, and the case's rationale records why.
+It is now fixed, but not by widening the net. There is a fourth retrieval tier,
+`indic_fuzzy`, which folds b/v/w and is then **required to earn its place**: a candidate
+found only through it is discarded unless the sentence independently supplies context for
+that memory. So `Krishna Bekariya submitted the form.` is corrected — `krishna` and
+`submitted` are Vekariya context terms — and `Bekariya is here.` is left alone. The
+dataset gained `noop-fuzzy-tier-needs-context` in the same commit, because a permissive
+tier tested only in the direction that flatters it is not tested at all.
+
+What made that safe to ship was the adversarial suite, not the reasoning. After enabling
+the tier, false positives stayed at **0 across 1,598 sentences** and exactly **one** case
+artifact in the entire evaluation changed — the one it targeted. That is a diff, not a
+claim. Without that harness the honest choice would still have been to leave the case
+failing.
+
+**`noop-sarah-real-name`** was written expecting a *false* intervention and passed on the
+first run — `Sarah` and `Saaras` share no phonetic key at all. The `known_hard` flag was
+removed once that was measured, and the case's rationale records why it passes.
+
+One branch of the decision policy is still never exercised, and the coverage table in
+`summary.md` says so rather than hiding it. See limitation 6.
 
 ## Limitations
 

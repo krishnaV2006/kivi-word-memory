@@ -31,5 +31,5 @@ None. No sentence in any corpus was modified.
 
 ## Cost
 
-1598 resolutions in 1.71 s (1.0685 ms each), reusing one `MemoryView`. 0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it does not distort the database-growth figures reported in `summary.md`.
+1598 resolutions in 4.06 s (2.5326 ms each), reusing one `MemoryView`. 0 model calls, Rs 0.00. Decision traces are not persisted during this run, so it does not distort the database-growth figures reported in `summary.md`.
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07 19:23:05",
+  "generated_at": "2026-09-07 19:29:14",
   "machine": {
     "platform": "Windows-11-10.0.26200-SP0",
     "python": "3.12.5"
@@ -9,11 +9,11 @@
       "useful_intervention": 0,
       "missed_intervention": 24,
       "wrong_intervention": 0,
-      "correct_abstention": 21,
+      "correct_abstention": 22,
       "false_intervention": 0,
-      "passed": 21,
-      "total": 45,
-      "pass_rate": 0.4667,
+      "passed": 22,
+      "total": 46,
+      "pass_rate": 0.4783,
       "precision": 0.0,
       "recall": 0.0,
       "f1": 0.0
@@ -22,96 +22,96 @@
       "useful_intervention": 12,
       "missed_intervention": 11,
       "wrong_intervention": 1,
-      "correct_abstention": 10,
+      "correct_abstention": 11,
       "false_intervention": 11,
-      "passed": 22,
-      "total": 45,
-      "pass_rate": 0.4889,
+      "passed": 23,
+      "total": 46,
+      "pass_rate": 0.5,
       "precision": 0.5,
       "recall": 0.5,
       "f1": 0.5
     },
     "phonetic": {
-      "useful_intervention": 23,
-      "missed_intervention": 1,
+      "useful_intervention": 24,
+      "missed_intervention": 0,
       "wrong_intervention": 0,
-      "correct_abstention": 21,
+      "correct_abstention": 22,
       "false_intervention": 0,
-      "passed": 44,
-      "total": 45,
-      "pass_rate": 0.9778,
+      "passed": 46,
+      "total": 46,
+      "pass_rate": 1.0,
       "precision": 1.0,
-      "recall": 0.9583,
-      "f1": 0.9787
+      "recall": 1.0,
+      "f1": 1.0
     }
   },
   "latency": {
     "repeats": 40,
     "journal_mode": "wal",
     "cold": {
-      "p50_ms": 2.17,
-      "p95_ms": 4.654,
-      "max_ms": 5.024,
-      "mean_ms": 2.706,
+      "p50_ms": 4.342,
+      "p95_ms": 5.012,
+      "max_ms": 5.303,
+      "mean_ms": 4.304,
       "stage_means_ms": {
-        "load_memory": 1.186,
-        "span_generation": 0.124,
-        "scoring_and_decision": 1.04,
-        "rewrite_and_prompt": 0.24,
-        "total": 2.59
+        "load_memory": 1.658,
+        "span_generation": 0.166,
+        "scoring_and_decision": 1.94,
+        "rewrite_and_prompt": 0.335,
+        "total": 4.099
       }
     },
     "warm": {
-      "p50_ms": 1.9,
-      "p95_ms": 2.536,
-      "max_ms": 2.563,
-      "mean_ms": 1.98,
+      "p50_ms": 2.386,
+      "p95_ms": 4.151,
+      "max_ms": 4.253,
+      "mean_ms": 2.625,
       "stage_means_ms": {
-        "load_memory": 0.0,
+        "load_memory": 0.001,
         "span_generation": 0.151,
-        "scoring_and_decision": 1.356,
-        "rewrite_and_prompt": 0.327,
-        "total": 1.835
+        "scoring_and_decision": 1.967,
+        "rewrite_and_prompt": 0.337,
+        "total": 2.455
       }
     },
-    "p50_ms": 2.17,
-    "p95_ms": 4.654,
-    "max_ms": 5.024,
-    "mean_ms": 2.706,
+    "p50_ms": 4.342,
+    "p95_ms": 5.012,
+    "max_ms": 5.303,
+    "mean_ms": 4.304,
     "stage_means_ms": {
-      "load_memory": 1.186,
-      "span_generation": 0.124,
-      "scoring_and_decision": 1.04,
-      "rewrite_and_prompt": 0.24,
-      "total": 2.59
+      "load_memory": 1.658,
+      "span_generation": 0.166,
+      "scoring_and_decision": 1.94,
+      "rewrite_and_prompt": 0.335,
+      "total": 4.099
     }
   },
   "db_growth": [
     {
       "observations": 10,
       "entries": 4,
-      "total_rows": 497,
-      "bytes": 90112,
-      "kb": 88.0
+      "total_rows": 502,
+      "bytes": 106496,
+      "kb": 104.0
     },
     {
       "observations": 50,
       "entries": 10,
-      "total_rows": 620,
-      "bytes": 90112,
-      "kb": 88.0
+      "total_rows": 632,
+      "bytes": 106496,
+      "kb": 104.0
     },
     {
       "observations": 200,
       "entries": 10,
-      "total_rows": 770,
-      "bytes": 131072,
-      "kb": 128.0
+      "total_rows": 782,
+      "bytes": 139264,
+      "kb": 136.0
     }
   ],
   "model_calls": 0,
   "cost_inr": 0.0,
-  "known_hard_count": 1,
+  "known_hard_count": 0,
   "adversarial": {
     "total_sentences": 1598,
     "total_interventions": 0,
@@ -145,8 +145,8 @@
     }
   },
   "branch_coverage": {
-    "apply": 23,
     "noop_already_correct": 3,
+    "apply": 24,
     "abstain_common_word": 2,
     "abstain_protected_span": 4,
     "abstain_low_evidence": 2,
@@ -5530,9 +5530,9 @@
     {
       "id": "fire-known-hard-bekariya",
       "category": "should_fire/romanisation",
-      "description": "KNOWN HARD, EXPECTED TO FAIL. b/v confusion is real in Indian ASR (Bekariya for Vekariya) but we deliberately do not map b to v globally.",
-      "rationale": "A global b<->v rule would collapse bat/vat, bet/vet and ban/van. We judged the false-positive cost higher than this miss, and report the miss rather than hiding it.",
-      "known_hard": true,
+      "description": "Indian ASR genuinely confuses b and v, so Vekariya comes back as Bekariya. Authored as a known-hard case and expected to fail; later fixed by the context-gated fuzzy tier rather than by widening the net.",
+      "rationale": "A global b<->v rewrite rule would also collapse bat/vat, bet/vet and ban/van, so it was refused. The fix is a separate over-permissive retrieval tier that folds b/v/w and is then required to earn its place: without independent context support from the sentence, a fuzzy candidate is dropped before it can compete. Here 'krishna' and 'submitted' are Vekariya context terms, so it fires. 'Bekariya is here.' does not.",
+      "known_hard": false,
       "inputs": {
         "asr": "krishna bekariya submitted the form",
         "formatted": "Krishna Bekariya submitted the form.",
@@ -5555,16 +5555,41 @@
           "passed": false
         },
         "phonetic": {
-          "actual": "Krishna Bekariya submitted the form.",
-          "intervened": false,
-          "outcome": "missed_intervention",
-          "passed": false
+          "actual": "Krishna Vekariya submitted the form.",
+          "intervened": true,
+          "outcome": "useful_intervention",
+          "passed": true
         }
       },
-      "passed": false,
-      "outcome": "missed_intervention",
+      "passed": true,
+      "outcome": "useful_intervention",
       "status_check": null,
-      "decision_trace": [],
+      "decision_trace": [
+        {
+          "span": "Bekariya",
+          "start": 8,
+          "end": 16,
+          "action": "apply",
+          "reason": "'Bekariya' matches 'Vekariya' via indic_fuzzy (similarity 0.7262, confidence 0.75, context 0.6667) scoring 0.7474",
+          "entry_id": 6,
+          "canonical": "Vekariya",
+          "score": 0.7474,
+          "runner_up": null,
+          "candidates": [
+            {
+              "entry_id": 6,
+              "canonical": "Vekariya",
+              "kind": "person",
+              "status": "active",
+              "confidence": 0.75,
+              "similarity": 0.7262,
+              "route": "indic_fuzzy",
+              "context_boost": 0.6667,
+              "score": 0.7474
+            }
+          ]
+        }
+      ],
       "memory_state": [
         {
           "canonical": "Aaditya",
@@ -5770,7 +5795,7 @@
           "evidence": {
             "confirmations": 2,
             "contradictions": 0,
-            "applications": 0
+            "applications": 2
           },
           "surfaces": [
             "Vekariya",
@@ -10673,6 +10698,266 @@
             "Adithya"
           ],
           "context_terms": []
+        },
+        {
+          "canonical": "Aditi",
+          "status": "active",
+          "confidence": 0.95,
+          "protected": true,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Aditi"
+          ],
+          "context_terms": []
+        },
+        {
+          "canonical": "Bulbul",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Bulbul",
+            "bulbool"
+          ],
+          "context_terms": [
+            "audio",
+            "nine",
+            "route",
+            "thirty",
+            "through",
+            "voice"
+          ]
+        },
+        {
+          "canonical": "Chinmay",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Chinmay",
+            "chinmai"
+          ],
+          "context_terms": [
+            "chinmai",
+            "build",
+            "design",
+            "green",
+            "ping",
+            "reviewing"
+          ]
+        },
+        {
+          "canonical": "IITM",
+          "status": "active",
+          "confidence": 0.95,
+          "protected": true,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "IITM"
+          ],
+          "context_terms": []
+        },
+        {
+          "canonical": "Kivi",
+          "status": "active",
+          "confidence": 0.8333,
+          "protected": false,
+          "evidence": {
+            "confirmations": 4,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Kivi",
+            "kiwi"
+          ],
+          "context_terms": [
+            "build",
+            "dictation",
+            "service",
+            "ship",
+            "correct",
+            "crashed",
+            "dictionary",
+            "formatting"
+          ]
+        },
+        {
+          "canonical": "Prateik",
+          "status": "candidate",
+          "confidence": 0.6667,
+          "protected": false,
+          "evidence": {
+            "confirmations": 1,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Prateik",
+            "prateek"
+          ],
+          "context_terms": [
+            "joined",
+            "prateek",
+            "standup"
+          ]
+        },
+        {
+          "canonical": "Saaras",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Saaras",
+            "saras"
+          ],
+          "context_terms": [
+            "sara",
+            "checkpoint",
+            "language",
+            "model",
+            "newer",
+            "swap",
+            "three",
+            "transcribe"
+          ]
+        },
+        {
+          "canonical": "Sarvam",
+          "status": "active",
+          "confidence": 0.8,
+          "protected": false,
+          "evidence": {
+            "confirmations": 3,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Sarvam",
+            "sarwam"
+          ],
+          "context_terms": [
+            "model",
+            "speech",
+            "bengaluru",
+            "build",
+            "bulbul",
+            "indian",
+            "language",
+            "office"
+          ]
+        },
+        {
+          "canonical": "Vekariya",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Vekariya",
+            "vekaria"
+          ],
+          "context_terms": [
+            "about",
+            "email",
+            "interview",
+            "krishna",
+            "submitted",
+            "task"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "noop-fuzzy-tier-needs-context",
+      "category": "should_not_fire/fuzzy_gate",
+      "description": "The b/v fuzzy tier is over-permissive by design and must not fire on its own.",
+      "rationale": "Same span as fire-known-hard-bekariya, same memory, but no Vekariya context term in the sentence. The fuzzy tier retrieves the entry and is then dropped for lack of independent support. Without this case the tier is only ever tested in the direction that flatters it.",
+      "known_hard": false,
+      "inputs": {
+        "asr": "bekariya is here",
+        "formatted": "Bekariya is here.",
+        "seeded": true,
+        "case_observations": []
+      },
+      "expected": "Bekariya is here.",
+      "expect_intervention": false,
+      "strategies": {
+        "none": {
+          "actual": "Bekariya is here.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "exact_dict": {
+          "actual": "Bekariya is here.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        },
+        "phonetic": {
+          "actual": "Bekariya is here.",
+          "intervened": false,
+          "outcome": "correct_abstention",
+          "passed": true
+        }
+      },
+      "passed": true,
+      "outcome": "correct_abstention",
+      "status_check": null,
+      "decision_trace": [],
+      "memory_state": [
+        {
+          "canonical": "Aaditya",
+          "status": "active",
+          "confidence": 0.75,
+          "protected": false,
+          "evidence": {
+            "confirmations": 2,
+            "contradictions": 0,
+            "applications": 0
+          },
+          "surfaces": [
+            "Aaditya",
+            "aditya"
+          ],
+          "context_terms": [
+            "ask",
+            "budget",
+            "fine",
+            "latency",
+            "pull",
+            "request",
+            "review",
+            "said"
+          ]
         },
         {
           "canonical": "Aditi",

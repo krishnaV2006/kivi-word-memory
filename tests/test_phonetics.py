@@ -8,6 +8,7 @@ import sys
 
 from app.phonetics import (
     consonant_skeleton,
+    fuzzy_skeleton,
     indic_skeleton,
     keys_for,
     metaphone_key,
@@ -54,6 +55,19 @@ def test_romanisation_drift_needs_loose_key() -> None:
     )
 
 
+def test_fuzzy_tier_folds_b_and_v_but_only_there() -> None:
+    """The b/v fold exists only in the fuzzy key. It must NOT leak into the strict or
+    loose keys, or ordinary English words would start colliding."""
+    check("bekariya/vekariya share the fuzzy key",
+          fuzzy_skeleton("bekariya"), fuzzy_skeleton("vekariya"))
+    check_true("bekariya/vekariya do NOT share the loose key",
+               consonant_skeleton("bekariya") != consonant_skeleton("vekariya"))
+    check_true("bat/vat stay distinct on the strict key",
+               indic_skeleton("bat") != indic_skeleton("vat"))
+    check_true("ban/van stay distinct on the strict key",
+               indic_skeleton("ban") != indic_skeleton("van"))
+
+
 def test_distinct_names_stay_distinct() -> None:
     check_true("aaditya != aditi", indic_skeleton("aaditya") != indic_skeleton("aditi"))
     check_true("kivi != cave", similarity("kivi", "cave") < 0.8)
@@ -70,7 +84,8 @@ def test_metaphone_is_insufficient_alone() -> None:
 def test_multiword_indexes_as_one_identity() -> None:
     pairs = keys_for("Sarvam Kivi")
     algos = {a for _, a in pairs}
-    check("three key algos emitted", algos, {"indic", "indic_loose", "metaphone"})
+    check("four key algos emitted", algos,
+          {"indic", "indic_loose", "indic_fuzzy", "metaphone"})
     strict = next(k for k, a in pairs if a == "indic")
     check("multiword strict key is joined", strict, "sarvamkivi")
 

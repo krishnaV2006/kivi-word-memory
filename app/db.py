@@ -116,6 +116,14 @@ def _main(argv: list[str]) -> int:
         migrate()
     elif cmd == "reset":
         reset()
+    elif cmd == "reindex":
+        from app.memory import reindex
+
+        conn = connect()
+        try:
+            print(f"reindexed {reindex(conn)} surfaces")
+        finally:
+            conn.close()
     elif cmd == "status":
         conn = connect()
         try:
@@ -127,7 +135,7 @@ def _main(argv: list[str]) -> int:
         finally:
             conn.close()
     else:
-        print(f"unknown command: {cmd}\nusage: python -m app.db [migrate|reset|status]")
+        print(f"unknown command: {cmd}\nusage: python -m app.db [migrate|reset|reindex|status]")
         return 2
     return 0
 
